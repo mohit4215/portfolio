@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohit Agarwal | Portfolio — Business × Tech</title>
+    <meta name="description" content="Portfolio of Mohit Agarwal (18) — B.Tech IT student, aspiring entrepreneur at the intersection of business and technology.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <canvas id="particle-canvas"></canvas>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="logo">
+                <span class="logo-text">M</span><span class="logo-dot">.</span><span class="logo-text">A</span>
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#hero" class="nav-link active">Home</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#achievements" class="nav-link">Achievements</a></li>
+                <li><a href="#case-studies" class="nav-link">Case Studies</a></li>
+                <li><a href="#certificates" class="nav-link">Certificates</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ============ HERO SECTION ============ -->
+        <section id="hero" class="section hero-section">
+            <div class="hero-content">
+                <div class="hero-badge animate-on-scroll">
+                    <i class="fas fa-rocket"></i>
+                    <span>Open to opportunities</span>
+                </div>
+                <p class="hero-greeting animate-on-scroll" style="--delay: 0.1s">Hi, I'm</p>
+                <h1 class="hero-name animate-on-scroll" style="--delay: 0.2s">
+                    Mohit Agarwal<span class="age-tag">, 18</span>
+                </h1>
+                <h2 class="hero-headline animate-on-scroll" style="--delay: 0.3s">
+                    <span class="gradient-text">B.Tech IT</span> Student
+                </h2>
+                <p class="hero-tagline animate-on-scroll" style="--delay: 0.4s">
+                    Always eager to learn. Loves the blend of <strong>business</strong> & <strong>tech</strong>. A future <span class="gradient-text">entrepreneur</span>.
+                </p>
+                <div class="hero-typing animate-on-scroll" style="--delay: 0.5s">
+                    <span class="typing-label">Specializing in:</span>
+                    <span class="typing-text" id="typing-text"></span>
+                    <span class="typing-cursor">|</span>
+                </div>
+                <div class="hero-cta animate-on-scroll" style="--delay: 0.6s">
+                    <a href="#case-studies" class="btn btn-primary">
+                        <i class="fas fa-briefcase"></i>
+                        View Case Studies
+                    </a>
+                    <a href="#certificates" class="btn btn-outline">
+                        <i class="fas fa-certificate"></i>
+                        Certificates
+                    </a>
+                </div>
+                <div class="hero-stats animate-on-scroll" style="--delay: 0.7s">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="8.23">0</span>
+                        <span class="stat-label">1st Sem SGPA</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="95">0</span><span class="stat-suffix">%</span>
+                        <span class="stat-label">Class 10th ICSE</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="10">0</span><span class="stat-suffix">+</span>
+                        <span class="stat-label">Competitions</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ EDUCATION SECTION ============ -->
+        <section id="education" class="section">
+            <div class="section-container">
+                <div class="section-header animate-on-scroll">
+                    <span class="section-tag"><i class="fas fa-graduation-cap"></i> Academic Journey</span>
+                    <h2 class="section-title">Education</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="education-grid">
+                    <div class="edu-card glass-card animate-on-scroll featured-edu" style="--delay: 0.1s" data-tilt>
+                        <div class="edu-icon-wrap">
+                            <div class="edu-icon"><i class="fas fa-university"></i></div>
+                            <span class="edu-status active-status">Current</span>
+                        </div>
+                        <h3 class="edu-degree">B.Tech — Information Technology</h3>
+                        <p class="edu-institution">Ajay Kumar Garg Engineering College (AKGEC), Ghaziabad</p>
+                        <div class="edu-score">
+                            <div class="score-ring">
+                                <svg viewBox="0 0 36 36">
+                                    <path class="score-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    <path class="score-fill" stroke-dasharray="82.3, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                </svg>
+                                <span class="score-value">8.23</span>
+                            </div>
+                            <span class="score-label">1st Semester SGPA</span>
+                        </div>
+                    </div>
+                    <div class="edu-card glass-card animate-on-scroll" style="--delay: 0.2s" data-tilt>
+                        <div class="edu-icon-wrap">
+                            <div class="edu-icon"><i class="fas fa-school"></i></div>
+                        </div>
+                        <h3 class="edu-degree">Class 12th — CBSE Board</h3>
+                        <p class="edu-institution">Senior Secondary Education</p>
+                        <div class="edu-score">
+                            <div class="score-ring">
+                                <svg viewBox="0 0 36 36">
+                                    <path class="score-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    <path class="score-fill" stroke-dasharray="81.2, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                </svg>
+                                <span class="score-value">81.2%</span>
+                            </div>
+                            <span class="score-label">Board Score</span>
+                        </div>
+                    </div>
+                    <div class="edu-card glass-card animate-on-scroll" style="--delay: 0.3s" data-tilt>
+                        <div class="edu-icon-wrap">
+                            <div class="edu-icon"><i class="fas fa-medal"></i></div>
+                            <span class="edu-status top-status">Top Scorer</span>
+                        </div>
+                        <h3 class="edu-degree">Class 10th — ICSE Board</h3>
+                        <p class="edu-institution">Secondary Education</p>
+                        <div class="edu-score">
+                            <div class="score-ring">
+                                <svg viewBox="0 0 36 36">
+                                    <path class="score-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    <path class="score-fill gold" stroke-dasharray="95, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                </svg>
+                                <span class="score-value">95%</span>
+                            </div>
+                            <span class="score-label">Board Score</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ ACHIEVEMENTS SECTION ============ -->
+        <section id="achievements" class="section">
+            <div class="section-container">
+                <div class="section-header animate-on-scroll">
+                    <span class="section-tag"><i class="fas fa-trophy"></i> Milestones</span>
+                    <h2 class="section-title">Achievements</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="achievements-timeline">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-entry animate-on-scroll" style="--delay: 0.1s">
+                        <div class="timeline-dot pulse-dot">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="timeline-card glass-card" data-tilt>
+                            <div class="timeline-badge winner-badge">🏆 Winner</div>
+                            <h3>Social Media Challenge — MAIT Marathon</h3>
+                            <p class="timeline-meta"><i class="fas fa-map-marker-alt"></i> Offline Event</p>
+                            <p class="timeline-desc">Won the Social Media Challenge at the TechXtract marathon organized by Maharaja Agrasen Institute of Technology (MAIT).</p>
+                        </div>
+                    </div>
+                    <div class="timeline-entry animate-on-scroll" style="--delay: 0.2s">
+                        <div class="timeline-dot pulse-dot">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="timeline-card glass-card" data-tilt>
+                            <div class="timeline-badge academic-badge">🎓 Academic</div>
+                            <h3>95% in Class 10th ICSE Board</h3>
+                            <p class="timeline-desc">Achieved an outstanding 95% score in the ICSE Board examinations, marking a significant academic milestone.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-entry animate-on-scroll" style="--delay: 0.3s">
+                        <div class="timeline-dot pulse-dot">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="timeline-card glass-card" data-tilt>
+                            <div class="timeline-badge compete-badge">🏅 Competitor</div>
+                            <h3>Active Competition Presence</h3>
+                            <p class="timeline-desc">Participated in India Predicts 2026, PromptWars, 360 Product Leadership Challenge, Plum X Invicta, TechNova, Niti Gyaan 5.0, Code Theft Auto, and more.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CASE STUDIES SECTION ============ -->
+        <section id="case-studies" class="section">
+            <div class="section-container">
+                <div class="section-header animate-on-scroll">
+                    <span class="section-tag"><i class="fas fa-chart-line"></i> Strategy Consulting</span>
+                    <h2 class="section-title">Case Studies</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="case-grid">
+                    <div class="case-card glass-card animate-on-scroll" style="--delay: 0.1s" data-tilt
+                         onclick="openCaseStudyModal('Xelaration by Money Mantra', 'A strategic case study exploring innovative financial solutions and market disruption through fintech innovation.', 'assets/case-studies/xelaration.pdf')">
+                        <div class="case-card-glow"></div>
+                        <div class="case-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="case-content">
+                            <span class="case-tag">FinTech Strategy</span>
+                            <h3>Xelaration</h3>
+                            <p class="case-org">by Money Mantra</p>
+                            <p class="case-desc">Strategic case study on fintech innovation and market disruption.</p>
+                        </div>
+                        <div class="case-action">
+                            <span>View Case Study</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="case-card glass-card animate-on-scroll" style="--delay: 0.2s" data-tilt
+                         onclick="openCaseStudyModal('Case-O-Crypt 6.0', 'An analytical deep-dive into crypto and blockchain business models, market positioning, and growth strategy.', 'assets/case-studies/case-o-crypt.pdf')">
+                        <div class="case-card-glow"></div>
+                        <div class="case-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <div class="case-content">
+                            <span class="case-tag">Business Analysis</span>
+                            <h3>Case-O-Crypt 6.0</h3>
+                            <p class="case-org">Crypto & Blockchain</p>
+                            <p class="case-desc">Analytical deep-dive into blockchain business models and growth strategy.</p>
+                        </div>
+                        <div class="case-action">
+                            <span>View Case Study</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                    <div class="case-card glass-card animate-on-scroll" style="--delay: 0.3s" data-tilt
+                         onclick="openCaseStudyModal('RIFT-20 hypLW', 'A comprehensive strategy and consulting case study exploring market dynamics and competitive analysis.', 'assets/case-studies/rift-20.pdf')">
+                        <div class="case-card-glow"></div>
+                        <div class="case-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="case-content">
+                            <span class="case-tag">Market Strategy</span>
+                            <h3>RIFT-20 hypLW</h3>
+                            <p class="case-org">Consulting Competition</p>
+                            <p class="case-desc">Market dynamics analysis with competitive strategy recommendations.</p>
+                        </div>
+                        <div class="case-action">
+                            <span>View Case Study</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CERTIFICATES SECTION ============ -->
+        <section id="certificates" class="section">
+            <div class="section-container">
+                <div class="section-header animate-on-scroll">
+                    <span class="section-tag"><i class="fas fa-award"></i> Participations</span>
+                    <h2 class="section-title">Certificates & Gallery</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="cert-grid">
+                    <!-- Plumb XIV -->
+                    <div class="cert-card animate-on-scroll" style="--delay: 0.05s"
+                         onclick="openLightbox(0)">
+                        <div class="cert-img-wrap">
+                            <img src="assets/certificates/plum-xiv.jpg" alt="Plumb XIV Certificate" loading="lazy">
+                            <div class="cert-overlay">
+                                <i class="fas fa-expand"></i>
+                                <span>View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h4>Plum X Invicta</h4>
+                            <p>Case Study Competition — DU</p>
+                        </div>
+                    </div>
+                    <!-- Nerd AI Quest -->
+                    <div class="cert-card animate-on-scroll" style="--delay: 0.1s"
+                         onclick="openLightbox(1)">
+                        <div class="cert-img-wrap placeholder-cert">
+                            <div class="placeholder-icon"><i class="fas fa-robot"></i></div>
+                            <div class="cert-overlay">
+                                <i class="fas fa-expand"></i>
+                                <span>View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h4>Nerd AI Quest</h4>
+                            <p>AI/ML Competition</p>
+                        </div>
+                    </div>
+                    <!-- Tech Nova -->
+                    <div class="cert-card animate-on-scroll" style="--delay: 0.15s"
+                         onclick="openLightbox(2)">
+                        <div class="cert-img-wrap placeholder-cert">
+                            <div class="placeholder-icon"><i class="fas fa-microchip"></i></div>
+                            <div class="cert-overlay">
+                                <i class="fas fa-expand"></i>
+                                <span>View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h4>Tech Nova</h4>
+                            <p>Tech Innovation Event</p>
+                        </div>
+                    </div>
+                    <!-- NitiGyan -->
+                    <div class="cert-card animate-on-scroll" style="--delay: 0.2s"
+                         onclick="openLightbox(3)">
+                        <div class="cert-img-wrap placeholder-cert">
+                            <div class="placeholder-icon"><i class="fas fa-balance-scale"></i></div>
+                            <div class="cert-overlay">
+                                <i class="fas fa-expand"></i>
+                                <span>View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h4>NitiGyan</h4>
+                            <p>Policy & Strategy</p>
+                        </div>
+                    </div>
+                    <!-- Elementary Teaching Certificate -->
+                    <div class="cert-card animate-on-scroll" style="--delay: 0.25s"
+                         onclick="openLightbox(4)">
+                        <div class="cert-img-wrap placeholder-cert">
+                            <div class="placeholder-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                            <div class="cert-overlay">
+                                <i class="fas fa-expand"></i>
+                                <span>View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h4>Elementary Teaching</h4>
+                            <p>Teaching Certificate</p>
+                        </div>
+                    </div>
+                    <!-- DTU Assets - M&A Offline -->
+                    <div class="cert-card animate-on-scroll" style="--delay: 0.3s"
+                         onclick="openLightbox(5)">
+                        <div class="cert-img-wrap">
+                            <img src="assets/gallery/dtu-presentation-1.jpeg" alt="DTU Assets M&A Offline" loading="lazy">
+                            <div class="cert-overlay">
+                                <i class="fas fa-expand"></i>
+                                <span>View Photo</span>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h4>DTU Assets — M&A Offline</h4>
+                            <p>MarkSense Competition, DTU</p>
+                        </div>
+                    </div>
+                    <!-- DTU Assets - The Final Boardroom -->
+                    <div class="cert-card animate-on-scroll" style="--delay: 0.35s"
+                         onclick="openLightbox(6)">
+                        <div class="cert-img-wrap">
+                            <img src="assets/gallery/dtu-presentation-2.jpeg" alt="DTU Assets The Final Boardroom" loading="lazy">
+                            <div class="cert-overlay">
+                                <i class="fas fa-expand"></i>
+                                <span>View Photo</span>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h4>DTU Assets — The Final Boardroom</h4>
+                            <p>Offline Presentation, DTU</p>
+                        </div>
+                    </div>
+                    <!-- IGDTUW Prompt Wars -->
+                    <div class="cert-card animate-on-scroll" style="--delay: 0.4s"
+                         onclick="openLightbox(7)">
+                        <div class="cert-img-wrap placeholder-cert">
+                            <div class="placeholder-icon"><i class="fas fa-terminal"></i></div>
+                            <div class="cert-overlay">
+                                <i class="fas fa-expand"></i>
+                                <span>View Certificate</span>
+                            </div>
+                        </div>
+                        <div class="cert-info">
+                            <h4>IGDTUW — Prompt Wars</h4>
+                            <p>by GDSC Offline</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CONTACT SECTION ============ -->
+        <section id="contact" class="section">
+            <div class="section-container">
+                <div class="section-header animate-on-scroll">
+                    <span class="section-tag"><i class="fas fa-paper-plane"></i> Let's Connect</span>
+                    <h2 class="section-title">Get In Touch</h2>
+                    <div class="section-line"></div>
+                    <p class="section-subtitle">Have an interesting project or want to chat about tech, finance & business strategy?</p>
+                </div>
+                <div class="contact-wrapper">
+                    <form id="contact-form" class="contact-form glass-card animate-on-scroll" data-tilt>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-name">Name</label>
+                                <input type="text" id="contact-name" placeholder="Your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Email</label>
+                                <input type="email" id="contact-email" placeholder="your@email.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">Message</label>
+                            <textarea id="contact-message" rows="5" placeholder="Your message..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full" id="submit-btn">
+                            <span>Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-socials">
+                <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="mailto:mohitagarwal4215@gmail.com" class="social-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="footer-text">© 2026 Mohit Agarwal. Crafted with precision.</p>
+        </div>
+    </footer>
+
+    <!-- ============ LIGHTBOX MODAL ============ -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-hidden="true">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close"><i class="fas fa-times"></i></button>
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+        <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Certificate">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <!-- ============ CASE STUDY MODAL ============ -->
+    <div class="case-modal" id="case-modal" role="dialog" aria-hidden="true">
+        <div class="case-modal-backdrop" onclick="closeCaseModal()"></div>
+        <div class="case-modal-content glass-card">
+            <button class="case-modal-close" onclick="closeCaseModal()" aria-label="Close"><i class="fas fa-times"></i></button>
+            <h3 id="case-modal-title"></h3>
+            <p id="case-modal-desc"></p>
+            <div class="case-modal-body" id="case-modal-body">
+                <div class="case-placeholder">
+                    <i class="fas fa-file-pdf"></i>
+                    <p>Case study file will be available soon.</p>
+                    <span>Drop your PDF/image into <code>assets/case-studies/</code></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
