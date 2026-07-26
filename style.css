@@ -1312,6 +1312,70 @@ nav.scrolled {
     border-radius: 4px;
 }
 
+/* ============ EXTRACURRICULAR ACTIVITIES ============ */
+.extra-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+.extra-card {
+    text-align: center;
+    padding: 2.2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transition: var(--transition);
+}
+
+.extra-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.12), rgba(124, 58, 237, 0.12));
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--accent-cyan);
+    margin-bottom: 1.2rem;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.1);
+    transition: var(--transition);
+}
+
+.extra-card:hover .extra-icon {
+    transform: scale(1.1) rotate(5deg);
+    background: var(--gradient-primary);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.35);
+}
+
+.extra-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: var(--text-white);
+}
+
+.extra-role {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-cyan);
+    margin-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.extra-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+}
+
 /* ============ SCROLL ANIMATIONS ============ */
 .animate-on-scroll {
     opacity: 0;
@@ -1330,6 +1394,7 @@ nav.scrolled {
     .education-grid { grid-template-columns: repeat(3, 1fr); }
     .case-grid { grid-template-columns: repeat(3, 1fr); }
     .cert-grid { grid-template-columns: repeat(3, 1fr); }
+    .extra-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 900px) {
@@ -1351,6 +1416,7 @@ nav.scrolled {
     .education-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
     .case-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
     .cert-grid { grid-template-columns: repeat(2, 1fr); }
+    .extra-grid { grid-template-columns: repeat(2, 1fr); }
     .form-row { grid-template-columns: 1fr; }
 
     .hero-stats {
@@ -1368,6 +1434,7 @@ nav.scrolled {
     .hero-cta { flex-direction: column; }
     .btn { justify-content: center; text-align: center; }
     .cert-grid { grid-template-columns: 1fr 1fr; }
+    .extra-grid { grid-template-columns: 1fr; }
     .section { padding: 60px 0; }
     .section-header { margin-bottom: 2.5rem; }
     .lightbox-prev { left: 0.5rem; }
