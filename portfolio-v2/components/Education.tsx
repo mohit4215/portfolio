@@ -1,80 +1,55 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GraduationCap, School, Medal } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 
 const EDU = [
   {
-    icon: GraduationCap,
-    status: "Current",
-    statusColor: "#2563EB",
+    emoji: "🏫", status: "Current", statusBg: "bg-mint",
     degree: "B.Tech — Information Technology",
     institution: "AKGEC, Ghaziabad · AKTU University",
-    score: 8.48,
-    scoreMax: 10,
-    scoreLabel: "1st Year CGPA",
-    accent: "#2563EB",
-    side: "left",
-    note: "Pursuing",
+    score: 8.48, scoreMax: 10, scoreLabel: "1st Year CGPA",
+    bg: "bg-sky", note: "Pursuing", color: "#2563EB",
   },
   {
-    icon: School,
-    status: "Completed",
-    statusColor: "#71717A",
+    emoji: "📚", status: "Completed", statusBg: "bg-lavender",
     degree: "Class 12th — CBSE Board",
     institution: "Senior Secondary Education",
-    score: null,
-    scoreMax: null,
-    scoreLabel: null,
-    accent: "#FF4800",
-    side: "right",
-    note: "2023–24",
+    score: null, scoreMax: null, scoreLabel: null,
+    bg: "bg-sakura", note: "2023–24", color: "#FF4D2E",
   },
   {
-    icon: Medal,
-    status: "Top Scorer",
-    statusColor: "#FF4800",
+    emoji: "🏅", status: "Top Scorer", statusBg: "bg-sunYellow",
     degree: "Class 10th — ICSE Board",
     institution: "Secondary Education",
-    score: 95,
-    scoreMax: 100,
-    scoreLabel: "Board Score",
-    accent: "#FF4800",
-    side: "left",
-    note: "2021–22",
+    score: 95, scoreMax: 100, scoreLabel: "Board Score",
+    bg: "bg-warm", note: "2021–22", color: "#FFB800",
   },
 ];
 
 function ScoreRing({ score, max, label, color }: { score: number; max: number; label: string; color: string }) {
-  const pct = (score / max) * 100;
-  const r = 42;
-  const circ = 2 * Math.PI * r;
-  const dash = (pct / 100) * circ;
-
+  const pct = score / max;
+  const r = 38, circ = 2 * Math.PI * r, dash = pct * circ;
   return (
-    <div className="flex flex-col items-center gap-1">
+    <div className="flex flex-col items-center gap-1 mt-4">
       <div className="relative w-24 h-24">
         <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r={r} fill="none" stroke="#E4E2D9" strokeWidth="5" />
-          <motion.circle
-            cx="50" cy="50" r={r}
-            fill="none"
-            stroke={color}
-            strokeWidth="5"
-            strokeLinecap="square"
-            strokeDasharray={circ}
+          <circle cx="50" cy="50" r={r} fill="none" stroke="rgba(26,26,46,0.1)" strokeWidth="6" />
+          <motion.circle cx="50" cy="50" r={r} fill="none" stroke={color} strokeWidth="6"
+            strokeLinecap="round" strokeDasharray={circ}
             initial={{ strokeDashoffset: circ }}
             whileInView={{ strokeDashoffset: circ - dash }}
             viewport={{ once: true }}
-            transition={{ duration: 1.4, ease: [0.77, 0, 0.175, 1], delay: 0.3 }}
+            transition={{ duration: 1.4, ease: [0.77, 0, 0.175, 1], delay: 0.4 }}
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="font-display text-xl text-charcoal">{score}{max === 100 ? "%" : ""}</span>
+          <span className="font-display text-2xl text-inkBlack" style={{ fontFamily: "Bangers, cursive" }}>
+            {score}{max === 100 ? "%" : ""}
+          </span>
         </div>
       </div>
-      <span className="font-mono text-[0.6rem] uppercase tracking-widest text-muted">{label}</span>
+      <span className="font-sans text-xs font-bold text-inkDark/50 uppercase tracking-wider">{label}</span>
     </div>
   );
 }
@@ -86,94 +61,56 @@ export default function Education() {
     <section
       id="education"
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="section-pad bg-paper border-b-2 border-charcoal"
+      className="section-pad"
+      style={{ background: "linear-gradient(135deg, #FFFDF5 0%, #FFF3D4 100%)" }}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
 
-        {/* ── Header ────────────────────────────────────────────── */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 border-b-2 border-charcoal pb-8">
-          <div>
-            <motion.p
-              className="font-mono text-xs uppercase tracking-[0.18em] text-cobalt mb-3"
-              initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ duration: 0.4 }}
-            >
-              ✦ Academic Journey
-            </motion.p>
-            <motion.h2
-              className="font-display text-display-xl text-charcoal"
-              initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, ease: [0.77, 0, 0.175, 1] }}
-            >
-              Education
-            </motion.h2>
-          </div>
-
-          {/* editorial index */}
-          <motion.span
-            className="font-display text-[8rem] leading-none text-charcoal/[0.04] select-none hidden md:block"
-            initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.4, duration: 0.6 }}
-          >
-            EDU
-          </motion.span>
+        {/* ── Header ── */}
+        <div className="text-center mb-14">
+          <motion.div initial={{ scale: 0 }} animate={inView ? { scale: 1 } : {}} transition={{ type: "spring", stiffness: 400, damping: 18 }} className="inline-block mb-4 text-4xl">🎓</motion.div>
+          <motion.h2 className="font-display text-5xl md:text-6xl text-inkBlack" style={{ fontFamily: "Bangers, cursive", letterSpacing: "0.08em" }} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }}>
+            EDUCATION
+          </motion.h2>
+          <motion.div className="inline-block mt-2 px-4 py-1 rounded-full border-3 border-inkBlack bg-sunYellow font-sans text-xs font-bold uppercase tracking-widest" style={{ boxShadow: "3px 3px 0px #1A1A2E" }} initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.3 }}>
+            🎒 Academic Journey
+          </motion.div>
         </div>
 
-        {/* ── Asymmetric grid ───────────────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border-2 border-charcoal">
-          {EDU.map((edu, i) => {
-            const Icon = edu.icon;
-            return (
+        {/* ── Cards ── */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {EDU.map((edu, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 50, rotate: i % 2 === 0 ? -4 : 4 }}
+              animate={inView ? { opacity: 1, y: 0, rotate: 0 } : {}}
+              transition={{ delay: 0.1 + i * 0.12, type: "spring", stiffness: 300, damping: 22 }}
+              whileHover={{ y: -8, rotate: i % 2 === 0 ? -2 : 2 }}
+              className={`manga-panel ${edu.bg} p-6 flex flex-col items-center text-center`}
+            >
+              {/* Emoji icon */}
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.1 + i * 0.15, duration: 0.6, ease: [0.77, 0, 0.175, 1] }}
-                className={`group p-8 border-b-2 md:border-b-0 md:border-r-2 border-charcoal last:border-r-0 last:border-b-0 hover:bg-charcoal transition-colors duration-300 cursor-default ${
-                  i === 0 ? "md:col-span-1" : ""
-                }`}
+                className="text-5xl mb-4"
+                animate={{ y: [-4, 4, -4] }}
+                transition={{ duration: 3 + i, repeat: Infinity, ease: "easeInOut" }}
               >
-                {/* Top row */}
-                <div className="flex items-start justify-between mb-6">
-                  <div
-                    className="w-10 h-10 border-2 border-charcoal flex items-center justify-center group-hover:border-paper transition-colors"
-                    style={{ background: edu.accent }}
-                  >
-                    <Icon size={18} color="#F3F1EA" />
-                  </div>
-                  <span
-                    className="font-mono text-[0.6rem] uppercase tracking-widest px-2 py-0.5 border"
-                    style={{
-                      color: edu.statusColor,
-                      borderColor: edu.statusColor,
-                      background: `${edu.statusColor}14`,
-                    }}
-                  >
-                    {edu.status}
-                  </span>
-                </div>
-
-                {/* Degree */}
-                <h3 className="font-display text-xl text-charcoal group-hover:text-paper mb-1 transition-colors">
-                  {edu.degree}
-                </h3>
-                <p className="font-sans text-xs text-muted group-hover:text-faint mb-2 transition-colors">
-                  {edu.institution}
-                </p>
-                <p className="font-mono text-[0.6rem] uppercase tracking-widest text-muted group-hover:text-faint/60 mb-6 transition-colors">
-                  {edu.note}
-                </p>
-
-                {/* Score ring */}
-                {edu.score !== null && (
-                  <ScoreRing
-                    score={edu.score}
-                    max={edu.scoreMax!}
-                    label={edu.scoreLabel!}
-                    color={edu.accent}
-                  />
-                )}
+                {edu.emoji}
               </motion.div>
-            );
-          })}
+
+              {/* Status badge */}
+              <span className={`inline-block px-3 py-1 rounded-full border-2 border-inkBlack ${edu.statusBg} font-sans text-xs font-bold mb-4`}>
+                {edu.status}
+              </span>
+
+              <h3 className="font-sans text-base font-extrabold text-inkBlack mb-1 leading-tight">{edu.degree}</h3>
+              <p className="font-sans text-xs text-inkDark/60 mb-1">{edu.institution}</p>
+              <p className="font-mono text-xs text-inkDark/40 mb-4">{edu.note}</p>
+
+              {edu.score !== null && (
+                <ScoreRing score={edu.score} max={edu.scoreMax!} label={edu.scoreLabel!} color={edu.color} />
+              )}
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

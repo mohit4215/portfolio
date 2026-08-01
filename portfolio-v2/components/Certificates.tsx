@@ -3,247 +3,120 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Maximize2, ChevronLeft, ChevronRight, X, Bot, Cpu, Scale, BookOpen, Terminal } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 
 const CERTS = [
-  {
-    id: 0,
-    title: "Plum X Invicta",
-    subtitle: "Case Study Competition · DU",
-    src: "/assets/certificates/plum-xiv.jpg",
-    hasImage: true,
-    icon: null,
-    accent: "#2563EB",
-  },
-  {
-    id: 1,
-    title: "Nerd AI Quest",
-    subtitle: "AI/ML Competition",
-    src: null,
-    hasImage: false,
-    icon: Bot,
-    accent: "#FF4800",
-  },
-  {
-    id: 2,
-    title: "Tech Nova",
-    subtitle: "Tech Innovation Event",
-    src: null,
-    hasImage: false,
-    icon: Cpu,
-    accent: "#18181B",
-  },
-  {
-    id: 3,
-    title: "NitiGyan 5.0",
-    subtitle: "Policy & Strategy",
-    src: null,
-    hasImage: false,
-    icon: Scale,
-    accent: "#2563EB",
-  },
-  {
-    id: 4,
-    title: "Elementary Teaching",
-    subtitle: "Teaching Certificate",
-    src: null,
-    hasImage: false,
-    icon: BookOpen,
-    accent: "#FF4800",
-  },
-  {
-    id: 5,
-    title: "DTU Assets — M&A Offline",
-    subtitle: "MarkSense Competition · DTU",
-    src: "/assets/gallery/dtu-presentation-1.jpeg",
-    hasImage: true,
-    icon: null,
-    accent: "#18181B",
-  },
-  {
-    id: 6,
-    title: "DTU Assets — Final Boardroom",
-    subtitle: "Offline Presentation · DTU",
-    src: "/assets/gallery/dtu-presentation-2.jpeg",
-    hasImage: true,
-    icon: null,
-    accent: "#2563EB",
-  },
-  {
-    id: 7,
-    title: "IGDTUW — Prompt Wars",
-    subtitle: "by GDSC Offline",
-    src: null,
-    hasImage: false,
-    icon: Terminal,
-    accent: "#FF4800",
-  },
+  { id: 0, title: "Plum X Invicta",              subtitle: "Case Study · DU",         src: "/assets/certificates/plum-xiv.jpg", hasImage: true,  emoji: "🏆", bg: "bg-sky" },
+  { id: 1, title: "Nerd AI Quest",                subtitle: "AI/ML Competition",        src: null,                                hasImage: false, emoji: "🤖", bg: "bg-mint" },
+  { id: 2, title: "Tech Nova",                    subtitle: "Tech Innovation",           src: null,                                hasImage: false, emoji: "💻", bg: "bg-lavender" },
+  { id: 3, title: "NitiGyan 5.0",                 subtitle: "Policy & Strategy",         src: null,                                hasImage: false, emoji: "⚖️", bg: "bg-warm" },
+  { id: 4, title: "Elementary Teaching",          subtitle: "Teaching Certificate",      src: null,                                hasImage: false, emoji: "📖", bg: "bg-sakura" },
+  { id: 5, title: "DTU Assets — M&A Offline",    subtitle: "MarkSense · DTU",          src: "/assets/gallery/dtu-presentation-1.jpeg", hasImage: true, emoji: "🤝", bg: "bg-sky" },
+  { id: 6, title: "DTU Assets — Final Boardroom",subtitle: "Offline Presentation · DTU",src: "/assets/gallery/dtu-presentation-2.jpeg", hasImage: true, emoji: "🎤", bg: "bg-sunYellow" },
+  { id: 7, title: "IGDTUW — Prompt Wars",         subtitle: "by GDSC Offline",          src: null,                                hasImage: false, emoji: "⚡", bg: "bg-mint" },
 ];
 
-const IMAGE_CERTS = CERTS.filter((c) => c.hasImage);
+const IMGS = CERTS.filter(c => c.hasImage);
 
 export default function Certificates() {
   const { ref: sectionRef, inView } = useInView<HTMLElement>({ threshold: 0.08 });
-  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const [lightbox, setLightbox] = useState<number | null>(null);
 
   const openLightbox = (certId: number) => {
-    const imgIdx = IMAGE_CERTS.findIndex((c) => c.id === certId);
-    if (imgIdx !== -1) setLightboxIdx(imgIdx);
+    const idx = IMGS.findIndex(c => c.id === certId);
+    if (idx !== -1) setLightbox(idx);
   };
-
-  const prev = () => setLightboxIdx((i) => (i === null ? 0 : (i - 1 + IMAGE_CERTS.length) % IMAGE_CERTS.length));
-  const next = () => setLightboxIdx((i) => (i === null ? 0 : (i + 1) % IMAGE_CERTS.length));
 
   return (
     <section
       id="certificates"
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className="section-pad bg-paper border-b-2 border-charcoal"
+      className="section-pad"
+      style={{ background: "linear-gradient(135deg, #FFF8E7 0%, #FFFDF5 100%)" }}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-6xl mx-auto px-6 md:px-12">
 
-        {/* ── Header ────────────────────────────────────────────── */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 border-b-2 border-charcoal pb-8">
-          <div>
-            <motion.p
-              className="font-mono text-xs uppercase tracking-[0.18em] text-cobalt mb-3"
-              initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
-            >
-              ✦ Participations
-            </motion.p>
-            <motion.h2
-              className="font-display text-display-xl text-charcoal"
-              initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, ease: [0.77, 0, 0.175, 1] }}
-            >
-              Certificates &amp; Gallery
-            </motion.h2>
-          </div>
-          <motion.span className="font-mono text-sm text-muted" initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.3 }}>
-            {CERTS.length} entries
-          </motion.span>
+        {/* ── Header ── */}
+        <div className="text-center mb-14">
+          <motion.div initial={{ scale: 0 }} animate={inView ? { scale: 1 } : {}} transition={{ type: "spring", stiffness: 400, damping: 18 }} className="inline-block mb-4 text-4xl">📜</motion.div>
+          <motion.h2 className="font-display text-5xl md:text-6xl text-inkBlack" style={{ fontFamily: "Bangers, cursive", letterSpacing: "0.08em" }} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }}>
+            CERTIFICATES
+          </motion.h2>
+          <motion.div className="inline-block mt-2 px-4 py-1 rounded-full border-3 border-inkBlack bg-sakura font-sans text-xs font-bold uppercase tracking-widest" style={{ boxShadow: "3px 3px 0px #1A1A2E" }} initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.3 }}>
+            🎖️ {CERTS.length} Participations
+          </motion.div>
         </div>
 
-        {/* ── Grid ──────────────────────────────────────────────── */}
-        <div className="grid grid-cols-2 md:grid-cols-4 border-2 border-charcoal">
-          {CERTS.map((cert, i) => {
-            const canOpen = cert.hasImage;
-            const Icon = cert.icon;
-            return (
-              <motion.div
-                key={cert.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.05 + i * 0.06, duration: 0.5 }}
-                onClick={() => canOpen && openLightbox(cert.id)}
-                className={`group relative border-b-2 border-r-2 border-charcoal overflow-hidden ${
-                  i % 4 === 3 ? "border-r-0" : ""
-                } ${canOpen ? "cursor-pointer" : "cursor-default"}`}
-              >
-                <div className="aspect-[4/3] relative bg-rule flex items-center justify-center overflow-hidden">
-                  {cert.hasImage && cert.src ? (
-                    <Image
-                      src={cert.src}
-                      alt={cert.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                    />
-                  ) : (
-                    <div
-                      className="w-14 h-14 border-2 border-charcoal flex items-center justify-center"
-                      style={{ background: cert.accent }}
-                    >
-                      {Icon && <Icon size={22} color="#F3F1EA" />}
+        {/* ── Grid ── */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {CERTS.map((cert, i) => (
+            <motion.div
+              key={cert.id}
+              initial={{ opacity: 0, scale: 0.8, rotate: Math.random() > 0.5 ? 3 : -3 }}
+              animate={inView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+              transition={{ delay: 0.05 + i * 0.06, type: "spring", stiffness: 350, damping: 22 }}
+              whileHover={{ scale: 1.06, rotate: i % 2 === 0 ? -3 : 3, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => cert.hasImage && openLightbox(cert.id)}
+              className={`manga-panel ${cert.bg} overflow-hidden ${cert.hasImage ? "cursor-pointer" : ""}`}
+            >
+              {/* Image or icon */}
+              <div className="aspect-[4/3] relative flex items-center justify-center overflow-hidden border-b-3 border-inkBlack">
+                {cert.hasImage && cert.src ? (
+                  <>
+                    <Image src={cert.src} alt={cert.title} fill className="object-cover" sizes="(max-width: 768px) 50vw, 25vw" />
+                    <div className="absolute inset-0 bg-inkBlack/0 hover:bg-inkBlack/30 transition-colors flex items-center justify-center">
+                      <motion.span className="text-3xl opacity-0 hover:opacity-100">🔍</motion.span>
                     </div>
-                  )}
+                  </>
+                ) : (
+                  <motion.span
+                    className="text-5xl"
+                    animate={{ scale: [1, 1.15, 1], rotate: [0, 10, -10, 0] }}
+                    transition={{ duration: 3 + i * 0.3, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    {cert.emoji}
+                  </motion.span>
+                )}
+              </div>
 
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/80 transition-all duration-300 flex items-center justify-center">
-                    <motion.div
-                      className="opacity-0 group-hover:opacity-100 flex flex-col items-center gap-2"
-                      initial={false}
-                    >
-                      {canOpen ? (
-                        <>
-                          <Maximize2 size={22} color="#F3F1EA" />
-                          <span className="font-mono text-[0.6rem] uppercase tracking-widest text-paper">Expand</span>
-                        </>
-                      ) : (
-                        <span className="font-mono text-[0.6rem] uppercase tracking-widest text-paper px-3 text-center">{cert.subtitle}</span>
-                      )}
-                    </motion.div>
-                  </div>
-
-                  {/* Accent bar */}
-                  <div
-                    className="absolute bottom-0 left-0 w-0 h-[3px] group-hover:w-full transition-all duration-500"
-                    style={{ background: cert.accent }}
-                    aria-hidden
-                  />
-                </div>
-
-                {/* Info */}
-                <div className="px-3 py-3 border-t-2 border-charcoal">
-                  <h4 className="font-sans text-xs font-semibold text-charcoal truncate">{cert.title}</h4>
-                  <p className="font-mono text-[0.6rem] text-muted truncate">{cert.subtitle}</p>
-                </div>
-              </motion.div>
-            );
-          })}
+              {/* Info */}
+              <div className="p-3">
+                <h4 className="font-sans text-xs font-extrabold text-inkBlack leading-tight">{cert.title}</h4>
+                <p className="font-mono text-[0.6rem] text-inkDark/50 mt-0.5">{cert.subtitle}</p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
 
-      {/* ── Lightbox ──────────────────────────────────────────── */}
+      {/* ── Lightbox ── */}
       <AnimatePresence>
-        {lightboxIdx !== null && (
+        {lightbox !== null && (
           <>
-            <motion.div
-              className="fixed inset-0 bg-charcoal/95 z-50"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              onClick={() => setLightboxIdx(null)}
-            />
-            <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center p-6"
-              initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 360, damping: 30 }}
-            >
-              {/* close */}
-              <button
-                onClick={() => setLightboxIdx(null)}
-                className="absolute top-5 right-5 w-10 h-10 border-2 border-paper/20 flex items-center justify-center hover:border-orange hover:text-orange text-paper transition-colors z-10"
-                aria-label="Close"
+            <motion.div className="fixed inset-0 bg-inkBlack/90 z-50 backdrop-blur-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setLightbox(null)} />
+            <motion.div className="fixed inset-0 z-50 flex items-center justify-center p-6 pointer-events-none">
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0, rotate: -5 }}
+                animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ type: "spring", stiffness: 380, damping: 26 }}
+                className="pointer-events-auto manga-panel bg-white max-w-2xl w-full p-4"
               >
-                <X size={16} />
-              </button>
-
-              {/* prev / next */}
-              <button onClick={prev} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 border-2 border-paper/20 flex items-center justify-center hover:border-cobalt text-paper transition-colors z-10" aria-label="Previous">
-                <ChevronLeft size={18} />
-              </button>
-              <button onClick={next} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 border-2 border-paper/20 flex items-center justify-center hover:border-cobalt text-paper transition-colors z-10" aria-label="Next">
-                <ChevronRight size={18} />
-              </button>
-
-              {/* image */}
-              <div className="relative max-w-3xl w-full pointer-events-none" onClick={(e) => e.stopPropagation()}>
-                <div className="relative w-full" style={{ maxHeight: "75vh" }}>
-                  <Image
-                    src={IMAGE_CERTS[lightboxIdx].src!}
-                    alt={IMAGE_CERTS[lightboxIdx].title}
-                    width={900}
-                    height={600}
-                    className="w-full h-auto object-contain border-2 border-paper/20 shadow-brutal pointer-events-auto"
-                    style={{ maxHeight: "75vh" }}
-                  />
+                <button onClick={() => setLightbox(null)} className="absolute top-3 right-3 w-9 h-9 rounded-full border-3 border-inkBlack bg-fireRed text-white font-bold text-sm flex items-center justify-center hover:scale-110 transition-transform">✕</button>
+                <div className="flex items-center justify-between mb-3">
+                  <button onClick={() => setLightbox(i => i === null ? 0 : (i - 1 + IMGS.length) % IMGS.length)} className="w-9 h-9 rounded-full border-3 border-inkBlack bg-sunYellow flex items-center justify-center font-bold hover:scale-110 transition-transform">←</button>
+                  <span className="font-mono text-xs text-inkBlack/40">{lightbox + 1} / {IMGS.length}</span>
+                  <button onClick={() => setLightbox(i => i === null ? 0 : (i + 1) % IMGS.length)} className="w-9 h-9 rounded-full border-3 border-inkBlack bg-sunYellow flex items-center justify-center font-bold hover:scale-110 transition-transform">→</button>
                 </div>
-                <div className="mt-4 text-center">
-                  <p className="font-display text-lg text-paper">{IMAGE_CERTS[lightboxIdx].title}</p>
-                  <p className="font-mono text-xs text-paper/40 uppercase tracking-widest">{IMAGE_CERTS[lightboxIdx].subtitle}</p>
-                  <p className="font-mono text-xs text-paper/20 mt-1">{lightboxIdx + 1} / {IMAGE_CERTS.length}</p>
+                <div className="relative w-full rounded-xl overflow-hidden border-3 border-inkBlack" style={{ aspectRatio: "3/2" }}>
+                  <Image src={IMGS[lightbox].src!} alt={IMGS[lightbox].title} fill className="object-contain" />
                 </div>
-              </div>
+                <div className="mt-3 text-center">
+                  <p className="font-sans text-base font-extrabold text-inkBlack">{IMGS[lightbox].emoji} {IMGS[lightbox].title}</p>
+                  <p className="font-mono text-xs text-inkDark/40">{IMGS[lightbox].subtitle}</p>
+                </div>
+              </motion.div>
             </motion.div>
           </>
         )}
