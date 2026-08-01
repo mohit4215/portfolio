@@ -3,159 +3,196 @@
 @tailwind utilities;
 
 /* ── Google Fonts ─────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Fredoka+One&display=swap');
 
 /* ── CSS Variables ────────────────────────────────────────────── */
 :root {
-  --font-display: 'DM Serif Display', serif;
-  --font-sans:    'Space Grotesk', sans-serif;
+  --font-display: 'Bangers', cursive;
+  --font-anime:   'Fredoka One', cursive;
+  --font-sans:    'Nunito', sans-serif;
   --font-mono:    'JetBrains Mono', monospace;
 }
 
-/* ── Base Reset ───────────────────────────────────────────────── */
+/* ── Base ─────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 2rem;
+  scroll-padding-top: 1rem;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 16px;
 }
 
 body {
-  background-color: #F3F1EA;
-  color: #18181B;
-  font-family: var(--font-sans);
+  background-color: #FFFDF5;
+  color: #1A1A2E;
+  font-family: 'Nunito', sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
-  cursor: none; /* replaced by custom cursor */
+  cursor: none;
 }
 
-/* ── Custom Scrollbar ─────────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #F3F1EA; }
-::-webkit-scrollbar-thumb { background: #18181B; border-radius: 0; }
-::-webkit-scrollbar-thumb:hover { background: #2563EB; }
+/* ── Custom scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #FFF8E7; }
+::-webkit-scrollbar-thumb { background: #1A1A2E; border-radius: 999px; border: 2px solid #FFF8E7; }
 
 /* ── Selection ────────────────────────────────────────────────── */
-::selection { background: #2563EB; color: #F3F1EA; }
+::selection { background: #FFE566; color: #1A1A2E; }
 
-/* ── Noise texture overlay ────────────────────────────────────── */
-body::before {
+/* ── Custom Cursor (anime style) ──────────────────────────────── */
+.cursor-star {
+  position: fixed;
+  top: 0; left: 0;
+  width: 20px; height: 20px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  line-height: 1;
+  transition: transform 0.1s;
+  filter: drop-shadow(0 0 4px #FFB800);
+}
+
+.cursor-trail {
+  position: fixed;
+  top: 0; left: 0;
+  width: 10px; height: 10px;
+  background: #FFE566;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  opacity: 0.6;
+  border: 2px solid #1A1A2E;
+}
+
+/* ── Manga panel borders ──────────────────────────────────────── */
+.manga-panel {
+  border: 3px solid #1A1A2E;
+  box-shadow: 5px 5px 0px #1A1A2E;
+  border-radius: 12px;
+  background: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+}
+
+.manga-panel::before {
   content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-  animation: noise 0.5s steps(2) infinite;
+  position: absolute;
+  top: 8px; left: 8px; right: -8px; bottom: -8px;
+  border: 3px solid rgba(26,26,46,0.12);
+  border-radius: 12px;
+  z-index: -1;
 }
 
-/* ── Custom Cursor ────────────────────────────────────────────── */
-.cursor-dot {
-  position: fixed;
-  top: 0; left: 0;
-  width: 8px; height: 8px;
-  background: #18181B;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 10000;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: multiply;
-  transition: background 0.2s, width 0.2s, height 0.2s;
+/* ── Speed lines background ───────────────────────────────────── */
+.speed-lines {
+  background-image: repeating-conic-gradient(
+    #1A1A2E 0deg, #1A1A2E 0.3deg,
+    transparent 0.3deg, transparent 4deg
+  );
+  background-position: center;
 }
 
-.cursor-ring {
-  position: fixed;
-  top: 0; left: 0;
-  width: 36px; height: 36px;
-  border: 2px solid #18181B;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: multiply;
-  transition: border-color 0.15s;
+/* ── Halftone dot pattern ─────────────────────────────────────── */
+.halftone {
+  background-image: radial-gradient(circle, #1A1A2E 1px, transparent 1px);
+  background-size: 12px 12px;
+  opacity: 0.06;
 }
 
-body.cursor-hover .cursor-dot {
-  width: 14px; height: 14px;
-  background: #2563EB;
-}
-body.cursor-hover .cursor-ring {
-  border-color: #2563EB;
-  width: 52px; height: 52px;
+/* ── Speech bubble ────────────────────────────────────────────── */
+.speech-bubble {
+  position: relative;
+  background: #FFFFFF;
+  border: 3px solid #1A1A2E;
+  border-radius: 16px;
+  box-shadow: 4px 4px 0px #1A1A2E;
 }
 
-/* ── Typography Utilities ─────────────────────────────────────── */
-.font-display  { font-family: var(--font-display); }
-.font-sans     { font-family: var(--font-sans); }
-.font-mono     { font-family: var(--font-mono); }
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -18px;
+  left: 28px;
+  border: 9px solid transparent;
+  border-top-color: #1A1A2E;
+}
+
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -13px;
+  left: 30px;
+  border: 7px solid transparent;
+  border-top-color: #FFFFFF;
+  z-index: 1;
+}
+
+/* ── Anime card ───────────────────────────────────────────────── */
+.anime-card {
+  border: 3px solid #1A1A2E;
+  box-shadow: 5px 5px 0px #1A1A2E;
+  border-radius: 16px;
+  background: #FFFFFF;
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.2s ease;
+}
+
+.anime-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0px #1A1A2E;
+}
+
+/* ── Shimmer text ─────────────────────────────────────────────── */
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #1A1A2E 0%, #1A1A2E 40%,
+    #FFB800 50%,
+    #1A1A2E 60%, #1A1A2E 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* ── Fire glow text ───────────────────────────────────────────── */
+.fire-text {
+  color: #FF4D2E;
+  text-shadow:
+    0 0 10px rgba(255,77,46,0.5),
+    0 0 20px rgba(255,140,0,0.3),
+    0 0 40px rgba(255,184,0,0.2);
+}
 
 /* ── Section layout ───────────────────────────────────────────── */
-.section-pad { padding-top: 7rem; padding-bottom: 7rem; }
+.section-pad { padding-top: 6rem; padding-bottom: 6rem; }
+@media (max-width: 768px) { .section-pad { padding-top: 3.5rem; padding-bottom: 3.5rem; } }
 
-@media (max-width: 768px) {
-  .section-pad { padding-top: 4rem; padding-bottom: 4rem; }
-}
-
-/* ── Structural border rule ───────────────────────────────────── */
-.rule-x { border-top: 2px solid #18181B; }
-.rule-b { border-bottom: 2px solid #18181B; }
-
-/* ── Tag / label pill ─────────────────────────────────────────── */
-.label-mono {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-/* ── Marquee pause on hover ───────────────────────────────────── */
-.marquee-track:hover .marquee-inner {
-  animation-play-state: paused;
-}
-
-/* ── Clip path reveal utility ─────────────────────────────────── */
-.clip-reveal {
-  clip-path: inset(0 100% 0 0);
-}
-.clip-reveal.revealed {
-  clip-path: inset(0 0% 0 0);
-  transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
-}
-
-/* ── Kinetic scramble text ────────────────────────────────────── */
-.scramble-char {
-  display: inline-block;
-  transition: color 0.05s;
-}
-
-/* ── Card deck stack ──────────────────────────────────────────── */
-.deck-card {
-  transform-origin: center bottom;
-  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.4s ease;
+/* ── Floating particles ───────────────────────────────────────── */
+.particle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  animation: float-slow 6s ease-in-out infinite;
 }
 
 /* ── Scroll progress bar ──────────────────────────────────────── */
 #scroll-progress {
   position: fixed;
   top: 0; left: 0;
-  height: 3px;
-  background: #2563EB;
+  height: 4px;
+  background: linear-gradient(90deg, #FF4D2E, #FFB800, #FFE566);
   z-index: 9998;
   transform-origin: left;
+  border-radius: 0 4px 4px 0;
 }
 
-/* ── Focus outlines (accessibility) ──────────────────────────── */
-:focus-visible {
-  outline: 2px solid #2563EB;
-  outline-offset: 3px;
-}
+/* ── Focus ────────────────────────────────────────────────────── */
+:focus-visible { outline: 3px solid #FFB800; outline-offset: 3px; }
 
 /* ── Reduce motion ────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {

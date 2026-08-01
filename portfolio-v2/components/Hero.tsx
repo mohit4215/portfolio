@@ -1,83 +1,33 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ArrowDownRight, Zap, MapPin, GraduationCap } from "lucide-react";
-import { useMagneticPull } from "@/hooks/useMagneticPull";
+import { motion } from "framer-motion";
 
-/* ── Text scramble ──────────────────────────────────────────────── */
-const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&";
+const ROLES = ["Strategy Consulting", "Financial Modeling", "M&A Blueprints", "AI & ML", "Entrepreneurship"];
 
-function useScramble(target: string, delay = 0) {
-  const [text, setText] = useState(() =>
-    target.replace(/\S/g, () => CHARS[Math.floor(Math.random() * CHARS.length)])
-  );
+const FLOATING_ELEMENTS = [
+  { emoji: "⚔️",  top: "12%", left: "8%",  delay: 0,    duration: 4   },
+  { emoji: "🔥",  top: "20%", right: "6%", delay: 0.5,  duration: 3.5 },
+  { emoji: "💎",  top: "70%", left: "5%",  delay: 1,    duration: 5   },
+  { emoji: "🌟",  top: "60%", right: "8%", delay: 0.8,  duration: 4.5 },
+  { emoji: "📊",  top: "80%", left: "12%", delay: 1.5,  duration: 3.8 },
+  { emoji: "🎯",  top: "15%", left: "85%", delay: 0.3,  duration: 4.2 },
+  { emoji: "🏆",  top: "75%", right: "5%", delay: 1.2,  duration: 4   },
+  { emoji: "✨",  top: "45%", left: "3%",  delay: 0.6,  duration: 3.2 },
+];
 
-  useEffect(() => {
-    let rafId = 0;
-    let frameCount = 0;
-    let resolved = 0;
-    let timeoutId: ReturnType<typeof setTimeout>;
-
-    const step = () => {
-      frameCount++;
-
-      // Scramble all unresolved characters every frame
-      setText((prev) => {
-        const arr = prev.split("");
-        for (let i = resolved; i < target.length; i++) {
-          arr[i] = target[i] === " " ? " " : CHARS[Math.floor(Math.random() * CHARS.length)];
-        }
-        return arr.join("");
-      });
-
-      // Resolve one character every 3 frames
-      if (frameCount % 3 === 0 && resolved < target.length) {
-        const idx = resolved;
-        setText((prev) => {
-          const arr = prev.split("");
-          arr[idx] = target[idx];
-          return arr.join("");
-        });
-        resolved++;
-      }
-
-      if (resolved < target.length) {
-        rafId = requestAnimationFrame(step);
-      } else {
-        setText(target);
-      }
-    };
-
-    timeoutId = setTimeout(() => {
-      rafId = requestAnimationFrame(step);
-    }, delay);
-
-    return () => {
-      clearTimeout(timeoutId);
-      cancelAnimationFrame(rafId);
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [target]);
-
-  return text;
-}
-
-/* ── Animated counter ──────────────────────────────────────────── */
-function Counter({ to, decimals = 0, duration = 1600 }: { to: number; decimals?: number; duration?: number }) {
+function Counter({ to, decimals = 0 }: { to: number; decimals?: number }) {
   const [val, setVal] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
+  const ref     = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
-
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !started.current) {
+    const el = ref.current; if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !started.current) {
         started.current = true;
-        const start = performance.now();
+        const t0 = performance.now();
         const tick = (now: number) => {
-          const p = Math.min((now - start) / duration, 1);
+          const p = Math.min((now - t0) / 1400, 1);
           const ease = 1 - Math.pow(1 - p, 3);
           setVal(parseFloat((ease * to).toFixed(decimals)));
           if (p < 1) requestAnimationFrame(tick);
@@ -87,235 +37,229 @@ function Counter({ to, decimals = 0, duration = 1600 }: { to: number; decimals?:
     }, { threshold: 0.5 });
     obs.observe(el);
     return () => obs.disconnect();
-  }, [to, decimals, duration]);
-
+  }, [to, decimals]);
   return <span ref={ref}>{val.toFixed(decimals)}</span>;
 }
 
-/* ── Quick-action toggle ────────────────────────────────────────── */
-const ROLES = ["Strategy Consulting", "Financial Modeling", "M&A Blueprints", "AI & ML", "Entrepreneurship"];
-
 export default function Hero() {
-  const { magneticRef: btnRef1, x: bx1, y: by1 } = useMagneticPull();
-  const { magneticRef: btnRef2, x: bx2, y: by2 } = useMagneticPull();
-
   const [roleIdx, setRoleIdx] = useState(0);
-  const line1 = useScramble("MOHIT", 200);
-  const line2 = useScramble("AGARWAL", 600);
-
-  // Cycle roles
   useEffect(() => {
-    const id = setInterval(() => setRoleIdx((i) => (i + 1) % ROLES.length), 2800);
+    const id = setInterval(() => setRoleIdx(i => (i + 1) % ROLES.length), 2600);
     return () => clearInterval(id);
   }, []);
-
-  // Parallax on mouse move for large headline
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const rx = useSpring(useTransform(mx, [-1, 1], [-8, 8]), { stiffness: 80, damping: 20 });
-  const ry = useSpring(useTransform(my, [-1, 1], [-5, 5]), { stiffness: 80, damping: 20 });
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const { clientX, clientY, currentTarget } = e;
-    const { left, top, width, height } = currentTarget.getBoundingClientRect();
-    mx.set(((clientX - left) / width - 0.5) * 2);
-    my.set(((clientY - top) / height - 0.5) * 2);
-  };
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-paper border-b-2 border-charcoal"
-      onMouseMove={handleMouseMove}
+      className="relative min-h-screen flex flex-col justify-center overflow-hidden"
+      style={{ background: "linear-gradient(135deg, #FFFDF5 0%, #FFF8E7 40%, #FFF3D4 70%, #FFEDD0 100%)" }}
     >
-      {/* ── Background grid ───────────────────────────────────── */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.035]"
-        style={{
-          backgroundImage:
-            "linear-gradient(#18181B 1px,transparent 1px),linear-gradient(90deg,#18181B 1px,transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
+      {/* ── Halftone bg ── */}
+      <div className="absolute inset-0 halftone pointer-events-none" />
 
-      {/* ── Orange accent block ───────────────────────────────── */}
-      <div className="absolute top-0 right-0 w-[38vw] h-[38vw] max-w-[520px] max-h-[520px] bg-orange opacity-[0.08] rounded-bl-[60%] pointer-events-none" />
+      {/* ── Decorative circles ── */}
+      <div className="absolute top-20 right-0 w-96 h-96 rounded-full opacity-20 pointer-events-none"
+        style={{ background: "radial-gradient(circle, #FFE566, transparent 70%)" }} />
+      <div className="absolute bottom-20 left-0 w-64 h-64 rounded-full opacity-15 pointer-events-none"
+        style={{ background: "radial-gradient(circle, #FFD6E0, transparent 70%)" }} />
 
-      {/* ── Content ───────────────────────────────────────────── */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 pt-24 pb-32">
-
-        {/* Status badge */}
+      {/* ── Floating emojis ── */}
+      {FLOATING_ELEMENTS.map((el, i) => (
         <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.5 }}
-          className="inline-flex items-center gap-2 border-2 border-charcoal bg-paper px-4 py-1.5 mb-10 shadow-brutal"
+          key={i}
+          className="absolute text-3xl select-none pointer-events-none hidden md:block"
+          style={{ top: el.top, left: (el as { left?: string }).left, right: (el as { right?: string }).right }}
+          animate={{ y: [-8, 8, -8], rotate: [-5, 5, -5] }}
+          transition={{ duration: el.duration, delay: el.delay, repeat: Infinity, ease: "easeInOut" }}
         >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-orange" />
-          </span>
-          <span className="font-mono text-xs uppercase tracking-[0.18em] text-charcoal">
-            Open to Opportunities
-          </span>
-          <span className="font-mono text-xs text-muted ml-1">— 2026</span>
+          {el.emoji}
         </motion.div>
+      ))}
 
-        {/* Giant kinetic headline */}
-        <div className="overflow-hidden">
-          <motion.h1
-            className="font-display leading-none select-none"
-            style={{ rotateX: ry, rotateY: rx, perspective: 800 }}
-          >
-            {/* Line 1 */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-12 pt-28 pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+          {/* ── Left: text ── */}
+          <div>
+            {/* Status badge */}
             <motion.div
-              className="block text-[clamp(4.5rem,12vw,11rem)] tracking-[-0.04em] text-charcoal"
-              initial={{ y: "110%" }}
-              animate={{ y: 0 }}
-              transition={{ delay: 0.15, duration: 0.7, ease: [0.77, 0, 0.175, 1] }}
+              initial={{ opacity: 0, y: -20, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ delay: 0.1, type: "spring", stiffness: 400, damping: 20 }}
+              className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border-3 border-inkBlack bg-mint"
+              style={{ boxShadow: "3px 3px 0px #1A1A2E" }}
             >
-              {line1.split("").map((ch, i) => (
-                <span
-                  key={i}
-                  className="inline-block"
-                  style={{ color: ch === line1[i] ? "#18181B" : "#2563EB" }}
-                >
-                  {ch === " " ? "\u00A0" : ch}
-                </span>
-              ))}
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+              </span>
+              <span className="font-sans text-xs font-bold text-inkBlack uppercase tracking-wider">
+                Open to Opportunities ✨
+              </span>
             </motion.div>
 
-            {/* Line 2 — orange accent on last char */}
-            <motion.div
-              className="block text-[clamp(4.5rem,12vw,11rem)] tracking-[-0.04em] -mt-2 md:-mt-4"
-              initial={{ y: "110%" }}
-              animate={{ y: 0 }}
-              transition={{ delay: 0.35, duration: 0.7, ease: [0.77, 0, 0.175, 1] }}
-            >
-              {line2.split("").map((ch, i) => (
-                <span
-                  key={i}
-                  className="inline-block"
-                  style={{
-                    color:
-                      i === line2.length - 1
-                        ? "#FF4800"
-                        : ch === line2[i]
-                        ? "#18181B"
-                        : "#2563EB",
-                  }}
-                >
-                  {ch === " " ? "\u00A0" : ch}
-                </span>
-              ))}
-            </motion.div>
-          </motion.h1>
-        </div>
-
-        {/* Sub-line + role ticker */}
-        <motion.div
-          className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-8 mb-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.9, duration: 0.6 }}
-        >
-          <div className="flex items-center gap-2 text-charcoal font-sans text-base md:text-lg font-medium">
-            <GraduationCap size={18} className="text-cobalt shrink-0" />
-            <span>B.Tech IT · AKGEC / AKTU</span>
-          </div>
-          <div className="w-px h-5 bg-charcoal hidden sm:block" />
-          <div className="flex items-center gap-2">
-            <MapPin size={16} className="text-orange shrink-0" />
-            <span className="font-sans text-sm text-muted">Ghaziabad, IN</span>
-          </div>
-          <div className="w-px h-5 bg-charcoal hidden sm:block" />
-          {/* Role ticker */}
-          <div className="border-2 border-charcoal bg-cobalt px-3 py-1 overflow-hidden h-8 flex items-center">
-            <motion.div
-              key={roleIdx}
-              initial={{ y: 24, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -24, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 400, damping: 24 }}
-              className="font-mono text-xs uppercase tracking-widest text-paper whitespace-nowrap"
-            >
-              {ROLES[roleIdx]}
-            </motion.div>
-          </div>
-        </motion.div>
-
-        {/* Stats row */}
-        <motion.div
-          className="flex flex-wrap gap-0 mb-14"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.1, duration: 0.55 }}
-        >
-          {[
-            { label: "1st Year CGPA (AKTU)", value: 8.48, dec: 2, suffix: "" },
-            { label: "Class 10th ICSE",      value: 95,   dec: 0, suffix: "%" },
-            { label: "Competitions Entered", value: 10,   dec: 0, suffix: "+" },
-          ].map((s, i) => (
-            <div
-              key={i}
-              className="border-2 border-charcoal px-6 py-4 -ml-[2px] first:ml-0 bg-paper hover:bg-charcoal hover:text-paper transition-colors duration-200 group"
-            >
-              <div className="font-display text-3xl md:text-4xl text-charcoal group-hover:text-paper leading-none">
-                <Counter to={s.value} decimals={s.dec} />
-                <span>{s.suffix}</span>
-              </div>
-              <div className="font-mono text-[0.65rem] uppercase tracking-widest text-muted group-hover:text-faint mt-1">
-                {s.label}
-              </div>
+            {/* Name */}
+            <div className="overflow-hidden mb-2">
+              <motion.h1
+                className="font-display text-[clamp(3.5rem,9vw,7rem)] leading-none text-inkBlack"
+                style={{ fontFamily: "Bangers, cursive", letterSpacing: "0.06em" }}
+                initial={{ y: "110%" }}
+                animate={{ y: 0 }}
+                transition={{ delay: 0.25, duration: 0.7, ease: [0.77, 0, 0.175, 1] }}
+              >
+                MOHIT
+              </motion.h1>
             </div>
-          ))}
-        </motion.div>
+            <div className="overflow-hidden mb-4">
+              <motion.h1
+                className="font-display text-[clamp(3.5rem,9vw,7rem)] leading-none"
+                style={{ fontFamily: "Bangers, cursive", letterSpacing: "0.06em",
+                  WebkitTextStroke: "3px #1A1A2E",
+                  color: "transparent",
+                  textShadow: "4px 4px 0px #FFB800",
+                }}
+                initial={{ y: "110%" }}
+                animate={{ y: 0 }}
+                transition={{ delay: 0.4, duration: 0.7, ease: [0.77, 0, 0.175, 1] }}
+              >
+                AGARWAL
+              </motion.h1>
+            </div>
 
-        {/* CTA buttons */}
-        <motion.div
-          className="flex flex-wrap gap-4"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.3, duration: 0.5 }}
-        >
-          <motion.a
-            ref={btnRef1 as React.RefObject<HTMLAnchorElement>}
-            href="#case-studies"
-            style={{ x: bx1, y: by1 }}
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
-            onClick={(e) => { e.preventDefault(); document.querySelector("#case-studies")?.scrollIntoView({ behavior: "smooth" }); }}
-            className="inline-flex items-center gap-2 bg-charcoal text-paper font-mono text-xs uppercase tracking-widest px-7 py-4 border-2 border-charcoal shadow-brutal hover:bg-cobalt hover:border-cobalt transition-colors duration-150"
-          >
-            View Case Studies
-            <ArrowDownRight size={16} />
-          </motion.a>
+            {/* Subtitle + role ticker */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.7, duration: 0.5 }}
+              className="flex flex-wrap items-center gap-3 mb-6"
+            >
+              <div
+                className="px-3 py-1.5 rounded-xl border-3 border-inkBlack bg-sky"
+                style={{ boxShadow: "3px 3px 0px #1A1A2E" }}
+              >
+                <span className="font-sans text-sm font-bold text-inkBlack">🎓 B.Tech IT · AKGEC</span>
+              </div>
+              <div
+                className="px-3 py-1.5 rounded-xl border-3 border-inkBlack bg-sakura"
+                style={{ boxShadow: "3px 3px 0px #1A1A2E" }}
+              >
+                <span className="font-sans text-sm font-bold text-inkBlack">📍 Ghaziabad, IN</span>
+              </div>
+              <div
+                className="px-3 py-1.5 rounded-xl border-3 border-inkBlack bg-sunYellow overflow-hidden"
+                style={{ boxShadow: "3px 3px 0px #1A1A2E" }}
+              >
+                <motion.span
+                  key={roleIdx}
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  className="font-sans text-sm font-bold text-inkBlack block"
+                >
+                  ⚡ {ROLES[roleIdx]}
+                </motion.span>
+              </div>
+            </motion.div>
 
-          <motion.a
-            ref={btnRef2 as React.RefObject<HTMLAnchorElement>}
-            href="#contact"
-            style={{ x: bx2, y: by2 }}
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
-            onClick={(e) => { e.preventDefault(); document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" }); }}
-            className="inline-flex items-center gap-2 bg-paper text-charcoal font-mono text-xs uppercase tracking-widest px-7 py-4 border-2 border-charcoal shadow-brutal hover:bg-orange hover:text-paper hover:border-orange transition-colors duration-150"
-          >
-            <Zap size={15} />
-            Get In Touch
-          </motion.a>
-        </motion.div>
+            {/* Tagline speech bubble */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.9, type: "spring", stiffness: 300, damping: 20 }}
+              className="speech-bubble px-5 py-4 mb-8 max-w-sm"
+            >
+              <p className="font-sans text-sm font-semibold text-inkDark leading-relaxed">
+                Always eager to learn. Loves the blend of <strong>business</strong> &amp; <strong>tech</strong>.
+                A future <span className="text-fireRed font-extrabold">entrepreneur</span> 🚀
+              </p>
+            </motion.div>
 
-        {/* Age tag — editorial floating label */}
-        <motion.div
-          className="absolute bottom-8 right-8 md:right-12 hidden md:block"
-          initial={{ opacity: 0, rotate: -6 }}
-          animate={{ opacity: 1, rotate: -6 }}
-          transition={{ delay: 1.6, duration: 0.4 }}
-        >
-          <div className="border-2 border-charcoal bg-orange text-paper font-mono text-xs uppercase tracking-widest px-4 py-2 shadow-brutal-orange">
-            Age 18 ·&nbsp;Entrepreneur
+            {/* CTA buttons */}
+            <motion.div
+              className="flex flex-wrap gap-3"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.1, duration: 0.5 }}
+            >
+              <motion.a
+                href="#case-studies"
+                onClick={e => { e.preventDefault(); document.querySelector("#case-studies")?.scrollIntoView({ behavior: "smooth" }); }}
+                whileHover={{ scale: 1.06, y: -3 }}
+                whileTap={{ scale: 0.94 }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl border-3 border-inkBlack bg-inkBlack text-cream font-sans font-bold text-sm"
+                style={{ boxShadow: "5px 5px 0px #FF4D2E", fontFamily: "Nunito, sans-serif" }}
+              >
+                📊 View Case Studies
+              </motion.a>
+              <motion.a
+                href="#contact"
+                onClick={e => { e.preventDefault(); document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" }); }}
+                whileHover={{ scale: 1.06, y: -3 }}
+                whileTap={{ scale: 0.94 }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl border-3 border-inkBlack bg-sunYellow text-inkBlack font-sans font-bold text-sm"
+                style={{ boxShadow: "5px 5px 0px #1A1A2E", fontFamily: "Nunito, sans-serif" }}
+              >
+                💌 Get In Touch
+              </motion.a>
+            </motion.div>
           </div>
-        </motion.div>
+
+          {/* ── Right: Stats card stack ── */}
+          <motion.div
+            className="flex flex-col gap-4"
+            initial={{ opacity: 0, x: 60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.6, duration: 0.7, ease: [0.34, 1.2, 0.64, 1] }}
+          >
+            {/* Age badge floating */}
+            <motion.div
+              className="self-end mb-2"
+              animate={{ rotate: [-3, 3, -3], y: [-4, 4, -4] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <div
+                className="px-4 py-2 rounded-2xl border-3 border-inkBlack bg-lavender text-inkBlack font-display text-lg"
+                style={{ fontFamily: "Bangers, cursive", letterSpacing: "0.1em", boxShadow: "4px 4px 0px #1A1A2E" }}
+              >
+                AGE 18 ⚡ ENTREPRENEUR
+              </div>
+            </motion.div>
+
+            {/* Stats cards */}
+            {[
+              { label: "1st Year CGPA (AKTU)", value: 8.48, dec: 2, suffix: "", color: "bg-sky",     emoji: "🎓" },
+              { label: "Class 10th ICSE",       value: 95,   dec: 0, suffix: "%", color: "bg-mint",    emoji: "⭐" },
+              { label: "Competitions Entered",  value: 10,   dec: 0, suffix: "+", color: "bg-sakura",  emoji: "🏆" },
+            ].map((s, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ scale: 1.04, rotate: i % 2 === 0 ? 1 : -1 }}
+                className={`flex items-center justify-between px-5 py-4 rounded-2xl border-3 border-inkBlack ${s.color}`}
+                style={{ boxShadow: "5px 5px 0px #1A1A2E" }}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{s.emoji}</span>
+                  <span className="font-sans text-sm font-bold text-inkDark">{s.label}</span>
+                </div>
+                <span
+                  className="font-display text-3xl text-inkBlack"
+                  style={{ fontFamily: "Bangers, cursive", letterSpacing: "0.05em" }}
+                >
+                  <Counter to={s.value} decimals={s.dec} />{s.suffix}
+                </span>
+              </motion.div>
+            ))}
+
+            {/* Chibi dragon doodle */}
+            <motion.div
+              className="self-center text-5xl"
+              animate={{ y: [-6, 6, -6], rotate: [-5, 5, -5] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              🐲
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
