@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Google Fonts ─────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* ── CSS Variables ────────────────────────────────────────────── */
+:root {
+  --font-display: 'DM Serif Display', serif;
+  --font-sans:    'Space Grotesk', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+}
+
+/* ── Base Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+}
+
+body {
+  background-color: #F3F1EA;
+  color: #18181B;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: none; /* replaced by custom cursor */
+}
+
+/* ── Custom Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #F3F1EA; }
+::-webkit-scrollbar-thumb { background: #18181B; border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: #2563EB; }
+
+/* ── Selection ────────────────────────────────────────────────── */
+::selection { background: #2563EB; color: #F3F1EA; }
+
+/* ── Noise texture overlay ────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  animation: noise 0.5s steps(2) infinite;
+}
+
+/* ── Custom Cursor ────────────────────────────────────────────── */
+.cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 8px; height: 8px;
+  background: #18181B;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: multiply;
+  transition: background 0.2s, width 0.2s, height 0.2s;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 36px; height: 36px;
+  border: 2px solid #18181B;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: multiply;
+  transition: border-color 0.15s;
+}
+
+body.cursor-hover .cursor-dot {
+  width: 14px; height: 14px;
+  background: #2563EB;
+}
+body.cursor-hover .cursor-ring {
+  border-color: #2563EB;
+  width: 52px; height: 52px;
+}
+
+/* ── Typography Utilities ─────────────────────────────────────── */
+.font-display  { font-family: var(--font-display); }
+.font-sans     { font-family: var(--font-sans); }
+.font-mono     { font-family: var(--font-mono); }
+
+/* ── Section layout ───────────────────────────────────────────── */
+.section-pad { padding-top: 7rem; padding-bottom: 7rem; }
+
+@media (max-width: 768px) {
+  .section-pad { padding-top: 4rem; padding-bottom: 4rem; }
+}
+
+/* ── Structural border rule ───────────────────────────────────── */
+.rule-x { border-top: 2px solid #18181B; }
+.rule-b { border-bottom: 2px solid #18181B; }
+
+/* ── Tag / label pill ─────────────────────────────────────────── */
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ── Marquee pause on hover ───────────────────────────────────── */
+.marquee-track:hover .marquee-inner {
+  animation-play-state: paused;
+}
+
+/* ── Clip path reveal utility ─────────────────────────────────── */
+.clip-reveal {
+  clip-path: inset(0 100% 0 0);
+}
+.clip-reveal.revealed {
+  clip-path: inset(0 0% 0 0);
+  transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* ── Kinetic scramble text ────────────────────────────────────── */
+.scramble-char {
+  display: inline-block;
+  transition: color 0.05s;
+}
+
+/* ── Card deck stack ──────────────────────────────────────────── */
+.deck-card {
+  transform-origin: center bottom;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.4s ease;
+}
+
+/* ── Scroll progress bar ──────────────────────────────────────── */
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: #2563EB;
+  z-index: 9998;
+  transform-origin: left;
+}
+
+/* ── Focus outlines (accessibility) ──────────────────────────── */
+:focus-visible {
+  outline: 2px solid #2563EB;
+  outline-offset: 3px;
+}
+
+/* ── Reduce motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
