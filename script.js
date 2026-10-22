@@ -1,6 +1,6 @@
 /**
  * MOHIT AGARWAL — CINEMATIC MONOCHROME PORTFOLIO
- * High-Performance GSAP & Canvas Text-Morphing Sequence with Three.js 3D Particle Portrait
+ * High-Performance GSAP & Canvas Text-Morphing Sequence with Three.js 3D Particle Silhouette
  */
 
 (function () {
@@ -8,7 +8,7 @@
 
     /* ==========================================================================
        1. SYNTHETIC AUDIO ENGINE (Web Audio API)
-       Pure programmatic sound synthesis: no external files or latency
+       Pure programmatic sound synthesis: no external assets or latency
        ========================================================================== */
     class AudioEngine {
         constructor() {
@@ -32,7 +32,7 @@
             return this.enabled;
         }
 
-        // Phase 1: Dead-center white dot pop
+        // Phase 1: Center dot pop
         playDotPop() {
             if (!this.enabled || !this.ctx) return;
             const now = this.ctx.currentTime;
@@ -131,7 +131,7 @@
 
     /* ==========================================================================
        2. THREE.JS INTERACTIVE 3D PARTICLE SILHOUETTE
-       Organically forms the silhouette of a person looking forward directly behind "PORTFOLIO"
+       Organically forms the silhouette of a person looking forward behind "PORTFOLIO"
        ========================================================================== */
     class ParticlePortrait {
         constructor(canvasId) {
@@ -241,24 +241,23 @@
             };
 
             // 1. Head & Facial Silhouette (Looking directly forward)
-            // Head center is y ~ 0.9. Chin at y ~ 0.1, crown at y ~ 2.0
             for (let i = 0; i < 14000; i++) {
-                const u = (Math.random() - 0.5) * Math.PI * 1.8; // Azimuth around face
-                const y = Math.random() * 2.0; // Vertical span
+                const u = (Math.random() - 0.5) * Math.PI * 1.8;
+                const y = Math.random() * 2.0;
 
                 let radX = 0.82;
                 let radZ = 0.95;
                 let zOffset = 0;
                 let brightness = 0.85;
 
-                // Nose Bridge & Tip (y: 0.45 to 0.88, projecting forward)
+                // Nose Bridge & Tip (y: 0.45 to 0.88)
                 if (y > 0.45 && y < 0.88 && Math.abs(u) < 0.28) {
                     const noseProgress = 1 - Math.abs(y - 0.62) / 0.26;
                     zOffset += 0.38 * Math.pow(Math.max(0, noseProgress), 1.4);
                     brightness = 1.0;
                 }
 
-                // Eye Sockets (y: 0.82 to 0.96, u: +/- 0.38)
+                // Eye Sockets (y: 0.82 to 0.96)
                 const eyeL = Math.hypot(u - 0.38, y - 0.88);
                 const eyeR = Math.hypot(u + 0.38, y - 0.88);
                 if (eyeL < 0.22 || eyeR < 0.22) {
@@ -272,25 +271,25 @@
                     brightness = 1.0;
                 }
 
-                // Cheekbones (y: 0.55 to 0.75, u: +/- 0.55)
+                // Cheekbones (y: 0.55 to 0.75)
                 if (y > 0.55 && y < 0.75 && (Math.abs(u - 0.55) < 0.22 || Math.abs(u + 0.55) < 0.22)) {
                     zOffset += 0.15;
                     brightness = 0.95;
                 }
 
-                // Lips (y: 0.22 to 0.38, u: +/- 0.3)
+                // Lips (y: 0.22 to 0.38)
                 if (y > 0.22 && y < 0.38 && Math.abs(u) < 0.3) {
                     zOffset += 0.15;
                     brightness = 0.92;
                 }
 
-                // Chin (y: 0.0 to 0.18, u: +/- 0.25)
+                // Chin (y: 0.0 to 0.18)
                 if (y >= 0.0 && y < 0.18 && Math.abs(u) < 0.25) {
                     zOffset += 0.22;
                     brightness = 0.95;
                 }
 
-                // Modern Hair/Crown volume (y: 1.2 to 2.15)
+                // Hair / Crown Volume
                 if (y > 1.2) {
                     radX += (y - 1.2) * 0.16;
                     radZ += (y - 1.2) * 0.14;
@@ -320,10 +319,10 @@
                 addPoint(x, y + 0.05, z, brightness, brightness, brightness);
             }
 
-            // 3. Trapezius & Broad Shoulders (y: -0.8 to -2.4, x: +/- 2.6)
+            // 3. Trapezius & Broad Shoulders (y: -0.8 to -2.4)
             for (let i = 0; i < 8500; i++) {
                 const side = Math.random() > 0.5 ? 1 : -1;
-                const progress = Math.random(); // 0 (neck) to 1 (deltoid)
+                const progress = Math.random();
 
                 const x = side * (0.45 + progress * 2.2);
                 const y = -0.8 - progress * 1.15 - Math.random() * 0.75;
@@ -362,7 +361,6 @@
             });
 
             this.pointsMesh = new THREE.Points(this.geometry, material);
-            // Center the bust vertically directly behind the word "PORTFOLIO"
             this.pointsMesh.position.set(0, -0.22, 0);
             this.scene.add(this.pointsMesh);
         }
@@ -395,26 +393,6 @@
             this.mouseRayPos.set(this.mouseX * 2.8, this.mouseY * 2.0, 0.5);
         }
 
-        triggerRepulsionBurst() {
-            if (!this.positions) return;
-            for (let i = 0; i < this.positions.length; i += 3) {
-                this.velocities[i] += (Math.random() - 0.5) * 1.6;
-                this.velocities[i + 1] += (Math.random() - 0.5) * 1.6;
-                this.velocities[i + 2] += (Math.random() - 0.5) * 1.6;
-            }
-        }
-
-        resetMesh() {
-            if (!this.positions) return;
-            for (let i = 0; i < this.positions.length; i++) {
-                this.positions[i] = this.initialPositions[i];
-                this.velocities[i] = 0;
-            }
-            if (this.geometry) {
-                this.geometry.attributes.position.needsUpdate = true;
-            }
-        }
-
         updatePhysics() {
             if (!this.positions || !this.initialPositions) return;
 
@@ -427,7 +405,6 @@
             const my = this.mouseRayPos.y;
             const mz = this.mouseRayPos.z;
 
-            // Optimized physics update loop
             for (let i = 0; i < this.positions.length; i += 3) {
                 const px = this.positions[i];
                 const py = this.positions[i + 1];
@@ -471,7 +448,7 @@
             const elapsed = this.clock.getElapsedTime();
 
             if (this.pointsMesh) {
-                // Parallax rotation smoothly tracking cursor
+                // Parallax rotation tracking cursor
                 this.pointsMesh.rotation.y += (this.targetRotY - this.pointsMesh.rotation.y) * 0.06;
                 this.pointsMesh.rotation.x += (this.targetRotX - this.pointsMesh.rotation.x) * 0.06;
 
@@ -479,7 +456,7 @@
                 const breathe = Math.sin(elapsed * 1.4) * 0.035;
                 this.pointsMesh.position.y = -0.22 + breathe;
 
-                // Interactive physics
+                // Physics update
                 this.updatePhysics();
             }
 
@@ -489,12 +466,11 @@
 
     /* ==========================================================================
        3. GSAP & CANVAS TEXT-MORPHING ENGINE
-       Exact Loading Sequence:
-       Phase 1: Pure black screen, dead-center solid white dot appears & pulses.
-       Phase 2: Dot rapidly expands horizontally into "MOHIT AGARWAL" in massive bold sans-serif font.
-       Phase 3 (The Morph): "MOHIT AGARWAL" immediately triggers 1.5s rapid scramble & glitch cycling.
-       Phase 4 (The Settle): Letters lock into place, settling permanently on "PORTFOLIO".
-       Final Hero Layout: Background portrait, subtitle, and top header fade in.
+       Phase 1: Center solid white dot in pure black screen
+       Phase 2: Dot rapidly expands and transforms into "MOHIT AGARWAL"
+       Phase 3: 1.5s rapid scramble/glitch cycling
+       Phase 4: Settle permanently on "PORTFOLIO"
+       Final Hero: Background portrait, subtitle, and top header fade in
        ========================================================================== */
     const CYPHER_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_#$[]/*{}~&@!%|<>+=-?^';
 
@@ -507,24 +483,20 @@
             this.height = window.innerHeight;
             this.dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-            // Morph Animation State (Orchestrated by GSAP)
             this.state = {
-                phase: 1,              // 1: Center Dot, 2: "MOHIT AGARWAL", 3: Morph Scramble, 4: Settle "PORTFOLIO"
-                dotScale: 0,           // 0 to 1
-                dotScaleX: 1,          // Expansion factor
+                phase: 1,
+                dotScale: 0,
+                dotScaleX: 1,
                 dotScaleY: 1,
                 dotOpacity: 0,
-                textOpacity: 0,        // Text visibility
+                textOpacity: 0,
                 textScale: 0.85,
-                scrambleProgress: 0,   // 0 to 1 during Phase 3
-                currentChars: [],      // Rendered characters
-                settleGlow: 0,         // Post-settle impact flash
-                glitchSlice: 0         // Horizontal slice displacement
+                scrambleProgress: 0,
+                settleGlow: 0,
+                glitchSlice: 0
             };
 
             this.masterTL = null;
-            this.portraitInstance = null;
-
             this.initCanvas();
             window.addEventListener('resize', this.onResize.bind(this));
             this.renderLoop();
@@ -543,22 +515,19 @@
         }
 
         getFontSize() {
-            // Massive, bold sans-serif font: clamp(3rem, 11vw, 11.5rem)
             const vw = this.width * 0.11;
             const minSize = 48;
             const maxSize = 184;
             return Math.max(minSize, Math.min(vw, maxSize));
         }
 
-        startSequence(portraitInstance) {
-            this.portraitInstance = portraitInstance;
+        startSequence() {
             if (this.masterTL) this.masterTL.kill();
 
             sound.init();
             window.scrollTo({ top: 0, behavior: 'instant' });
             document.body.classList.add('is-loading');
 
-            // Reset UI Elements
             const subtitle = document.getElementById('hero-subtitle');
             const header = document.getElementById('site-header');
             const meta = document.getElementById('hero-meta');
@@ -572,7 +541,6 @@
             gsap.set(portraitCanvas, { opacity: 0 });
             gsap.set(controlDock, { opacity: 0 });
 
-            // Reset Canvas State
             this.state.phase = 1;
             this.state.dotScale = 0;
             this.state.dotScaleX = 1;
@@ -581,7 +549,6 @@
             this.state.textOpacity = 0;
             this.state.textScale = 0.85;
             this.state.scrambleProgress = 0;
-            this.state.currentChars = 'MOHIT AGARWAL'.split('');
             this.state.settleGlow = 0;
             this.state.glitchSlice = 0;
 
@@ -591,10 +558,7 @@
                 }
             });
 
-            // ==========================================================
-            // PHASE 1: Screen completely black.
-            // A single, solid white dot appears in the exact dead center.
-            // ==========================================================
+            // PHASE 1: Screen completely black, solid white dot in exact center
             this.masterTL.add(() => {
                 sound.playDotPop();
             }, 0.35);
@@ -606,7 +570,7 @@
                 ease: 'back.out(2.5)'
             }, 0.35);
 
-            // Dot pulses once in dead center
+            // Dot pulse
             this.masterTL.to(this.state, {
                 dotScale: 1.4,
                 duration: 0.35,
@@ -615,15 +579,11 @@
                 repeat: 1
             }, 0.85);
 
-            // ==========================================================
-            // PHASE 2: Dot rapidly expands and transforms into
-            // "MOHIT AGARWAL" in a massive, bold, sans-serif white font.
-            // ==========================================================
+            // PHASE 2: Dot rapidly expands horizontally into "MOHIT AGARWAL"
             this.masterTL.add(() => {
                 sound.playWhoosh();
             }, 1.45);
 
-            // Rapid horizontal expansion across center line
             this.masterTL.to(this.state, {
                 dotScaleX: 65,
                 dotScaleY: 0.15,
@@ -631,10 +591,8 @@
                 ease: 'power4.in'
             }, 1.45);
 
-            // Transforms into "MOHIT AGARWAL"
             this.masterTL.add(() => {
                 this.state.phase = 2;
-                this.state.currentChars = 'MOHIT AGARWAL'.split('');
             }, 1.65);
 
             this.masterTL.to(this.state, {
@@ -645,30 +603,20 @@
                 ease: 'power3.out'
             }, 1.65);
 
-            // Holds crisp on "MOHIT AGARWAL" for ~0.35s
-            // ==========================================================
-            // PHASE 3 (THE MORPH): Immediately triggers rapid scramble/glitch.
-            // Individual letters dynamically cycle and flip through random
-            // characters for about 1.5 seconds.
-            // ==========================================================
+            // PHASE 3 (THE MORPH): Immediately triggers 1.5s rapid scramble/glitch
             this.masterTL.add(() => {
                 this.state.phase = 3;
             }, 2.0);
 
-            // Exactly 1.5 seconds of high-speed cypher scramble (2.0s to 3.5s)
             this.masterTL.to(this.state, {
                 scrambleProgress: 1.0,
                 duration: 1.5,
                 ease: 'linear'
             }, 2.0);
 
-            // ==========================================================
-            // PHASE 4 (THE SETTLE): Scrambled letters lock into place,
-            // settling permanently on "PORTFOLIO" in massive bold white font.
-            // ==========================================================
+            // PHASE 4 (THE SETTLE): Scrambled letters lock onto "PORTFOLIO"
             this.masterTL.add(() => {
                 this.state.phase = 4;
-                this.state.currentChars = 'PORTFOLIO'.split('');
                 this.state.settleGlow = 1.0;
                 sound.playLockImpact();
             }, 3.5);
@@ -679,12 +627,7 @@
                 ease: 'power2.out'
             }, 3.5);
 
-            // ==========================================================
-            // THE FINAL HERO LAYOUT (Fades in after Phase 4):
-            // 1. Background Particle Portrait fades in behind "PORTFOLIO"
-            // 2. Subtitle fades in directly below "PORTFOLIO"
-            // 3. Minimalist Header fades in at top
-            // ==========================================================
+            // THE FINAL HERO LAYOUT (Fades in after Phase 4)
             this.masterTL.to(portraitCanvas, {
                 opacity: 1,
                 duration: 1.4,
@@ -728,15 +671,12 @@
             const w = this.width;
             const h = this.height;
 
-            // Clear Canvas
             ctx.clearRect(0, 0, w, h);
 
             const centerX = w / 2;
             const centerY = h / 2;
 
-            // ----------------------------------------------------
-            // DRAW PHASE 1 & 2: Center White Dot & Expansion
-            // ----------------------------------------------------
+            // DRAW PHASE 1 & 2: Center Dot
             if (this.state.dotOpacity > 0.001) {
                 ctx.save();
                 ctx.translate(centerX, centerY);
@@ -754,9 +694,7 @@
                 ctx.restore();
             }
 
-            // ----------------------------------------------------
-            // DRAW PHASE 2, 3, 4: Massive Bold White Text
-            // ----------------------------------------------------
+            // DRAW PHASE 2, 3, 4: Typography
             if (this.state.textOpacity > 0.001) {
                 const fontSize = this.getFontSize();
                 ctx.save();
@@ -772,17 +710,13 @@
                 if (this.state.phase === 2) {
                     stringToRender = 'MOHIT AGARWAL';
                 } else if (this.state.phase === 3) {
-                    // Phase 3 (The Morph): 1.5s Rapid Scramble/Glitch Animation
                     const target = 'PORTFOLIO';
                     const targetLen = target.length; // 9
                     const sourceLen = 13; // "MOHIT AGARWAL"
 
-                    const p = this.state.scrambleProgress; // 0 to 1
-
-                    // Character count contracts smoothly from 13 down to 9
+                    const p = this.state.scrambleProgress;
                     const currentLen = Math.round(sourceLen - p * (sourceLen - targetLen));
 
-                    // Progressive left-to-right locking between progress 0.6 and 1.0
                     const lockStart = 0.55;
                     const lockProgress = Math.max(0, (p - lockStart) / (1 - lockStart));
                     const lockedCount = Math.floor(lockProgress * targetLen);
@@ -793,13 +727,11 @@
                             if (i < lockedCount || p >= 1.0) {
                                 charArr.push(target[i]);
                             } else {
-                                // High-speed dynamic cycling of cypher glyphs
                                 const randGlyph = CYPHER_CHARS[Math.floor(Math.random() * CYPHER_CHARS.length)];
                                 charArr.push(randGlyph);
                                 if (Math.random() < 0.15) sound.playGlitchTick();
                             }
                         } else {
-                            // Excess character collapsing
                             const randGlyph = CYPHER_CHARS[Math.floor(Math.random() * CYPHER_CHARS.length)];
                             charArr.push(randGlyph);
                         }
@@ -807,7 +739,6 @@
 
                     stringToRender = charArr.join('');
 
-                    // Digital Glitch Horizontal Slice Displacement
                     if (Math.random() < 0.28) {
                         this.state.glitchSlice = (Math.random() - 0.5) * 8;
                     } else {
@@ -817,10 +748,8 @@
                     stringToRender = 'PORTFOLIO';
                 }
 
-                // Render Main Text
                 ctx.fillStyle = '#ffffff';
 
-                // Lock-in Impact Glow
                 if (this.state.settleGlow > 0) {
                     ctx.shadowColor = 'rgba(255, 255, 255, 1)';
                     ctx.shadowBlur = 35 * this.state.settleGlow;
@@ -829,7 +758,6 @@
                     ctx.shadowBlur = 24;
                 }
 
-                // Draw Text with micro-glitch slice offset
                 if (this.state.glitchSlice !== 0) {
                     ctx.fillText(stringToRender, this.state.glitchSlice, 0);
                 } else {
@@ -845,18 +773,18 @@
        4. APPLICATION BOOTSTRAP & INTERACTION HOOKS
        ========================================================================== */
     document.addEventListener('DOMContentLoaded', () => {
-        // 1. Initialize Three.js Particle Portrait (Directly Behind Text)
+        // 1. Initialize Three.js Particle Portrait
         const portrait = new ParticlePortrait('portrait-canvas');
 
         // 2. Initialize & Trigger Exact GSAP & Canvas Text-Morphing Loading Sequence
         const textEngine = new CanvasTextMorphEngine('text-canvas');
-        textEngine.startSequence(portrait);
+        textEngine.startSequence();
 
         // 3. Replay Intro Button
         const btnReplay = document.getElementById('btn-replay');
         if (btnReplay) {
             btnReplay.addEventListener('click', () => {
-                textEngine.startSequence(portrait);
+                textEngine.startSequence();
             });
         }
 
@@ -883,14 +811,14 @@
                 cursorRing.style.top = `${e.clientY}px`;
             });
 
-            const interactives = document.querySelectorAll('a, button, input, textarea, .preset-pill, .control-btn');
+            const interactives = document.querySelectorAll('a, button, input, textarea, .course-pill, .skill-tag, .control-btn');
             interactives.forEach(el => {
                 el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
                 el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
             });
         }
 
-        // 6. Header Scroll Blur & Scrollspy
+        // 6. Header Scroll Blur & Scrollspy for Sections
         const header = document.getElementById('site-header');
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('section[id]');
@@ -938,101 +866,7 @@
             });
         }
 
-        // 8. Components Lab: Live Interactive Text Scrambler
-        const demoDisplay = document.getElementById('demo-scramble-display');
-        const demoInput = document.getElementById('demo-input');
-        const btnRunScramble = document.getElementById('btn-run-scramble');
-        const presetPills = document.querySelectorAll('.preset-pill');
-
-        if (demoDisplay) {
-            let demoInterval = null;
-
-            const runScrambleDemo = (targetWord) => {
-                clearInterval(demoInterval);
-                const duration = 1200;
-                const startTime = performance.now();
-                const targetLen = targetWord.length;
-
-                demoInterval = setInterval(() => {
-                    const elapsed = performance.now() - startTime;
-                    const p = Math.min(1, elapsed / duration);
-                    const lockedCount = Math.floor(p * targetLen);
-
-                    let res = '';
-                    for (let i = 0; i < targetLen; i++) {
-                        if (i < lockedCount || p >= 1) {
-                            res += targetWord[i];
-                        } else {
-                            res += CYPHER_CHARS[Math.floor(Math.random() * CYPHER_CHARS.length)];
-                        }
-                    }
-                    demoDisplay.textContent = res;
-                    sound.playGlitchTick();
-
-                    if (p >= 1) {
-                        clearInterval(demoInterval);
-                        sound.playLockImpact();
-                    }
-                }, 35);
-            };
-
-            if (btnRunScramble && demoInput) {
-                btnRunScramble.addEventListener('click', () => {
-                    const val = (demoInput.value || 'CYPHER').toUpperCase().trim();
-                    runScrambleDemo(val);
-                });
-            }
-
-            presetPills.forEach(pill => {
-                pill.addEventListener('click', () => {
-                    const text = pill.getAttribute('data-text');
-                    if (demoInput) demoInput.value = text;
-                    runScrambleDemo(text);
-                });
-            });
-        }
-
-        // 9. Components Lab: 3D Particle Controls
-        const sliderParticleSize = document.getElementById('slider-particle-size');
-        const labelParticleSize = document.getElementById('label-particle-size');
-        const sliderParallax = document.getElementById('slider-parallax');
-        const labelParallax = document.getElementById('label-parallax');
-        const btnBurst = document.getElementById('btn-particle-burst');
-        const btnResetMesh = document.getElementById('btn-reset-bust');
-
-        if (portrait) {
-            if (sliderParticleSize) {
-                sliderParticleSize.addEventListener('input', (e) => {
-                    const val = parseFloat(e.target.value);
-                    if (labelParticleSize) labelParticleSize.textContent = val.toFixed(3);
-                    if (portrait.pointsMesh) {
-                        portrait.pointsMesh.material.size = val;
-                    }
-                });
-            }
-
-            if (sliderParallax) {
-                sliderParallax.addEventListener('input', (e) => {
-                    const val = parseFloat(e.target.value);
-                    if (labelParallax) labelParallax.textContent = `${val.toFixed(1)}x`;
-                    portrait.mouseSensitivity = val;
-                });
-            }
-
-            if (btnBurst) {
-                btnBurst.addEventListener('click', () => {
-                    portrait.triggerRepulsionBurst();
-                });
-            }
-
-            if (btnResetMesh) {
-                btnResetMesh.addEventListener('click', () => {
-                    portrait.resetMesh();
-                });
-            }
-        }
-
-        // 10. Contact Terminal Form
+        // 8. Contact Form Terminal Response Simulation
         const contactForm = document.getElementById('contact-form');
         const formLog = document.getElementById('form-log');
 
@@ -1042,11 +876,11 @@
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
 
-                formLog.innerHTML = `<span style="color:#ffffff;">> TRANSMITTING PACKET FROM [${email}]...</span>`;
+                formLog.innerHTML = `<span style="color:#ffffff;">> TRANSMITTING ENCRYPTED PACKET FROM [${email}]...</span>`;
                 sound.playWhoosh();
 
                 setTimeout(() => {
-                    formLog.innerHTML = `<span style="color:#ffffff;">> ENCRYPTED PACKET RECEIVED. ACKNOWLEDGED FOR [${name.toUpperCase()}]. STATUS: 200 OK</span>`;
+                    formLog.innerHTML = `<span style="color:#ffffff;">> PACKET RECEIVED & ACKNOWLEDGED FOR [${name.toUpperCase()}]. STATUS: 200 OK</span>`;
                     sound.playLockImpact();
                     contactForm.reset();
                 }, 1200);
