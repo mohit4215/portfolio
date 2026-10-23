@@ -514,10 +514,11 @@
             this.initCanvas();
         }
 
-        getFontSize() {
-            const vw = this.width * 0.11;
-            const minSize = 48;
-            const maxSize = 184;
+        getFontSize(textLen = 13) {
+            const baseVw = textLen > 10 ? 0.088 : 0.11;
+            const vw = this.width * baseVw;
+            const minSize = textLen > 10 ? 32 : 44;
+            const maxSize = textLen > 10 ? 150 : 180;
             return Math.max(minSize, Math.min(vw, maxSize));
         }
 
@@ -577,7 +578,7 @@
                 repeat: 1
             }, 0.85);
 
-            // PHASE 2: Dot rapidly expands horizontally into "MOHIT AGARWAL"
+            // PHASE 2: Dot rapidly expands horizontally across center line
             this.masterTL.add(() => {
                 sound.playWhoosh();
             }, 1.45);
@@ -589,70 +590,89 @@
                 ease: 'power4.in'
             }, 1.45);
 
+            // Dot bursts into scattered letters forming "PORTFOLIO" first
             this.masterTL.add(() => {
-                this.state.phase = 2;
+                this.state.phase = 2; // Scattered letters resolving into "PORTFOLIO"
             }, 1.65);
 
             this.masterTL.to(this.state, {
                 dotOpacity: 0,
                 textOpacity: 1,
                 textScale: 1.0,
-                duration: 0.28,
+                duration: 0.25,
                 ease: 'power3.out'
             }, 1.65);
 
-            // PHASE 3 (THE MORPH): Immediately triggers 1.5s rapid scramble/glitch
+            // Letters scatter and lock sequentially into "PORTFOLIO"
+            this.masterTL.to(this.state, {
+                scrambleProgress: 1.0,
+                duration: 0.7,
+                ease: 'power2.out'
+            }, 1.65);
+
+            // Hold solid on "PORTFOLIO"
             this.masterTL.add(() => {
-                this.state.phase = 3;
-            }, 2.0);
+                this.state.phase = 3; // "PORTFOLIO" held solid
+                this.state.scrambleProgress = 0;
+                sound.playLockImpact();
+            }, 2.35);
+
+            // PHASE 3 (THE MORPH): "PORTFOLIO" scrambles into "MOHIT AGARWAL" (1.5s rapid scramble & glitch)
+            this.masterTL.add(() => {
+                this.state.phase = 4; // Morphing from "PORTFOLIO" -> "MOHIT AGARWAL"
+            }, 2.95);
 
             this.masterTL.to(this.state, {
                 scrambleProgress: 1.0,
                 duration: 1.5,
                 ease: 'linear'
-            }, 2.0);
+            }, 2.95);
 
-            // PHASE 4 (THE SETTLE): Scrambled letters lock onto "PORTFOLIO"
+            // PHASE 4 (THE SETTLE): Settle permanently on "MOHIT AGARWAL", "PORTFOLIO" disappears completely
             this.masterTL.add(() => {
-                this.state.phase = 4;
+                this.state.phase = 5; // Settled permanently on "MOHIT AGARWAL"
                 this.state.settleGlow = 1.0;
                 sound.playLockImpact();
-            }, 3.5);
+            }, 4.45);
 
             this.masterTL.to(this.state, {
                 settleGlow: 0,
                 duration: 0.8,
                 ease: 'power2.out'
-            }, 3.5);
+            }, 4.45);
 
-            // THE FINAL HERO LAYOUT (Fades in after Phase 4)
+            // THE FINAL HERO LAYOUT (PORTFOLIO disappeared, landing page appears with MOHIT AGARWAL as hero title)
+            // 1. Three.js Background particle portrait silhouette fades in behind "MOHIT AGARWAL"
             this.masterTL.to(portraitCanvas, {
                 opacity: 1,
                 duration: 1.4,
                 ease: 'power2.out'
-            }, 3.6);
+            }, 4.55);
 
+            // 2. Subtitle: "IT Undergraduate & Full-Stack Developer" fades in directly below
             this.masterTL.to(subtitle, {
                 opacity: 1,
                 y: 0,
                 duration: 1.0,
                 ease: 'power3.out'
-            }, 3.8);
+            }, 4.75);
 
+            // 3. Header: "Mohit Agarwal" and nav links fade in at the top
             this.masterTL.to(header, {
                 opacity: 1,
                 y: 0,
                 duration: 1.0,
                 ease: 'power3.out'
-            }, 3.9);
+            }, 4.85);
 
+            // 4. Hero technical status bar and scroll prompt fade in
             this.masterTL.to([meta, scrollPrompt], {
                 opacity: 1,
                 y: 0,
                 duration: 0.8,
                 stagger: 0.15,
                 ease: 'power2.out'
-            }, 4.1);
+            }, 5.05);
         }
 
         renderLoop() {
@@ -667,7 +687,7 @@
             const centerX = w / 2;
             const centerY = h / 2;
 
-            // DRAW PHASE 1 & 2: Center Dot
+            // DRAW PHASE 1: Center Dot
             if (this.state.dotOpacity > 0.001) {
                 ctx.save();
                 ctx.translate(centerX, centerY);
@@ -685,9 +705,80 @@
                 ctx.restore();
             }
 
-            // DRAW PHASE 2, 3, 4: Typography
+            // DRAW PHASES 2, 3, 4, 5: Typography
             if (this.state.textOpacity > 0.001) {
-                const fontSize = this.getFontSize();
+                let stringToRender = '';
+
+                if (this.state.phase === 2) {
+                    // Phase 2: Scattered letters rapidly assemble into "PORTFOLIO"
+                    const target = 'PORTFOLIO';
+                    const targetLen = target.length; // 9
+                    const p = this.state.scrambleProgress;
+                    const lockedCount = Math.floor(p * targetLen);
+
+                    const charArr = [];
+                    for (let i = 0; i < targetLen; i++) {
+                        if (i < lockedCount || p >= 1.0) {
+                            charArr.push(target[i]);
+                        } else {
+                            const randGlyph = CYPHER_CHARS[Math.floor(Math.random() * CYPHER_CHARS.length)];
+                            charArr.push(randGlyph);
+                            if (Math.random() < 0.12) sound.playGlitchTick();
+                        }
+                    }
+                    stringToRender = charArr.join('');
+
+                    if (Math.random() < 0.25) {
+                        this.state.glitchSlice = (Math.random() - 0.5) * 6;
+                    } else {
+                        this.state.glitchSlice = 0;
+                    }
+                } else if (this.state.phase === 3) {
+                    // Phase 3: Hold "PORTFOLIO" crisp and bold
+                    stringToRender = 'PORTFOLIO';
+                    this.state.glitchSlice = 0;
+                } else if (this.state.phase === 4) {
+                    // Phase 4: The Morph — "PORTFOLIO" scrambles and glitches for 1.5s into "MOHIT AGARWAL"
+                    const source = 'PORTFOLIO';
+                    const target = 'MOHIT AGARWAL';
+                    const sourceLen = source.length; // 9
+                    const targetLen = target.length; // 13
+
+                    const p = this.state.scrambleProgress;
+                    const currentLen = Math.round(sourceLen + p * (targetLen - sourceLen));
+
+                    const lockStart = 0.5;
+                    const lockProgress = Math.max(0, (p - lockStart) / (1 - lockStart));
+                    const lockedCount = Math.floor(lockProgress * targetLen);
+
+                    const charArr = [];
+                    for (let i = 0; i < currentLen; i++) {
+                        if (i < lockedCount || p >= 1.0) {
+                            charArr.push(target[i]);
+                        } else {
+                            if (target[i] === ' ' && Math.random() > 0.4) {
+                                charArr.push(' ');
+                            } else {
+                                const randGlyph = CYPHER_CHARS[Math.floor(Math.random() * CYPHER_CHARS.length)];
+                                charArr.push(randGlyph);
+                                if (Math.random() < 0.15) sound.playGlitchTick();
+                            }
+                        }
+                    }
+                    stringToRender = charArr.join('');
+
+                    if (Math.random() < 0.3) {
+                        this.state.glitchSlice = (Math.random() - 0.5) * 8;
+                    } else {
+                        this.state.glitchSlice = 0;
+                    }
+                } else if (this.state.phase === 5) {
+                    // Phase 5: "PORTFOLIO" has disappeared completely, permanent hero title is "MOHIT AGARWAL"
+                    stringToRender = 'MOHIT AGARWAL';
+                    this.state.glitchSlice = 0;
+                }
+
+                const fontSize = this.getFontSize(stringToRender.length);
                 ctx.save();
                 ctx.translate(centerX, centerY);
                 ctx.scale(this.state.textScale, this.state.textScale);
@@ -696,47 +787,12 @@
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
 
-                let stringToRender = '';
-
-                if (this.state.phase === 2) {
-                    stringToRender = 'MOHIT AGARWAL';
-                } else if (this.state.phase === 3) {
-                    const target = 'PORTFOLIO';
-                    const targetLen = target.length; // 9
-                    const sourceLen = 13; // "MOHIT AGARWAL"
-
-                    const p = this.state.scrambleProgress;
-                    const currentLen = Math.round(sourceLen - p * (sourceLen - targetLen));
-
-                    const lockStart = 0.55;
-                    const lockProgress = Math.max(0, (p - lockStart) / (1 - lockStart));
-                    const lockedCount = Math.floor(lockProgress * targetLen);
-
-                    const charArr = [];
-                    for (let i = 0; i < currentLen; i++) {
-                        if (i < targetLen) {
-                            if (i < lockedCount || p >= 1.0) {
-                                charArr.push(target[i]);
-                            } else {
-                                const randGlyph = CYPHER_CHARS[Math.floor(Math.random() * CYPHER_CHARS.length)];
-                                charArr.push(randGlyph);
-                                if (Math.random() < 0.15) sound.playGlitchTick();
-                            }
-                        } else {
-                            const randGlyph = CYPHER_CHARS[Math.floor(Math.random() * CYPHER_CHARS.length)];
-                            charArr.push(randGlyph);
-                        }
-                    }
-
-                    stringToRender = charArr.join('');
-
-                    if (Math.random() < 0.28) {
-                        this.state.glitchSlice = (Math.random() - 0.5) * 8;
-                    } else {
-                        this.state.glitchSlice = 0;
-                    }
-                } else if (this.state.phase === 4) {
-                    stringToRender = 'PORTFOLIO';
+                // Responsive auto-fit: ensure text width never exceeds 92% of viewport
+                const textWidth = ctx.measureText(stringToRender).width;
+                const maxAvailable = w * 0.92;
+                if (textWidth > maxAvailable && textWidth > 0) {
+                    const fitScale = maxAvailable / textWidth;
+                    ctx.scale(fitScale, fitScale);
                 }
 
                 ctx.fillStyle = '#ffffff';
