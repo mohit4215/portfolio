@@ -701,6 +701,54 @@ a {
     border-color: #ffffff;
 }
 
+/* Supplementary Tools Strip */
+.skills-tools-strip {
+    margin-top: 2rem;
+    padding: 1.5rem 2.2rem;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    transition: border-color 0.25s ease;
+}
+
+.skills-tools-strip:hover {
+    border-color: var(--border-medium);
+}
+
+.tools-strip-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.tools-strip-chips {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.tool-tag {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    padding: 0.35rem 0.8rem;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-dim);
+    transition: all 0.2s ease;
+}
+
+.tool-tag:hover {
+    color: #ffffff;
+    border-color: var(--border-medium);
+    background-color: rgba(255, 255, 255, 0.07);
+}
+
 /* ==================== PROJECTS SECTION ==================== */
 .projects-grid {
     display: grid;
