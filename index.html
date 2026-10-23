@@ -116,68 +116,79 @@
             </div>
         </section>
 
-        <!-- ==================== ABOUT SECTION ==================== -->
-        <section id="about" class="content-section">
-            <div class="section-container">
-                <div class="section-header-row">
-                    <span class="section-num">01</span>
-                    <h2 class="section-title">ABOUT ME</h2>
-                    <span class="section-tag">ENGINEERING & ARTISTRY</span>
+        <!-- ==================== ABOUT SECTION (ANTI-GRAVITY ZERO-G) ==================== -->
+        <section id="about" class="antigravity-section">
+            <!-- Ambient Space Dust Canvas -->
+            <canvas id="space-dust-canvas" class="space-dust-canvas"></canvas>
+
+            <div class="antigravity-container">
+                <!-- Floating 3D / Lifestyle Orbit Items -->
+                <!-- 1: Code / Terminal -->
+                <div class="floating-orbit-item orbit-item-1" data-float-speed="1.1" data-float-offset="0">
+                    <div class="orbit-icon-wrap">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                    </div>
+                    <span class="orbit-label">MLOps & Code</span>
                 </div>
 
-                <div class="about-grid">
-                    <div class="about-narrative">
-                        <h3 class="narrative-heading">
-                            Building resilient full-stack web architectures with academic discipline, entrepreneurial drive, and musical artistry.
-                        </h3>
-                        <p class="narrative-body">
-                            I am a 3rd-semester Information Technology undergraduate at <strong>Ajay Kumar Garg Engineering College (AKGEC)</strong>, Ghaziabad. My engineering focus centers on modern full-stack web applications, atomic frontend architecture, and headless content management systems using Next.js and Payload CMS.
-                        </p>
-                        <p class="narrative-body">
-                            Academically, I maintain a strong trajectory with an <strong>8.23 GPA in Semester 1</strong> and an <strong>8.73 GPA in Semester 2</strong>, balancing rigorous coursework with hands-on campus ventures, startup hackathons, and institutional portal development.
-                        </p>
-                        <p class="narrative-body">
-                            Beyond code, I am a trained classical bamboo <strong>Bansuri</strong> player specializing in traditional Indian instrumental arrangements (including performance sets on the E Natural Base scale), and a daily content creator sharing student life and tech vlogs on Instagram (<a href="https://instagram.com/madhavhumohitkrluga" target="_blank" rel="noopener noreferrer" class="text-link">@madhavhumohitkrluga</a>).
-                        </p>
+                <!-- 2: Bamboo Flute / Music -->
+                <div class="floating-orbit-item orbit-item-2" data-float-speed="0.9" data-float-offset="1.2">
+                    <div class="orbit-icon-wrap">
+                        <svg class="w-4 h-4 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                    </div>
+                    <span class="orbit-label">Bamboo Bansuri</span>
+                </div>
+
+                <!-- 3: Fitness / Gym -->
+                <div class="floating-orbit-item orbit-item-3" data-float-speed="1.25" data-float-offset="2.4">
+                    <div class="orbit-icon-wrap">
+                        <svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4v16M18 4v16M2 8v8M22 8v8M6 12h12"/></svg>
+                    </div>
+                    <span class="orbit-label">Iron & Fitness</span>
+                </div>
+
+                <!-- 4: Stock / Market -->
+                <div class="floating-orbit-item orbit-item-4" data-float-speed="1.0" data-float-offset="3.6">
+                    <div class="orbit-icon-wrap">
+                        <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    </div>
+                    <span class="orbit-label">Stock & Markets</span>
+                </div>
+
+                <!-- 5: Camera / Content Creation -->
+                <div class="floating-orbit-item orbit-item-5" data-float-speed="1.15" data-float-offset="4.8">
+                    <div class="orbit-icon-wrap">
+                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                    </div>
+                    <span class="orbit-label">Daily Content</span>
+                </div>
+
+                <!-- 6: Relentless Consistency -->
+                <div class="floating-orbit-item orbit-item-6" data-float-speed="0.85" data-float-offset="5.5">
+                    <div class="orbit-icon-wrap">
+                        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <span class="orbit-label">Relentless Consistency</span>
+                </div>
+
+                <!-- Central About Card -->
+                <div class="about-center-card">
+                    <div class="about-eyebrow">
+                        <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                        <span>ABOUT ME // ZERO GRAVITY</span>
                     </div>
 
-                    <div class="about-cards-column">
-                        <!-- Academic Standing Card -->
-                        <div class="about-card">
-                            <div class="card-eyebrow">ACADEMIC EXCELLENCE</div>
-                            <div class="gpa-display">
-                                <div class="gpa-box">
-                                    <span class="gpa-num">8.73</span>
-                                    <span class="gpa-label">SEMESTER 2</span>
-                                </div>
-                                <div class="gpa-divider"></div>
-                                <div class="gpa-box">
-                                    <span class="gpa-num">8.23</span>
-                                    <span class="gpa-label">SEMESTER 1</span>
-                                </div>
-                            </div>
-                            <p class="card-caption">Department of Information Technology, AKGEC</p>
-                        </div>
+                    <h2 class="about-glow-heading">Beyond the Code.</h2>
 
-                        <!-- Core Coursework Card -->
-                        <div class="about-card">
-                            <div class="card-eyebrow">CORE COURSEWORK</div>
-                            <ul class="coursework-list">
-                                <li>Data Structures & Theory of Logic</li>
-                                <li>Computer Organization & Architecture</li>
-                                <li>Python Programming</li>
-                                <li>Mathematics IV</li>
-                            </ul>
-                        </div>
+                    <p class="about-bio-text">
+                        I am Mohit Agarwal, a 2nd-year IT undergrad at AKGEC specializing in MLOps and Full-Stack Engineering. I believe in building systems that scale and living a life that is just as versatile. When I am not structuring databases or training models, you will find me analyzing stock market trends, hitting the gym, playing the bamboo Bansuri, or creating daily digital content. For me, whether it is writing clean code, playing a perfect tune, or maintaining a fitness streak, it all comes down to one thing: relentless consistency.
+                    </p>
 
-                        <!-- Classical Flute Card -->
-                        <div class="about-card">
-                            <div class="card-eyebrow">CLASSICAL ACOUSTICS</div>
-                            <h4 class="card-highlight-title">Bamboo Bansuri Artist</h4>
-                            <p class="card-caption">
-                                Performed solo flute arrangements of traditional themes (including Mahabharat title track on E Natural Base) in collegiate competitions such as IIT Delhi Rendezvous '51.
-                            </p>
-                        </div>
+                    <div class="about-cta-row">
+                        <a href="#contact" class="btn-resume group">
+                            <span>Download Resume</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -115,7 +115,138 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 2. CUSTOM CURSOR
+    // 2. ANTI-GRAVITY SPACE DUST & FLOATING ORBIT ENGINE
+    // ==========================================
+    const aboutSection = document.getElementById('about');
+    const spaceCanvas = document.getElementById('space-dust-canvas');
+    const orbitItems = document.querySelectorAll('.floating-orbit-item');
+
+    // 2A. Space Dust Canvas
+    if (spaceCanvas && aboutSection) {
+        const sCtx = spaceCanvas.getContext('2d');
+        let sw = (spaceCanvas.width = aboutSection.offsetWidth);
+        let sh = (spaceCanvas.height = aboutSection.offsetHeight);
+
+        const stars = [];
+        const starCount = 55;
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                x: Math.random() * sw,
+                y: Math.random() * sh,
+                size: Math.random() * 1.8 + 0.4,
+                alpha: Math.random() * 0.7 + 0.2,
+                vx: (Math.random() - 0.5) * 0.18,
+                vy: (Math.random() - 0.5) * 0.18,
+                pulse: Math.random() * Math.PI * 2
+            });
+        }
+
+        window.addEventListener('resize', () => {
+            sw = spaceCanvas.width = aboutSection.offsetWidth;
+            sh = spaceCanvas.height = aboutSection.offsetHeight;
+        });
+
+        function renderSpaceDust() {
+            sCtx.clearRect(0, 0, sw, sh);
+            stars.forEach((star) => {
+                star.x += star.vx;
+                star.y += star.vy;
+                star.pulse += 0.02;
+
+                if (star.x < 0) star.x = sw;
+                if (star.x > sw) star.x = 0;
+                if (star.y < 0) star.y = sh;
+                if (star.y > sh) star.y = 0;
+
+                const dynamicAlpha = Math.max(0.1, star.alpha + Math.sin(star.pulse) * 0.2);
+                sCtx.fillStyle = `rgba(255, 255, 255, ${dynamicAlpha})`;
+                sCtx.beginPath();
+                sCtx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                sCtx.fill();
+            });
+            requestAnimationFrame(renderSpaceDust);
+        }
+        renderSpaceDust();
+    }
+
+    // 2B. Physics-Based Zero-Gravity Floating & Magnetic Repel Effect
+    if (orbitItems.length > 0 && aboutSection) {
+        let mouseX = -9999;
+        let mouseY = -9999;
+        let time = 0;
+
+        const itemsData = Array.from(orbitItems).map((el) => {
+            const speed = parseFloat(el.getAttribute('data-float-speed')) || 1.0;
+            const offset = parseFloat(el.getAttribute('data-float-offset')) || 0;
+            return {
+                el,
+                speed,
+                offset,
+                currX: 0,
+                currY: 0,
+                targetX: 0,
+                targetY: 0
+            };
+        });
+
+        aboutSection.addEventListener('mousemove', (e) => {
+            const rect = aboutSection.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+        });
+
+        aboutSection.addEventListener('mouseleave', () => {
+            mouseX = -9999;
+            mouseY = -9999;
+        });
+
+        function animateAntiGravity() {
+            time += 0.018;
+
+            itemsData.forEach((item) => {
+                // 1. Natural Zero-Gravity Floating Motion
+                const floatY = Math.sin(time * item.speed + item.offset) * 14;
+                const floatX = Math.cos(time * item.speed * 0.75 + item.offset) * 8;
+                const floatRot = Math.sin(time * 0.85 + item.offset) * 5;
+
+                // 2. Magnetic Repel from Mouse
+                if (window.innerWidth >= 1024) {
+                    const rect = item.el.getBoundingClientRect();
+                    const aboutRect = aboutSection.getBoundingClientRect();
+                    const itemCenterX = rect.left - aboutRect.left + rect.width / 2;
+                    const itemCenterY = rect.top - aboutRect.top + rect.height / 2;
+
+                    const dx = itemCenterX - mouseX;
+                    const dy = itemCenterY - mouseY;
+                    const dist = Math.hypot(dx, dy);
+                    const repelRadius = 180;
+
+                    if (dist < repelRadius && dist > 1) {
+                        const force = (1 - dist / repelRadius) * 45;
+                        item.targetX = (dx / dist) * force;
+                        item.targetY = (dy / dist) * force;
+                    } else {
+                        item.targetX = 0;
+                        item.targetY = 0;
+                    }
+
+                    // Smooth spring dampening (lerp)
+                    item.currX += (item.targetX - item.currX) * 0.08;
+                    item.currY += (item.targetY - item.currY) * 0.08;
+
+                    item.el.style.transform = `translate3d(${item.currX + floatX}px, ${item.currY + floatY}px, 0px) rotate(${floatRot}deg)`;
+                } else {
+                    item.el.style.transform = `translate3d(${floatX}px, ${floatY}px, 0px) rotate(${floatRot}deg)`;
+                }
+            });
+
+            requestAnimationFrame(animateAntiGravity);
+        }
+        animateAntiGravity();
+    }
+
+    // ==========================================
+    // 3. CUSTOM CURSOR
     // ==========================================
     const cursorDot = document.getElementById('cursor-dot');
     const cursorRing = document.getElementById('cursor-ring');
