@@ -455,14 +455,15 @@
        Phase 1: Center solid white dot appears & pulses.
        Phase 2: Dot rapidly expands horizontally; scattered letters assemble into "PORTFOLIO" first.
        Phase 3: Holds on "PORTFOLIO", then triggers 1.5s rapid scramble & glitch cypher morph into "MOHIT AGARWAL".
-       Phase 4: Settle on "MOHIT AGARWAL", "PORTFOLIO" is gone, and the real landing page appears with
-                "MOHIT AGARWAL" positioned with mathematical precision right above the subtitle & actions!
+       Phase 4: Settle on "MOHIT AGARWAL", "PORTFOLIO" is gone, and the landing page appears with
+                "MOHIT AGARWAL" remaining permanently displayed in the exact right position!
        ========================================================================== */
     const CYPHER_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_#$[]/*{}~&@!%|<>+=-?^';
 
     class IntroSequenceMaster {
         constructor(canvasId) {
-            this.canvas = document.getElementById(canvasId);
+            this.canvas = document.getElementById(canvasId) || document.getElementById('text-canvas') || document.getElementById('intro-canvas');
+            if (!this.canvas) return;
             this.ctx = this.canvas.getContext('2d');
 
             this.width = window.innerWidth;
@@ -470,7 +471,7 @@
             this.dpr = Math.min(window.devicePixelRatio || 1, 2);
 
             this.state = {
-                phase: 1, // 1: Dot, 2: Assemble PORTFOLIO, 3: Hold PORTFOLIO, 4: Morph to MOHIT AGARWAL, 5: Settle & reveal landing page
+                phase: 1, // 1: Dot, 2: Assemble PORTFOLIO, 3: Hold PORTFOLIO, 4: Morph to MOHIT AGARWAL, 5: Settle & stay on MOHIT AGARWAL
                 dotScale: 0,
                 dotScaleX: 1,
                 dotScaleY: 1,
@@ -489,10 +490,18 @@
         }
 
         initCanvas() {
+            if (!this.canvas) return;
             this.width = window.innerWidth;
             this.height = window.innerHeight;
             this.canvas.width = this.width * this.dpr;
             this.canvas.height = this.height * this.dpr;
+            this.canvas.style.width = this.width + 'px';
+            this.canvas.style.height = this.height + 'px';
+            if (this.ctx.resetTransform) {
+                this.ctx.resetTransform();
+            } else {
+                this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+            }
             this.ctx.scale(this.dpr, this.dpr);
         }
 
@@ -501,32 +510,44 @@
         }
 
         getFontSize(textLen = 13) {
-            const baseVw = textLen > 10 ? 0.085 : 0.105;
+            // "PORTFOLIO" (9 chars) vs "MOHIT AGARWAL" (13 chars)
+            const baseVw = textLen > 10 ? 0.082 : 0.098;
             const vw = this.width * baseVw;
-            const minSize = textLen > 10 ? 32 : 44;
-            const maxSize = textLen > 10 ? 140 : 175;
+            const minSize = textLen > 10 ? 28 : 36;
+            const maxSize = textLen > 10 ? 128 : 155;
             return Math.max(minSize, Math.min(vw, maxSize));
         }
 
         startSequence() {
+            if (!this.canvas) return;
             if (this.masterTL) this.masterTL.kill();
 
             sound.init();
             window.scrollTo({ top: 0, behavior: 'instant' });
             document.body.classList.add('is-loading');
 
-            const heroContainer = document.getElementById('hero-container');
+            const heroContent = document.getElementById('hero-content') || document.getElementById('hero-container');
             const header = document.getElementById('site-header');
             const scrollIndicator = document.getElementById('scroll-indicator');
             const portraitCanvas = document.getElementById('portrait-canvas');
-            const introCanvas = document.getElementById('intro-canvas');
+            const textCanvas = this.canvas;
 
             // Reset Initial States
-            gsap.set(heroContainer, { opacity: 0, y: 15 });
-            gsap.set(header, { opacity: 0, y: -20 });
-            gsap.set(scrollIndicator, { opacity: 0 });
-            gsap.set(portraitCanvas, { opacity: 0 });
-            gsap.set(introCanvas, { opacity: 1 });
+            if (heroContent) {
+                gsap.set(heroContent, { opacity: 0, y: 15, xPercent: -50, left: '50%' });
+            }
+            if (header) {
+                gsap.set(header, { opacity: 0, y: -20 });
+            }
+            if (scrollIndicator) {
+                gsap.set(scrollIndicator, { opacity: 0 });
+            }
+            if (portraitCanvas) {
+                gsap.set(portraitCanvas, { opacity: 0 });
+            }
+            if (textCanvas) {
+                gsap.set(textCanvas, { opacity: 1 });
+            }
 
             this.state.phase = 1;
             this.state.dotScale = 0;
@@ -630,43 +651,44 @@
             }, 4.42);
 
             // LANDING PAGE REVEAL:
-            // "MOHIT AGARWAL" is positioned in the exact right spot in #hero-container!
-            // 1. Reveal hero container containing #hero-title, subtitle, badges, and action buttons
-            this.masterTL.to(heroContainer, {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power3.out'
-            }, 4.5);
+            // "MOHIT AGARWAL" REMAINS PROMINENTLY ON THE PAGE (textCanvas stays at opacity 1 permanently!)
+            // 1. Reveal hero content (subtitle & action buttons) directly below MOHIT AGARWAL
+            if (heroContent) {
+                this.masterTL.to(heroContent, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out'
+                }, 4.48);
+            }
 
             // 2. Three.js Background particle portrait fades in directly behind MOHIT AGARWAL
-            this.masterTL.to(portraitCanvas, {
-                opacity: 1,
-                duration: 1.2,
-                ease: 'power2.out'
-            }, 4.55);
+            if (portraitCanvas) {
+                this.masterTL.to(portraitCanvas, {
+                    opacity: 1,
+                    duration: 1.2,
+                    ease: 'power2.out'
+                }, 4.52);
+            }
 
-            // 3. Fade out intro canvas now that heroContainer is visible
-            this.masterTL.to(introCanvas, {
-                opacity: 0,
-                duration: 0.4,
-                ease: 'power2.out'
-            }, 4.7);
+            // 3. Header: "Mohit Agarwal" brand and nav links fade in at the top
+            if (header) {
+                this.masterTL.to(header, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out'
+                }, 4.6);
+            }
 
-            // 4. Header: "Mohit Agarwal" and nav links fade in at the top
-            this.masterTL.to(header, {
-                opacity: 1,
-                y: 0,
-                duration: 1.0,
-                ease: 'power3.out'
-            }, 4.8);
-
-            // 5. Scroll prompt fades in
-            this.masterTL.to(scrollIndicator, {
-                opacity: 1,
-                duration: 0.8,
-                ease: 'power2.out'
-            }, 5.0);
+            // 4. Scroll prompt fades in at the bottom
+            if (scrollIndicator) {
+                this.masterTL.to(scrollIndicator, {
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: 'power2.out'
+                }, 4.75);
+            }
         }
 
         renderLoop() {
@@ -679,7 +701,7 @@
             ctx.clearRect(0, 0, w, h);
 
             const centerX = w / 2;
-            const centerY = h / 2;
+            const centerY = w < 768 ? h * 0.42 : h * 0.44;
 
             // DRAW PHASE 1: Center Dot
             if (this.state.dotOpacity > 0.001) {
@@ -767,7 +789,7 @@
                         this.state.glitchSlice = 0;
                     }
                 } else if (this.state.phase === 5) {
-                    // Phase 5: "PORTFOLIO" is gone, settled on "MOHIT AGARWAL"
+                    // Phase 5: "PORTFOLIO" is gone, settled on "MOHIT AGARWAL" permanently
                     stringToRender = 'MOHIT AGARWAL';
                     this.state.glitchSlice = 0;
                 }
@@ -782,7 +804,7 @@
                 ctx.textBaseline = 'middle';
 
                 const textWidth = ctx.measureText(stringToRender).width;
-                const maxAvailable = w * 0.92;
+                const maxAvailable = w * 0.90;
                 if (textWidth > maxAvailable && textWidth > 0) {
                     const fitScale = maxAvailable / textWidth;
                     ctx.scale(fitScale, fitScale);
@@ -817,8 +839,14 @@
         const portrait = new ParticlePortrait('portrait-canvas');
 
         // 2. Initialize & Trigger Exact GSAP Canvas Text-Morphing Sequence
-        const introMaster = new IntroSequenceMaster('intro-canvas');
-        introMaster.startSequence();
+        const introMaster = new IntroSequenceMaster('text-canvas');
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                introMaster.startSequence();
+            });
+        } else {
+            introMaster.startSequence();
+        }
 
         // 3. Custom Cursor Movement
         const cursorDot = document.getElementById('cursor-dot');
