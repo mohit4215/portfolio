@@ -104,7 +104,7 @@ a {
     body {
         cursor: none;
     }
-    a, button, input, textarea, .course-pill, .skill-tag, .control-btn {
+    a, button, input, textarea, .course-pill, .skill-tag {
         cursor: none;
     }
 }
@@ -144,52 +144,6 @@ a {
     height: 52px;
     border-color: #ffffff;
     background-color: rgba(255, 255, 255, 0.08);
-}
-
-/* ==================== CONTROL DOCK ==================== */
-.control-dock {
-    position: fixed;
-    bottom: 2rem;
-    right: 2.5rem;
-    display: flex;
-    gap: 0.75rem;
-    z-index: 1000;
-    opacity: 0;
-    transform: translateY(15px);
-    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
-}
-
-.control-dock.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.control-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border-medium);
-    color: var(--text-white);
-    padding: 0.55rem 0.95rem;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    transition: all 0.25s var(--ease-out);
-}
-
-.control-btn:hover {
-    background-color: #ffffff;
-    color: #000000;
-    border-color: #ffffff;
-    transform: translateY(-2px);
-}
-
-.btn-icon {
-    font-size: 0.88rem;
-    line-height: 1;
 }
 
 /* ==================== MINIMALIST TOP HEADER ==================== */
@@ -1177,9 +1131,5 @@ a {
         flex-direction: column;
         gap: 1.5rem;
         text-align: center;
-    }
-    .control-dock {
-        bottom: 1.25rem;
-        right: 1.25rem;
     }
 }

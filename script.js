@@ -533,13 +533,11 @@
             const meta = document.getElementById('hero-meta');
             const scrollPrompt = document.getElementById('scroll-prompt');
             const portraitCanvas = document.getElementById('portrait-canvas');
-            const controlDock = document.getElementById('control-dock');
 
             gsap.set(subtitle, { opacity: 0, y: 25 });
             gsap.set(header, { opacity: 0, y: -20 });
             gsap.set([meta, scrollPrompt], { opacity: 0, y: 15 });
             gsap.set(portraitCanvas, { opacity: 0 });
-            gsap.set(controlDock, { opacity: 0 });
 
             this.state.phase = 1;
             this.state.dotScale = 0;
@@ -655,13 +653,6 @@
                 stagger: 0.15,
                 ease: 'power2.out'
             }, 4.1);
-
-            this.masterTL.to(controlDock, {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power2.out'
-            }, 4.3);
         }
 
         renderLoop() {
@@ -780,27 +771,7 @@
         const textEngine = new CanvasTextMorphEngine('text-canvas');
         textEngine.startSequence();
 
-        // 3. Replay Intro Button
-        const btnReplay = document.getElementById('btn-replay');
-        if (btnReplay) {
-            btnReplay.addEventListener('click', () => {
-                textEngine.startSequence();
-            });
-        }
-
-        // 4. Synthesized Audio Toggle
-        const btnSound = document.getElementById('btn-sound');
-        const soundLabel = document.getElementById('sound-label');
-        const soundIcon = document.getElementById('sound-icon');
-        if (btnSound) {
-            btnSound.addEventListener('click', () => {
-                const isEnabled = sound.toggle();
-                if (soundLabel) soundLabel.textContent = isEnabled ? 'AUDIO: ON' : 'AUDIO: OFF';
-                if (soundIcon) soundIcon.textContent = isEnabled ? '◒' : '○';
-            });
-        }
-
-        // 5. Custom Cursor Movement
+        // 3. Custom Cursor Movement
         const cursorDot = document.getElementById('cursor-dot');
         const cursorRing = document.getElementById('cursor-ring');
         if (cursorDot && cursorRing) {
@@ -811,7 +782,7 @@
                 cursorRing.style.top = `${e.clientY}px`;
             });
 
-            const interactives = document.querySelectorAll('a, button, input, textarea, .course-pill, .skill-tag, .control-btn');
+            const interactives = document.querySelectorAll('a, button, input, textarea, .course-pill, .skill-tag');
             interactives.forEach(el => {
                 el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
                 el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
