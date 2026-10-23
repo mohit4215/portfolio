@@ -1,6 +1,6 @@
 /**
- * MOHIT AGARWAL — CINEMATIC MONOCHROME PORTFOLIO
- * High-Performance GSAP & Canvas Text-Morphing Sequence with Three.js 3D Particle Silhouette
+ * MOHIT AGARWAL — PERSONAL DEVELOPER PORTFOLIO
+ * High-Performance GSAP Canvas Text-Morphing Sequence & Three.js 3D Particle Silhouette
  */
 
 (function () {
@@ -26,13 +26,6 @@
             }
         }
 
-        toggle() {
-            this.enabled = !this.enabled;
-            if (this.enabled) this.init();
-            return this.enabled;
-        }
-
-        // Phase 1: Center dot pop
         playDotPop() {
             if (!this.enabled || !this.ctx) return;
             const now = this.ctx.currentTime;
@@ -52,7 +45,6 @@
             osc.stop(now + 0.13);
         }
 
-        // Phase 2: Dot expansion whoosh
         playWhoosh() {
             if (!this.enabled || !this.ctx) return;
             const now = this.ctx.currentTime;
@@ -72,7 +64,6 @@
             osc.stop(now + 0.29);
         }
 
-        // Phase 3: High-speed glitch cypher tick
         playGlitchTick() {
             if (!this.enabled || !this.ctx) return;
             const now = this.ctx.currentTime;
@@ -91,7 +82,6 @@
             osc.stop(now + 0.025);
         }
 
-        // Phase 4: Settle impact lock
         playLockImpact() {
             if (!this.enabled || !this.ctx) return;
             const now = this.ctx.currentTime;
@@ -131,7 +121,6 @@
 
     /* ==========================================================================
        2. THREE.JS INTERACTIVE 3D PARTICLE SILHOUETTE
-       Organically forms the silhouette of a person looking forward behind "PORTFOLIO"
        ========================================================================== */
     class ParticlePortrait {
         constructor(canvasId) {
@@ -240,7 +229,7 @@
                 idx += 3;
             };
 
-            // 1. Head & Facial Silhouette (Looking directly forward)
+            // Head and Face Silhouette looking directly forward
             for (let i = 0; i < 14000; i++) {
                 const u = (Math.random() - 0.5) * Math.PI * 1.8;
                 const y = Math.random() * 2.0;
@@ -250,14 +239,14 @@
                 let zOffset = 0;
                 let brightness = 0.85;
 
-                // Nose Bridge & Tip (y: 0.45 to 0.88)
+                // Nose Bridge & Tip
                 if (y > 0.45 && y < 0.88 && Math.abs(u) < 0.28) {
                     const noseProgress = 1 - Math.abs(y - 0.62) / 0.26;
                     zOffset += 0.38 * Math.pow(Math.max(0, noseProgress), 1.4);
                     brightness = 1.0;
                 }
 
-                // Eye Sockets (y: 0.82 to 0.96)
+                // Eye Sockets
                 const eyeL = Math.hypot(u - 0.38, y - 0.88);
                 const eyeR = Math.hypot(u + 0.38, y - 0.88);
                 if (eyeL < 0.22 || eyeR < 0.22) {
@@ -265,31 +254,31 @@
                     brightness = 0.45;
                 }
 
-                // Brow Ridge (y: 0.98 to 1.12)
+                // Brow Ridge
                 if (y > 0.98 && y < 1.12 && Math.abs(u) < 0.65) {
                     zOffset += 0.16;
                     brightness = 1.0;
                 }
 
-                // Cheekbones (y: 0.55 to 0.75)
+                // Cheekbones
                 if (y > 0.55 && y < 0.75 && (Math.abs(u - 0.55) < 0.22 || Math.abs(u + 0.55) < 0.22)) {
                     zOffset += 0.15;
                     brightness = 0.95;
                 }
 
-                // Lips (y: 0.22 to 0.38)
+                // Lips
                 if (y > 0.22 && y < 0.38 && Math.abs(u) < 0.3) {
                     zOffset += 0.15;
                     brightness = 0.92;
                 }
 
-                // Chin (y: 0.0 to 0.18)
+                // Chin
                 if (y >= 0.0 && y < 0.18 && Math.abs(u) < 0.25) {
                     zOffset += 0.22;
                     brightness = 0.95;
                 }
 
-                // Hair / Crown Volume
+                // Hair / Crown
                 if (y > 1.2) {
                     radX += (y - 1.2) * 0.16;
                     radZ += (y - 1.2) * 0.14;
@@ -306,7 +295,7 @@
                 addPoint(x, y + 0.05, z, brightness, brightness, brightness);
             }
 
-            // 2. Neck column (y: -0.85 to 0.0)
+            // Neck column
             for (let i = 0; i < 4000; i++) {
                 const angle = Math.random() * Math.PI * 2;
                 const y = -0.05 - Math.random() * 0.75;
@@ -319,7 +308,7 @@
                 addPoint(x, y + 0.05, z, brightness, brightness, brightness);
             }
 
-            // 3. Trapezius & Broad Shoulders (y: -0.8 to -2.4)
+            // Trapezius and Broad Shoulders
             for (let i = 0; i < 8500; i++) {
                 const side = Math.random() > 0.5 ? 1 : -1;
                 const progress = Math.random();
@@ -332,7 +321,7 @@
                 addPoint(x, y + 0.05, z, brightness, brightness, brightness);
             }
 
-            // 4. Ambient Floating Nodes
+            // Ambient Floating Nodes
             while (idx < totalPoints * 3) {
                 const r = 1.4 + Math.random() * 2.6;
                 const theta = Math.random() * Math.PI * 2;
@@ -354,14 +343,14 @@
                 size: this.pointSize,
                 map: this.createGlowTexture(),
                 transparent: true,
-                opacity: 0.88,
+                opacity: 0.85,
                 blending: THREE.AdditiveBlending,
                 depthWrite: false,
                 vertexColors: true
             });
 
             this.pointsMesh = new THREE.Points(this.geometry, material);
-            this.pointsMesh.position.set(0, -0.22, 0);
+            this.pointsMesh.position.set(0, -0.15, 0);
             this.scene.add(this.pointsMesh);
         }
 
@@ -448,15 +437,12 @@
             const elapsed = this.clock.getElapsedTime();
 
             if (this.pointsMesh) {
-                // Parallax rotation tracking cursor
                 this.pointsMesh.rotation.y += (this.targetRotY - this.pointsMesh.rotation.y) * 0.06;
                 this.pointsMesh.rotation.x += (this.targetRotX - this.pointsMesh.rotation.x) * 0.06;
 
-                // Organic breathing motion
                 const breathe = Math.sin(elapsed * 1.4) * 0.035;
-                this.pointsMesh.position.y = -0.22 + breathe;
+                this.pointsMesh.position.y = -0.15 + breathe;
 
-                // Physics update
                 this.updatePhysics();
             }
 
@@ -465,16 +451,16 @@
     }
 
     /* ==========================================================================
-       3. GSAP & CANVAS TEXT-MORPHING ENGINE
-       Phase 1: Center solid white dot in pure black screen
-       Phase 2: Dot rapidly expands and transforms into "MOHIT AGARWAL"
-       Phase 3: 1.5s rapid scramble/glitch cycling
-       Phase 4: Settle permanently on "PORTFOLIO"
-       Final Hero: Background portrait, subtitle, and top header fade in
+       3. GSAP & CANVAS INTRO SEQUENCE & HERO SEAMLESS PLACEMENT
+       Phase 1: Center solid white dot appears & pulses.
+       Phase 2: Dot rapidly expands horizontally; scattered letters assemble into "PORTFOLIO" first.
+       Phase 3: Holds on "PORTFOLIO", then triggers 1.5s rapid scramble & glitch cypher morph into "MOHIT AGARWAL".
+       Phase 4: Settle on "MOHIT AGARWAL", "PORTFOLIO" is gone, and the real landing page appears with
+                "MOHIT AGARWAL" positioned with mathematical precision right above the subtitle & actions!
        ========================================================================== */
     const CYPHER_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_#$[]/*{}~&@!%|<>+=-?^';
 
-    class CanvasTextMorphEngine {
+    class IntroSequenceMaster {
         constructor(canvasId) {
             this.canvas = document.getElementById(canvasId);
             this.ctx = this.canvas.getContext('2d');
@@ -484,7 +470,7 @@
             this.dpr = Math.min(window.devicePixelRatio || 1, 2);
 
             this.state = {
-                phase: 1,
+                phase: 1, // 1: Dot, 2: Assemble PORTFOLIO, 3: Hold PORTFOLIO, 4: Morph to MOHIT AGARWAL, 5: Settle & reveal landing page
                 dotScale: 0,
                 dotScaleX: 1,
                 dotScaleY: 1,
@@ -515,10 +501,10 @@
         }
 
         getFontSize(textLen = 13) {
-            const baseVw = textLen > 10 ? 0.088 : 0.11;
+            const baseVw = textLen > 10 ? 0.085 : 0.105;
             const vw = this.width * baseVw;
             const minSize = textLen > 10 ? 32 : 44;
-            const maxSize = textLen > 10 ? 150 : 180;
+            const maxSize = textLen > 10 ? 140 : 175;
             return Math.max(minSize, Math.min(vw, maxSize));
         }
 
@@ -529,16 +515,18 @@
             window.scrollTo({ top: 0, behavior: 'instant' });
             document.body.classList.add('is-loading');
 
-            const subtitle = document.getElementById('hero-subtitle');
+            const heroContainer = document.getElementById('hero-container');
             const header = document.getElementById('site-header');
-            const meta = document.getElementById('hero-meta');
-            const scrollPrompt = document.getElementById('scroll-prompt');
+            const scrollIndicator = document.getElementById('scroll-indicator');
             const portraitCanvas = document.getElementById('portrait-canvas');
+            const introCanvas = document.getElementById('intro-canvas');
 
-            gsap.set(subtitle, { opacity: 0, y: 25 });
+            // Reset Initial States
+            gsap.set(heroContainer, { opacity: 0, y: 15 });
             gsap.set(header, { opacity: 0, y: -20 });
-            gsap.set([meta, scrollPrompt], { opacity: 0, y: 15 });
+            gsap.set(scrollIndicator, { opacity: 0 });
             gsap.set(portraitCanvas, { opacity: 0 });
+            gsap.set(introCanvas, { opacity: 1 });
 
             this.state.phase = 1;
             this.state.dotScale = 0;
@@ -560,14 +548,14 @@
             // PHASE 1: Screen completely black, solid white dot in exact center
             this.masterTL.add(() => {
                 sound.playDotPop();
-            }, 0.35);
+            }, 0.3);
 
             this.masterTL.to(this.state, {
                 dotScale: 1,
                 dotOpacity: 1,
                 duration: 0.45,
                 ease: 'back.out(2.5)'
-            }, 0.35);
+            }, 0.3);
 
             // Dot pulse
             this.masterTL.to(this.state, {
@@ -576,24 +564,24 @@
                 ease: 'power2.inOut',
                 yoyo: true,
                 repeat: 1
-            }, 0.85);
+            }, 0.8);
 
-            // PHASE 2: Dot rapidly expands horizontally across center line
+            // PHASE 2: Dot rapidly expands horizontally
             this.masterTL.add(() => {
                 sound.playWhoosh();
-            }, 1.45);
+            }, 1.4);
 
             this.masterTL.to(this.state, {
                 dotScaleX: 65,
                 dotScaleY: 0.15,
                 duration: 0.22,
                 ease: 'power4.in'
-            }, 1.45);
+            }, 1.4);
 
-            // Dot bursts into scattered letters forming "PORTFOLIO" first
+            // Scattered letters resolve into "PORTFOLIO" first
             this.masterTL.add(() => {
-                this.state.phase = 2; // Scattered letters resolving into "PORTFOLIO"
-            }, 1.65);
+                this.state.phase = 2;
+            }, 1.62);
 
             this.masterTL.to(this.state, {
                 dotOpacity: 0,
@@ -601,78 +589,84 @@
                 textScale: 1.0,
                 duration: 0.25,
                 ease: 'power3.out'
-            }, 1.65);
+            }, 1.62);
 
-            // Letters scatter and lock sequentially into "PORTFOLIO"
+            // Scattered letters cycling and locking into "PORTFOLIO"
             this.masterTL.to(this.state, {
                 scrambleProgress: 1.0,
                 duration: 0.7,
                 ease: 'power2.out'
-            }, 1.65);
+            }, 1.62);
 
             // Hold solid on "PORTFOLIO"
             this.masterTL.add(() => {
-                this.state.phase = 3; // "PORTFOLIO" held solid
+                this.state.phase = 3;
                 this.state.scrambleProgress = 0;
                 sound.playLockImpact();
-            }, 2.35);
+            }, 2.32);
 
             // PHASE 3 (THE MORPH): "PORTFOLIO" scrambles into "MOHIT AGARWAL" (1.5s rapid scramble & glitch)
             this.masterTL.add(() => {
-                this.state.phase = 4; // Morphing from "PORTFOLIO" -> "MOHIT AGARWAL"
-            }, 2.95);
+                this.state.phase = 4;
+            }, 2.92);
 
             this.masterTL.to(this.state, {
                 scrambleProgress: 1.0,
                 duration: 1.5,
                 ease: 'linear'
-            }, 2.95);
+            }, 2.92);
 
-            // PHASE 4 (THE SETTLE): Settle permanently on "MOHIT AGARWAL", "PORTFOLIO" disappears completely
+            // PHASE 4 (THE SETTLE): Settle on "MOHIT AGARWAL", "PORTFOLIO" disappears
             this.masterTL.add(() => {
-                this.state.phase = 5; // Settled permanently on "MOHIT AGARWAL"
+                this.state.phase = 5;
                 this.state.settleGlow = 1.0;
                 sound.playLockImpact();
-            }, 4.45);
+            }, 4.42);
 
             this.masterTL.to(this.state, {
                 settleGlow: 0,
-                duration: 0.8,
+                duration: 0.6,
                 ease: 'power2.out'
-            }, 4.45);
+            }, 4.42);
 
-            // THE FINAL HERO LAYOUT (PORTFOLIO disappeared, landing page appears with MOHIT AGARWAL as hero title)
-            // 1. Three.js Background particle portrait silhouette fades in behind "MOHIT AGARWAL"
+            // LANDING PAGE REVEAL:
+            // "MOHIT AGARWAL" is positioned in the exact right spot in #hero-container!
+            // 1. Reveal hero container containing #hero-title, subtitle, badges, and action buttons
+            this.masterTL.to(heroContainer, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'power3.out'
+            }, 4.5);
+
+            // 2. Three.js Background particle portrait fades in directly behind MOHIT AGARWAL
             this.masterTL.to(portraitCanvas, {
                 opacity: 1,
-                duration: 1.4,
+                duration: 1.2,
                 ease: 'power2.out'
             }, 4.55);
 
-            // 2. Subtitle: "IT Undergraduate & Full-Stack Developer" fades in directly below
-            this.masterTL.to(subtitle, {
-                opacity: 1,
-                y: 0,
-                duration: 1.0,
-                ease: 'power3.out'
-            }, 4.75);
+            // 3. Fade out intro canvas now that heroContainer is visible
+            this.masterTL.to(introCanvas, {
+                opacity: 0,
+                duration: 0.4,
+                ease: 'power2.out'
+            }, 4.7);
 
-            // 3. Header: "Mohit Agarwal" and nav links fade in at the top
+            // 4. Header: "Mohit Agarwal" and nav links fade in at the top
             this.masterTL.to(header, {
                 opacity: 1,
                 y: 0,
                 duration: 1.0,
                 ease: 'power3.out'
-            }, 4.85);
+            }, 4.8);
 
-            // 4. Hero technical status bar and scroll prompt fade in
-            this.masterTL.to([meta, scrollPrompt], {
+            // 5. Scroll prompt fades in
+            this.masterTL.to(scrollIndicator, {
                 opacity: 1,
-                y: 0,
                 duration: 0.8,
-                stagger: 0.15,
                 ease: 'power2.out'
-            }, 5.05);
+            }, 5.0);
         }
 
         renderLoop() {
@@ -710,9 +704,9 @@
                 let stringToRender = '';
 
                 if (this.state.phase === 2) {
-                    // Phase 2: Scattered letters rapidly assemble into "PORTFOLIO"
+                    // Phase 2: Scattered letters assemble into "PORTFOLIO"
                     const target = 'PORTFOLIO';
-                    const targetLen = target.length; // 9
+                    const targetLen = target.length;
                     const p = this.state.scrambleProgress;
                     const lockedCount = Math.floor(p * targetLen);
 
@@ -734,15 +728,15 @@
                         this.state.glitchSlice = 0;
                     }
                 } else if (this.state.phase === 3) {
-                    // Phase 3: Hold "PORTFOLIO" crisp and bold
+                    // Phase 3: Hold "PORTFOLIO"
                     stringToRender = 'PORTFOLIO';
                     this.state.glitchSlice = 0;
                 } else if (this.state.phase === 4) {
-                    // Phase 4: The Morph — "PORTFOLIO" scrambles and glitches for 1.5s into "MOHIT AGARWAL"
+                    // Phase 4: The Morph — "PORTFOLIO" scrambles into "MOHIT AGARWAL"
                     const source = 'PORTFOLIO';
                     const target = 'MOHIT AGARWAL';
-                    const sourceLen = source.length; // 9
-                    const targetLen = target.length; // 13
+                    const sourceLen = source.length;
+                    const targetLen = target.length;
 
                     const p = this.state.scrambleProgress;
                     const currentLen = Math.round(sourceLen + p * (targetLen - sourceLen));
@@ -773,7 +767,7 @@
                         this.state.glitchSlice = 0;
                     }
                 } else if (this.state.phase === 5) {
-                    // Phase 5: "PORTFOLIO" has disappeared completely, permanent hero title is "MOHIT AGARWAL"
+                    // Phase 5: "PORTFOLIO" is gone, settled on "MOHIT AGARWAL"
                     stringToRender = 'MOHIT AGARWAL';
                     this.state.glitchSlice = 0;
                 }
@@ -787,7 +781,6 @@
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
 
-                // Responsive auto-fit: ensure text width never exceeds 92% of viewport
                 const textWidth = ctx.measureText(stringToRender).width;
                 const maxAvailable = w * 0.92;
                 if (textWidth > maxAvailable && textWidth > 0) {
@@ -823,9 +816,9 @@
         // 1. Initialize Three.js Particle Portrait
         const portrait = new ParticlePortrait('portrait-canvas');
 
-        // 2. Initialize & Trigger Exact GSAP & Canvas Text-Morphing Loading Sequence
-        const textEngine = new CanvasTextMorphEngine('text-canvas');
-        textEngine.startSequence();
+        // 2. Initialize & Trigger Exact GSAP Canvas Text-Morphing Sequence
+        const introMaster = new IntroSequenceMaster('intro-canvas');
+        introMaster.startSequence();
 
         // 3. Custom Cursor Movement
         const cursorDot = document.getElementById('cursor-dot');
@@ -838,14 +831,14 @@
                 cursorRing.style.top = `${e.clientY}px`;
             });
 
-            const interactives = document.querySelectorAll('a, button, input, textarea, .course-pill, .skill-tag');
+            const interactives = document.querySelectorAll('a, button, input, textarea, .chip, .btn-primary, .btn-secondary, .btn-tertiary');
             interactives.forEach(el => {
                 el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
                 el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
             });
         }
 
-        // 6. Header Scroll Blur & Scrollspy for Sections
+        // 4. Header Scroll Blur & Scrollspy
         const header = document.getElementById('site-header');
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('section[id]');
@@ -876,7 +869,7 @@
             });
         });
 
-        // 7. Mobile Drawer Navigation
+        // 5. Mobile Drawer Navigation
         const mobileToggle = document.getElementById('mobile-toggle');
         const mobileDrawer = document.getElementById('mobile-drawer');
         const mobileLinks = document.querySelectorAll('.mobile-link');
@@ -893,24 +886,22 @@
             });
         }
 
-        // 8. Contact Form Terminal Response Simulation
+        // 6. Clean, Human Contact Form Handling
         const contactForm = document.getElementById('contact-form');
-        const formLog = document.getElementById('form-log');
+        const formFeedback = document.getElementById('form-feedback');
 
-        if (contactForm && formLog) {
+        if (contactForm && formFeedback) {
             contactForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const name = document.getElementById('name').value;
                 const email = document.getElementById('email').value;
 
-                formLog.innerHTML = `<span style="color:#ffffff;">> TRANSMITTING ENCRYPTED PACKET FROM [${email}]...</span>`;
+                formFeedback.innerHTML = `<span style="color:#ffffff;">Thank you, ${name}! Your message has been prepared for transmission.</span>`;
                 sound.playWhoosh();
 
                 setTimeout(() => {
-                    formLog.innerHTML = `<span style="color:#ffffff;">> PACKET RECEIVED & ACKNOWLEDGED FOR [${name.toUpperCase()}]. STATUS: 200 OK</span>`;
-                    sound.playLockImpact();
                     contactForm.reset();
-                }, 1200);
+                }, 1500);
             });
         }
     });

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mohit Agarwal — IT Undergraduate & Full-Stack Developer</title>
-    <meta name="description" content="Cinematic portfolio of Mohit Agarwal — IT Undergraduate at AKGEC & Full-Stack Developer. Strictly monochrome (#000000 background) with GSAP Canvas text-morphing and Three.js 3D particle silhouette.">
+    <meta name="description" content="Portfolio of Mohit Agarwal — 3rd Semester Information Technology undergraduate at AKGEC, Full-Stack Developer specializing in Next.js & Payload CMS, and Classical Bamboo Bansuri artist.">
 
-    <!-- Fonts: Syne (Ultra Bold Display), Inter (Refined Body), JetBrains Mono (Technical/Data) -->
+    <!-- Fonts: Syne (Editorial Display), Inter (Clean Body), Space Grotesk (Labels & Badges) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
 
     <!-- CDN Libraries: GSAP & Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -23,17 +23,14 @@
     <div id="cursor-dot" class="custom-cursor-dot"></div>
     <div id="cursor-ring" class="custom-cursor-ring"></div>
 
-
-    <!-- Minimalist Top Navigation Bar (Fades in after Phase 4) -->
+    <!-- Minimalist Top Navigation Bar -->
     <header id="site-header" class="site-header">
         <div class="header-container">
-            <!-- Top-Left Corner: "Mohit Agarwal" -->
             <a href="#hero" class="header-brand">
                 <span class="brand-text">Mohit Agarwal</span>
                 <span class="brand-pip"></span>
             </a>
 
-            <!-- Top-Right Corner: Navigation Links -->
             <nav class="header-nav">
                 <ul class="nav-list">
                     <li class="nav-item"><a href="#hero" class="nav-link active">HOME</a></li>
@@ -46,7 +43,6 @@
                 </ul>
             </nav>
 
-            <!-- Mobile Hamburger Button -->
             <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
                 <span class="toggle-bar"></span>
                 <span class="toggle-bar"></span>
@@ -54,7 +50,7 @@
         </div>
     </header>
 
-    <!-- Mobile Drawer Overlay -->
+    <!-- Mobile Drawer -->
     <div id="mobile-drawer" class="mobile-drawer">
         <div class="drawer-content">
             <ul class="mobile-nav-list">
@@ -67,8 +63,7 @@
                 <li><a href="#contact" class="mobile-link">07 // CONTACT</a></li>
             </ul>
             <div class="drawer-footer">
-                <p class="mono-text">MOHIT AGARWAL — DEVELOPER PORTFOLIO</p>
-                <p class="mono-text">AKGEC IT UNDERGRADUATE // BANSURI ARTIST</p>
+                <p class="mono-text">MOHIT AGARWAL — AKGEC IT // BANSURI ARTIST</p>
             </div>
         </div>
     </div>
@@ -76,35 +71,49 @@
     <main id="main-content">
         <!-- ==================== HERO SECTION ==================== -->
         <section id="hero" class="hero-section">
-            <!-- Three.js Interactive Particle Portrait Canvas (Fades in directly behind "PORTFOLIO") -->
+            <!-- Three.js Interactive Particle Portrait Canvas -->
             <canvas id="portrait-canvas" class="portrait-canvas"></canvas>
 
-            <!-- GSAP & Canvas Text-Morphing Canvas (Phase 1 Dot -> Phase 2 "MOHIT AGARWAL" -> Phase 3 Morph -> Phase 4 "PORTFOLIO") -->
-            <canvas id="text-canvas" class="text-canvas"></canvas>
+            <!-- GSAP & Canvas Intro Sequence (Phase 1 Dot -> "PORTFOLIO" -> Morph -> "MOHIT AGARWAL") -->
+            <canvas id="intro-canvas" class="intro-canvas"></canvas>
 
-            <!-- Screen reader accessible title -->
-            <h1 class="sr-only">Mohit Agarwal — Portfolio</h1>
+            <!-- Hero Real Layout Container (Positioned with mathematical precision) -->
+            <div class="hero-container" id="hero-container">
+                <div class="hero-header-badge">
+                    <span class="badge-dot"></span>
+                    <span>AKGEC IT UNDERGRADUATE &bull; GHAZIABAD</span>
+                </div>
 
-            <!-- Subtitle Container (Fades in directly below "PORTFOLIO" after Phase 4) -->
-            <div class="hero-overlay-ui">
+                <h1 id="hero-title" class="hero-title">
+                    MOHIT AGARWAL
+                </h1>
+
                 <p id="hero-subtitle" class="hero-subtitle">
                     IT Undergraduate & Full-Stack Developer
                 </p>
 
-                <!-- Technical Status & Metrics -->
-                <div id="hero-meta" class="hero-meta">
-                    <span class="meta-item"><span class="meta-dot"></span> AKGEC IT // 3RD SEMESTER</span>
-                    <span class="meta-sep">//</span>
-                    <span class="meta-item">NEXT.JS & PAYLOAD CMS</span>
-                    <span class="meta-sep">//</span>
-                    <span class="meta-item">BAMBOO BANSURI ARTIST</span>
+                <div class="hero-meta-row" id="hero-meta">
+                    <span class="meta-tag">NEXT.JS & PAYLOAD CMS</span>
+                    <span class="meta-divider">&bull;</span>
+                    <span class="meta-tag">8.73 GPA (SEM 2)</span>
+                    <span class="meta-divider">&bull;</span>
+                    <span class="meta-tag">CLASSICAL BANSURI ARTIST</span>
                 </div>
 
-                <!-- Scroll Prompt -->
-                <a href="#about" class="scroll-prompt" id="scroll-prompt">
-                    <span class="prompt-text">EXPLORE PROFILE</span>
-                    <span class="prompt-line"></span>
-                </a>
+                <div class="hero-actions" id="hero-actions">
+                    <a href="#projects" class="btn-primary">EXPLORE PROJECTS</a>
+                    <a href="#contact" class="btn-secondary">GET IN TOUCH</a>
+                    <a href="https://instagram.com/madhavhumohitkrluga" target="_blank" rel="noopener noreferrer" class="btn-tertiary">
+                        <span>INSTAGRAM</span>
+                        <span class="btn-arrow">↗</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="scroll-indicator" id="scroll-indicator">
+                <span class="scroll-text">SCROLL TO EXPLORE</span>
+                <span class="scroll-line"></span>
             </div>
         </section>
 
@@ -112,132 +121,146 @@
         <section id="about" class="content-section">
             <div class="section-container">
                 <div class="section-header-row">
-                    <span class="section-num">[ 01 ]</span>
-                    <h2 class="section-title">ABOUT // IDENTITY & FOUNDATIONS</h2>
+                    <span class="section-num">01</span>
+                    <h2 class="section-title">ABOUT ME</h2>
                     <span class="section-tag">ENGINEERING & ARTISTRY</span>
                 </div>
 
                 <div class="about-grid">
-                    <div class="about-statement">
-                        <p class="statement-lead">
-                            3rd Semester Information Technology undergraduate at Ajay Kumar Garg Engineering College (AKGEC), building modern web architectures while mastering traditional classical acoustics.
+                    <div class="about-narrative">
+                        <h3 class="narrative-heading">
+                            Building resilient full-stack web architectures with academic discipline, entrepreneurial drive, and musical artistry.
+                        </h3>
+                        <p class="narrative-body">
+                            I am a 3rd-semester Information Technology undergraduate at <strong>Ajay Kumar Garg Engineering College (AKGEC)</strong>, Ghaziabad. My engineering focus centers on modern full-stack web applications, atomic frontend architecture, and headless content management systems using Next.js and Payload CMS.
                         </p>
-                        <p class="statement-body">
-                            Driven by strong academic rigor with an <strong>8.23 GPA in Semester 1</strong> and an <strong>8.73 GPA in Semester 2</strong>. I specialize in modern full-stack application development, scalable frontend structure, and content architecture.
+                        <p class="narrative-body">
+                            Academically, I maintain a strong trajectory with an <strong>8.23 GPA in Semester 1</strong> and an <strong>8.73 GPA in Semester 2</strong>, balancing rigorous coursework with hands-on campus ventures, startup hackathons, and institutional portal development.
                         </p>
-                        <p class="statement-body">
-                            Beyond systems engineering and code, I am a professional bamboo Bansuri player specializing in traditional instrumental arrangements, and an active digital creator sharing technical and creative vlogs on Instagram (<a href="https://instagram.com/madhavhumohitkrluga" target="_blank" rel="noopener noreferrer" class="text-link">@madhavhumohitkrluga</a>).
+                        <p class="narrative-body">
+                            Beyond code, I am a trained classical bamboo <strong>Bansuri</strong> player specializing in traditional Indian instrumental arrangements (including performance sets on the E Natural Base scale), and a daily content creator sharing student life and tech vlogs on Instagram (<a href="https://instagram.com/madhavhumohitkrluga" target="_blank" rel="noopener noreferrer" class="text-link">@madhavhumohitkrluga</a>).
                         </p>
-
-                        <!-- Academic Coursework Callout -->
-                        <div class="coursework-box">
-                            <span class="box-tag">CORE ACADEMIC COURSEWORK</span>
-                            <div class="coursework-pills">
-                                <span class="course-pill">Data Structures & Theory of Logic</span>
-                                <span class="course-pill">Computer Organization and Architecture</span>
-                                <span class="course-pill">Python Programming</span>
-                                <span class="course-pill">Mathematics 4</span>
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="stats-column">
-                        <div class="stat-card">
-                            <span class="stat-value">8.73</span>
-                            <span class="stat-label">SEMESTER 2 GPA</span>
-                            <p class="stat-desc">Consistent academic acceleration (Semester 1: 8.23 GPA) at AKGEC, Department of Information Technology.</p>
+                    <div class="about-cards-column">
+                        <!-- Academic Standing Card -->
+                        <div class="about-card">
+                            <div class="card-eyebrow">ACADEMIC EXCELLENCE</div>
+                            <div class="gpa-display">
+                                <div class="gpa-box">
+                                    <span class="gpa-num">8.73</span>
+                                    <span class="gpa-label">SEMESTER 2</span>
+                                </div>
+                                <div class="gpa-divider"></div>
+                                <div class="gpa-box">
+                                    <span class="gpa-num">8.23</span>
+                                    <span class="gpa-label">SEMESTER 1</span>
+                                </div>
+                            </div>
+                            <p class="card-caption">Department of Information Technology, AKGEC</p>
                         </div>
-                        <div class="stat-card">
-                            <span class="stat-value">E BASE</span>
-                            <span class="stat-label">BAMBOO BANSURI MASTERY</span>
-                            <p class="stat-desc">Professional classical flute performer specializing in Indian traditional arrangements and competitive stage sets.</p>
+
+                        <!-- Core Coursework Card -->
+                        <div class="about-card">
+                            <div class="card-eyebrow">CORE COURSEWORK</div>
+                            <ul class="coursework-list">
+                                <li>Data Structures & Theory of Logic</li>
+                                <li>Computer Organization & Architecture</li>
+                                <li>Python Programming</li>
+                                <li>Mathematics IV</li>
+                            </ul>
                         </div>
-                        <div class="stat-card">
-                            <span class="stat-value">2+</span>
-                            <span class="stat-label">FOUNDED VENTURES</span>
-                            <p class="stat-desc">Founder of HiTrade (pitched at NIT Kurukshetra) and Co-founder of The Upcycle Engine (MAIT HackXTract winner).</p>
+
+                        <!-- Classical Flute Card -->
+                        <div class="about-card">
+                            <div class="card-eyebrow">CLASSICAL ACOUSTICS</div>
+                            <h4 class="card-highlight-title">Bamboo Bansuri Artist</h4>
+                            <p class="card-caption">
+                                Performed solo flute arrangements of traditional themes (including Mahabharat title track on E Natural Base) in collegiate competitions such as IIT Delhi Rendezvous '51.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== TECH STACK & SKILLS SECTION ==================== -->
+        <!-- ==================== SKILLS SECTION ==================== -->
         <section id="skills" class="content-section">
             <div class="section-container">
                 <div class="section-header-row">
-                    <span class="section-num">[ 02 ]</span>
-                    <h2 class="section-title">SKILLS // TECHNICAL MATRIX</h2>
-                    <span class="section-tag">DEVELOPMENT & DESIGN</span>
+                    <span class="section-num">02</span>
+                    <h2 class="section-title">TECHNICAL SKILLS</h2>
+                    <span class="section-tag">TOOLING & TECHNOLOGIES</span>
                 </div>
 
                 <div class="skills-grid">
-                    <!-- Frameworks & Languages -->
-                    <div class="skill-category-card">
-                        <div class="category-header">
-                            <span class="category-num">01</span>
-                            <h3 class="category-name">FRAMEWORKS & LANGUAGES</h3>
+                    <!-- Languages & Frameworks -->
+                    <div class="skill-category">
+                        <div class="skill-category-header">
+                            <span class="skill-cat-num">01</span>
+                            <h3 class="skill-cat-title">FRAMEWORKS & LANGUAGES</h3>
                         </div>
-                        <p class="category-desc">Modern web application development, typed systems, and reactive interfaces.</p>
-                        <div class="skill-tags-group">
-                            <span class="skill-tag highlight">Next.js</span>
-                            <span class="skill-tag highlight">Payload CMS</span>
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">HTML5 / CSS3</span>
-                            <span class="skill-tag">JavaScript / TS</span>
-                            <span class="skill-tag">C / C++</span>
-                            <span class="skill-tag">Java</span>
-                            <span class="skill-tag">SQL</span>
+                        <p class="skill-cat-desc">Production web applications, typed architectures, and modern web frameworks.</p>
+                        <div class="skill-chips">
+                            <span class="chip chip-priority">Next.js</span>
+                            <span class="chip chip-priority">Payload CMS</span>
+                            <span class="chip chip-priority">Python</span>
+                            <span class="chip">TypeScript</span>
+                            <span class="chip">JavaScript</span>
+                            <span class="chip">C / C++</span>
+                            <span class="chip">Java</span>
+                            <span class="chip">SQL</span>
+                            <span class="chip">HTML5 / CSS3</span>
                         </div>
                     </div>
 
-                    <!-- Backend & MLOps -->
-                    <div class="skill-category-card">
-                        <div class="category-header">
-                            <span class="category-num">02</span>
-                            <h3 class="category-name">BACKEND & REAL-TIME</h3>
+                    <!-- Backend & Real-Time -->
+                    <div class="skill-category">
+                        <div class="skill-category-header">
+                            <span class="skill-cat-num">02</span>
+                            <h3 class="skill-cat-title">BACKEND & REAL-TIME</h3>
                         </div>
-                        <p class="category-desc">High-throughput APIs, database schemas, real-time WebSockets, and stateful services.</p>
-                        <div class="skill-tags-group">
-                            <span class="skill-tag highlight">FastAPI</span>
-                            <span class="skill-tag highlight">PostgreSQL</span>
-                            <span class="skill-tag">WebSockets</span>
-                            <span class="skill-tag">Streamlit</span>
-                            <span class="skill-tag">LLM Orchestration</span>
-                            <span class="skill-tag">RESTful Architecture</span>
+                        <p class="skill-cat-desc">RESTful services, relational data modeling, and streaming event pipelines.</p>
+                        <div class="skill-chips">
+                            <span class="chip chip-priority">FastAPI</span>
+                            <span class="chip chip-priority">PostgreSQL</span>
+                            <span class="chip">WebSockets</span>
+                            <span class="chip">Streamlit</span>
+                            <span class="chip">LLM Orchestration</span>
+                            <span class="chip">API Design</span>
                         </div>
                     </div>
 
                     <!-- Data & Analytics -->
-                    <div class="skill-category-card">
-                        <div class="category-header">
-                            <span class="category-num">03</span>
-                            <h3 class="category-name">DATA & ANALYTICS</h3>
+                    <div class="skill-category">
+                        <div class="skill-category-header">
+                            <span class="skill-cat-num">03</span>
+                            <h3 class="skill-cat-title">DATA & ANALYTICS</h3>
                         </div>
-                        <p class="category-desc">Exploratory Data Analysis (EDA), mathematical modeling, and data manipulation pipelines.</p>
-                        <div class="skill-tags-group">
-                            <span class="skill-tag highlight">Google Colab</span>
-                            <span class="skill-tag">EDA & Data Cleansing</span>
-                            <span class="skill-tag">Pandas & NumPy</span>
-                            <span class="skill-tag">Data Structures</span>
-                            <span class="skill-tag">Statistical Analytics</span>
+                        <p class="skill-cat-desc">Exploratory Data Analysis (EDA), statistical pipelines, and data structures.</p>
+                        <div class="skill-chips">
+                            <span class="chip chip-priority">Google Colab</span>
+                            <span class="chip">Exploratory Data Analysis</span>
+                            <span class="chip">Pandas</span>
+                            <span class="chip">NumPy</span>
+                            <span class="chip">Data Cleansing</span>
                         </div>
                     </div>
 
                     <!-- Design & Video Suite -->
-                    <div class="skill-category-card">
-                        <div class="category-header">
-                            <span class="category-num">04</span>
-                            <h3 class="category-name">DESIGN & PRODUCTION</h3>
+                    <div class="skill-category">
+                        <div class="skill-category-header">
+                            <span class="skill-cat-num">04</span>
+                            <h3 class="skill-cat-title">DESIGN & VIDEO SUITE</h3>
                         </div>
-                        <p class="category-desc">End-to-end creative workflow, interactive UI prototyping, and cinematic video editing.</p>
-                        <div class="skill-tags-group">
-                            <span class="skill-tag highlight">Figma</span>
-                            <span class="skill-tag">Gamma</span>
-                            <span class="skill-tag">Cursor</span>
-                            <span class="skill-tag">Adobe Premiere Pro</span>
-                            <span class="skill-tag">Lightroom</span>
-                            <span class="skill-tag">DaVinci Resolve</span>
+                        <p class="skill-cat-desc">High-fidelity UI prototyping, modern AI tooling, and cinematic video editing.</p>
+                        <div class="skill-chips">
+                            <span class="chip chip-priority">Figma</span>
+                            <span class="chip">Gamma</span>
+                            <span class="chip">Cursor</span>
+                            <span class="chip">Adobe Premiere Pro</span>
+                            <span class="chip">Lightroom</span>
+                            <span class="chip">DaVinci Resolve</span>
                         </div>
                     </div>
                 </div>
@@ -248,21 +271,22 @@
         <section id="projects" class="content-section">
             <div class="section-container">
                 <div class="section-header-row">
-                    <span class="section-num">[ 03 ]</span>
-                    <h2 class="section-title">PROJECTS // ARCHITECTURAL WORK</h2>
-                    <span class="section-tag">PRODUCTION ARTIFACTS</span>
+                    <span class="section-num">03</span>
+                    <h2 class="section-title">FEATURED PROJECTS</h2>
+                    <span class="section-tag">ENGINEERING ARTIFACTS</span>
                 </div>
 
                 <div class="projects-grid">
-                    <!-- Project 1: University Portal Development -->
-                    <article class="project-card featured">
+                    <!-- Project 1: University Portal -->
+                    <article class="project-card">
                         <div class="project-header">
-                            <span class="project-index">01 / INSTITUTIONAL PORTAL</span>
-                            <span class="project-badge">ACTIVE DEVELOPMENT</span>
+                            <span class="project-num">PROJECT 01</span>
+                            <span class="project-status-pill">ACTIVE DEVELOPMENT</span>
                         </div>
-                        <h3 class="project-title">UNIVERSITY PORTAL DEVELOPMENT</h3>
+                        <h3 class="project-title">University Portal Development</h3>
+                        <p class="project-org">Ajay Kumar Garg University (AKGEC)</p>
                         <p class="project-desc">
-                            Designing and building a modern, full-stack university portal for Ajay Kumar Garg University. Implemented modern content architecture, atomic design components, and dynamic content management utilizing Next.js and Payload CMS.
+                            Designing and building a modern, full-stack institutional web portal for Ajay Kumar Garg University. Implemented robust headless content architecture using Payload CMS and high-performance server-rendered frontend components in Next.js.
                         </p>
                         <div class="project-tags">
                             <span>Next.js</span>
@@ -271,20 +295,18 @@
                             <span>Tailwind CSS</span>
                             <span>PostgreSQL</span>
                         </div>
-                        <div class="project-footer">
-                            <span class="project-status">● DEPLOYED & SCALED FOR AKGEC</span>
-                        </div>
                     </article>
 
-                    <!-- Project 2: StudyPartner Platform -->
+                    <!-- Project 2: StudyPartner -->
                     <article class="project-card">
                         <div class="project-header">
-                            <span class="project-index">02 / RESEARCH & AI PLATFORM</span>
-                            <span class="project-badge">IEEE PAPER CO-AUTHORED</span>
+                            <span class="project-num">PROJECT 02</span>
+                            <span class="project-status-pill">CO-AUTHORED IEEE PAPER</span>
                         </div>
-                        <h3 class="project-title">STUDYPARTNER</h3>
+                        <h3 class="project-title">StudyPartner</h3>
+                        <p class="project-org">Focus Enforcement & AI Orchestration Platform</p>
                         <p class="project-desc">
-                            A focus enforcement and study orchestration platform built with FastAPI, PostgreSQL, real-time WebSockets, and LLM orchestration. Accompanied by a co-authored research paper formatted to IEEE publication standards.
+                            A focus enforcement and study orchestration web platform engineered with FastAPI, PostgreSQL, and real-time WebSockets. Backed by a co-authored research paper formatted to IEEE standards analyzing retention metrics and automated focus intervention.
                         </p>
                         <div class="project-tags">
                             <span>FastAPI</span>
@@ -293,50 +315,41 @@
                             <span>LLM Orchestration</span>
                             <span>IEEE Paper</span>
                         </div>
-                        <div class="project-footer">
-                            <span class="project-status">● RESEARCH PROTOTYPE & BENCHMARK</span>
-                        </div>
                     </article>
 
-                    <!-- Project 3: Quest Campus Delivery -->
+                    <!-- Project 3: Quest Logistics -->
                     <article class="project-card">
                         <div class="project-header">
-                            <span class="project-index">03 / CAMPUS LOGISTICS</span>
-                            <span class="project-badge">AKGEC TBI INCUBATION</span>
+                            <span class="project-num">PROJECT 03</span>
+                            <span class="project-status-pill">SUBMITTED TO TBI</span>
                         </div>
-                        <h3 class="project-title">QUEST NETWORK</h3>
+                        <h3 class="project-title">Quest Network</h3>
+                        <p class="project-org">Campus Micro-Delivery Logistics</p>
                         <p class="project-desc">
-                            Campus micro-delivery logistics network designed and architected specifically for collegiate ecosystems. Submitted and presented for incubation to Ajay Kumar Garg Engineering College Technology Business Incubator (TBI).
+                            Designed and architected a specialized collegiate micro-delivery network system to streamline intra-campus package flow and student commerce. Prepared and submitted for incubation to AKGEC Technology Business Incubator (TBI).
                         </p>
                         <div class="project-tags">
-                            <span>Logistics Tech</span>
-                            <span>Micro-Delivery</span>
-                            <span>TBI Incubation</span>
+                            <span>Campus Logistics</span>
                             <span>System Architecture</span>
-                        </div>
-                        <div class="project-footer">
-                            <span class="project-status">● SUBMITTED TO AKGEC TBI</span>
+                            <span>AKGEC TBI Incubation</span>
                         </div>
                     </article>
 
-                    <!-- Project 4: Love Nature Waste Routing -->
+                    <!-- Project 4: Love Nature -->
                     <article class="project-card">
                         <div class="project-header">
-                            <span class="project-index">04 / SUSTAINABILITY TECH</span>
-                            <span class="project-badge">WASTECHAKRA 2026</span>
+                            <span class="project-num">PROJECT 04</span>
+                            <span class="project-status-pill">WASTECHAKRA 2026</span>
                         </div>
-                        <h3 class="project-title">LOVE NATURE</h3>
+                        <h3 class="project-title">Love Nature</h3>
+                        <p class="project-org">Predictive Waste Routing System</p>
                         <p class="project-desc">
-                            Predictive waste-routing and intelligent logistics concept engineered for WasteChakra 2026. Utilizes predictive spatial analysis to optimize municipal collection routes and minimize carbon footprint.
+                            Engineered an intelligent predictive waste routing logistics concept for the WasteChakra 2026 national competition. Leverages spatial predictive modeling to optimize municipal collection schedules and minimize route emissions.
                         </p>
                         <div class="project-tags">
                             <span>Predictive Analytics</span>
                             <span>Route Optimization</span>
-                            <span>WasteChakra 2026</span>
                             <span>CleanTech</span>
-                        </div>
-                        <div class="project-footer">
-                            <span class="project-status">● COMPETITION CONCEPT ARTIFACT</span>
                         </div>
                     </article>
                 </div>
@@ -347,86 +360,80 @@
         <section id="experience" class="content-section">
             <div class="section-container">
                 <div class="section-header-row">
-                    <span class="section-num">[ 04 ]</span>
-                    <h2 class="section-title">EXPERIENCE // LEADERSHIP & ROLES</h2>
-                    <span class="section-tag">CHRONOLOGICAL TRAJECTORY</span>
+                    <span class="section-num">04</span>
+                    <h2 class="section-title">EXPERIENCE & ROLES</h2>
+                    <span class="section-tag">LEADERSHIP & VENTURES</span>
                 </div>
 
-                <div class="timeline-container">
-                    <!-- Experience 1: IDEA Lab AKGEC -->
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-date">2025 — PRESENT</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">WEB CONTENT & INITIATIVE LEAD</h3>
-                            <h4 class="timeline-org">IDEA Lab, AKGEC</h4>
-                            <p class="timeline-desc">
-                                Developed web content and established core organizational pillars to support flagship lab initiatives, technical research workshops, and college-wide student engagement.
+                <div class="experience-timeline">
+                    <!-- Item 1: IDEA Lab AKGEC -->
+                    <div class="timeline-entry">
+                        <div class="entry-date">2025 — PRESENT</div>
+                        <div class="entry-body">
+                            <h3 class="entry-title">Web Content & Organizational Lead</h3>
+                            <h4 class="entry-company">IDEA Lab, AKGEC</h4>
+                            <p class="entry-desc">
+                                Spearheaded web content strategies and established core institutional pillars to support student initiatives, engineering research projects, and campus-wide technical workshops.
                             </p>
                         </div>
                     </div>
 
-                    <!-- Experience 2: Summer Training AKGEC -->
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-date">SUMMER 2025</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">SPECIALIZED TECHNICAL SKILLING TRAINEE</h3>
-                            <h4 class="timeline-org">AKGEC Technical Training Division</h4>
-                            <p class="timeline-desc">
-                                Completed intensive technical training and student skilling enhancement programs focusing on algorithmic logic, data structures, and production-grade software development practices.
+                    <!-- Item 2: Summer Training -->
+                    <div class="timeline-entry">
+                        <div class="entry-date">SUMMER 2025</div>
+                        <div class="entry-body">
+                            <h3 class="entry-title">Technical Skilling Enhancement Trainee</h3>
+                            <h4 class="entry-company">AKGEC Technical Skilling Division</h4>
+                            <p class="entry-desc">
+                                Completed rigorous specialized technical training covering algorithmic problem solving, advanced data structures, and production web engineering standards.
                             </p>
                         </div>
                     </div>
 
-                    <!-- Experience 3: Founder HiTrade -->
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-date">2025 — 2026</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">FOUNDER</h3>
-                            <h4 class="timeline-org">HiTrade</h4>
-                            <p class="timeline-desc">
-                                Founded and spearheaded HiTrade. Formulated business model, architecture, and investor deck; pitched live at NIT Kurukshetra Startup Pitch Arena and Hacksagon 2026.
+                    <!-- Item 3: HiTrade Founder -->
+                    <div class="timeline-entry">
+                        <div class="entry-date">2025 — 2026</div>
+                        <div class="entry-body">
+                            <h3 class="entry-title">Founder</h3>
+                            <h4 class="entry-company">HiTrade</h4>
+                            <p class="entry-desc">
+                                Founded and structured HiTrade. Authored financial models, system workflows, and investor pitch decks; pitched live at NIT Kurukshetra Startup Pitch Arena and Hacksagon 2026.
                             </p>
                         </div>
                     </div>
 
-                    <!-- Experience 4: Co-Founder The Upcycle Engine -->
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-date">2025 — 2026</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">CO-FOUNDER</h3>
-                            <h4 class="timeline-org">The Upcycle Engine (Team Rocket)</h4>
-                            <p class="timeline-desc">
-                                Co-founded sustainability platform connecting waste producers with upcycling manufacturers. Won the Social Media Challenge at MAIT HackXTract.
+                    <!-- Item 4: The Upcycle Engine -->
+                    <div class="timeline-entry">
+                        <div class="entry-date">2025 — 2026</div>
+                        <div class="entry-body">
+                            <h3 class="entry-title">Co-Founder</h3>
+                            <h4 class="entry-company">The Upcycle Engine (Team Rocket)</h4>
+                            <p class="entry-desc">
+                                Co-founded sustainability tech initiative connecting recyclable material producers with upcycling manufacturing hubs. Won the Social Media Challenge at MAIT HackXTract.
                             </p>
                         </div>
                     </div>
 
-                    <!-- Experience 5: Software on Service (SoS) -->
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-date">2025 — PRESENT</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">HR & ADMINISTRATIVE LEAD</h3>
-                            <h4 class="timeline-org">Software on Service (SoS), AKGEC</h4>
-                            <p class="timeline-desc">
-                                Serving as HR to manage society logistics, member records, onboarding cycles, and official administrative correspondence across departmental faculties and student cohorts.
+                    <!-- Item 5: Software on Service (SoS) -->
+                    <div class="timeline-entry">
+                        <div class="entry-date">2025 — PRESENT</div>
+                        <div class="entry-body">
+                            <h3 class="entry-title">HR & Administrative Lead</h3>
+                            <h4 class="entry-company">Software on Service (SoS), AKGEC</h4>
+                            <p class="entry-desc">
+                                Managing society logistics, member databases, onboarding cycles, and formal correspondence between college administration and active student teams.
                             </p>
                         </div>
                     </div>
 
-                    <!-- Experience 6: Robin Hood Army -->
-                    <div class="timeline-item">
-                        <div class="timeline-marker"></div>
-                        <div class="timeline-date">2024 — PRESENT</div>
-                        <div class="timeline-content">
-                            <h3 class="timeline-role">VOLUNTEER & SOCIAL MEDIA MANAGER</h3>
-                            <h4 class="timeline-org">Robin Hood Army</h4>
-                            <p class="timeline-desc">
-                                Directing social media campaigns, designing promotional visual materials, and driving mobilization for the Bharat AI Learning Center educational drives.
+                    <!-- Item 6: Robin Hood Army -->
+                    <div class="timeline-entry">
+                        <div class="entry-date">2024 — PRESENT</div>
+                        <div class="entry-body">
+                            <h3 class="entry-title">Volunteer & Social Media Manager</h3>
+                            <h4 class="entry-company">Robin Hood Army</h4>
+                            <p class="entry-desc">
+                                Designing outreach campaigns and promotional digital assets to mobilize youth participation in Bharat AI Learning Center educational drives.
                             </p>
                         </div>
                     </div>
@@ -434,58 +441,54 @@
             </div>
         </section>
 
-        <!-- ==================== ACHIEVEMENTS & EXTRACURRICULARS ==================== -->
+        <!-- ==================== ACHIEVEMENTS SECTION ==================== -->
         <section id="achievements" class="content-section">
             <div class="section-container">
                 <div class="section-header-row">
-                    <span class="section-num">[ 05 ]</span>
-                    <h2 class="section-title">ACHIEVEMENTS // HACKATHONS & CULTURAL</h2>
-                    <span class="section-tag">DISTINCTIONS & AWARDS</span>
+                    <span class="section-num">05</span>
+                    <h2 class="section-title">ACHIEVEMENTS</h2>
+                    <span class="section-tag">COMPETITIONS & DISTINCTIONS</span>
                 </div>
 
                 <div class="achievements-grid">
                     <!-- Achievement 1: IIT Delhi Flute Performance -->
                     <div class="achievement-card">
-                        <div class="achieve-icon">♫</div>
-                        <div class="achieve-meta">CULTURAL COMPETITION // 2025</div>
-                        <h3 class="achieve-title">IIT DELHI RENDEZVOUS '51</h3>
+                        <div class="achieve-badge">IIT DELHI CULTURAL</div>
+                        <h3 class="achieve-title">IIT Delhi Rendezvous '51</h3>
                         <p class="achieve-desc">
-                            Selected and entered the <em>Faces of Rendezvous</em> competition for the 51st annual cultural festival at IIT Delhi with a solo flute performance of the Mahabharat title track on an E Natural Base scale bamboo Bansuri.
+                            Entered the prestigious <em>Faces of Rendezvous</em> competition for the 51st annual cultural festival at IIT Delhi with a solo flute performance of the Mahabharat title track on an E Natural Base bamboo Bansuri.
                         </p>
-                        <span class="achieve-tag">CLASSICAL BANSURI PERFORMANCE</span>
+                        <span class="achieve-pill">CLASSICAL BANSURI PERFORMANCE</span>
                     </div>
 
                     <!-- Achievement 2: HackXTract MAIT -->
                     <div class="achievement-card">
-                        <div class="achieve-icon">★</div>
-                        <div class="achieve-meta">HACKATHON WINNER // 2026</div>
-                        <h3 class="achieve-title">HACKXTRACT (MAIT) — 1ST PLACE</h3>
+                        <div class="achieve-badge">HACKATHON WINNER</div>
+                        <h3 class="achieve-title">HackXTract (MAIT) — 1st Place</h3>
                         <p class="achieve-desc">
                             Won the Social Media Challenge at Maharaja Agrasen Institute of Technology (MAIT) HackXTract representing Team Rocket with "The Upcycle Engine".
                         </p>
-                        <span class="achieve-tag">CHALLENGE WINNER</span>
+                        <span class="achieve-pill">1ST PLACE SOCIAL MEDIA</span>
                     </div>
 
                     <!-- Achievement 3: GDG Code Theft Auto -->
                     <div class="achievement-card">
-                        <div class="achieve-icon">◆</div>
-                        <div class="achieve-meta">GOOGLE DEVELOPER GROUPS // 2025</div>
-                        <h3 class="achieve-title">GDG CODE THEFT AUTO — 2ND PLACE</h3>
+                        <div class="achieve-badge">GOOGLE DEVELOPER GROUPS</div>
+                        <h3 class="achieve-title">GDG Code Theft Auto — 2nd Place</h3>
                         <p class="achieve-desc">
                             Secured 2nd place in the competitive team rounds solving rapid algorithmic debugging and architecture hurdles under strict time constraints.
                         </p>
-                        <span class="achieve-tag">RUNNER-UP PODIUM</span>
+                        <span class="achieve-pill">2ND PLACE PODIUM</span>
                     </div>
 
-                    <!-- Achievement 4: Strategic Pitch Decks -->
+                    <!-- Achievement 4: Pitch Decks -->
                     <div class="achievement-card">
-                        <div class="achieve-icon">▲</div>
-                        <div class="achieve-meta">BUSINESS & PITCH ARCHITECTURE</div>
-                        <h3 class="achieve-title">STRATEGY & PITCH DECKS</h3>
+                        <div class="achieve-badge">VENTURE & STRATEGY</div>
+                        <h3 class="achieve-title">Strategy & Pitch Decks</h3>
                         <p class="achieve-desc">
-                            Researched and authored competition pitch decks for Fashion Box (Atharv '26, IIM Indore), Chanakya Niti 3.0, and INVICTA 2026.
+                            Authored competitive pitch decks for Fashion Box (Atharv '26, IIM Indore), Chanakya Niti 3.0, and INVICTA 2026.
                         </p>
-                        <span class="achieve-tag">FINANCE & PRODUCT STRATEGY</span>
+                        <span class="achieve-pill">BUSINESS ARCHITECTURE</span>
                     </div>
                 </div>
             </div>
@@ -495,57 +498,59 @@
         <section id="contact" class="content-section">
             <div class="section-container">
                 <div class="section-header-row">
-                    <span class="section-num">[ 06 ]</span>
-                    <h2 class="section-title">CONTACT // DIRECT PROTOCOL</h2>
-                    <span class="section-tag">OPEN TRANSMISSION</span>
+                    <span class="section-num">06</span>
+                    <h2 class="section-title">GET IN TOUCH</h2>
+                    <span class="section-tag">OPEN COLLABORATIONS</span>
                 </div>
 
                 <div class="contact-grid">
-                    <div class="contact-dossier">
-                        <h3 class="contact-headline">START A CONVERSATION</h3>
-                        <p class="contact-desc">
-                            Available for full-stack engineering collaborations, campus initiatives, freelance web architectures, and classical flute performances. Send a transmission below or reach out directly across channels.
+                    <div class="contact-info-column">
+                        <h3 class="contact-lead">Let's build something remarkable together.</h3>
+                        <p class="contact-sub">
+                            Open to full-stack engineering collaborations, campus projects, freelance web architecture, and classical flute performances.
                         </p>
 
-                        <div class="dossier-items">
-                            <div class="dossier-row">
-                                <span class="dossier-key">DIRECT EMAIL</span>
-                                <a href="mailto:mohitagarwal4215@gmail.com" class="dossier-val highlight">mohitagarwal4215@gmail.com</a>
+                        <div class="contact-links-list">
+                            <div class="contact-link-item">
+                                <span class="link-label">EMAIL</span>
+                                <a href="mailto:mohitagarwal4215@gmail.com" class="link-val">mohitagarwal4215@gmail.com</a>
                             </div>
-                            <div class="dossier-row">
-                                <span class="dossier-key">INSTAGRAM / VLOGS</span>
-                                <a href="https://instagram.com/madhavhumohitkrluga" target="_blank" rel="noopener noreferrer" class="dossier-val highlight">@madhavhumohitkrluga</a>
+                            <div class="contact-link-item">
+                                <span class="link-label">INSTAGRAM</span>
+                                <a href="https://instagram.com/madhavhumohitkrluga" target="_blank" rel="noopener noreferrer" class="link-val">@madhavhumohitkrluga</a>
                             </div>
-                            <div class="dossier-row">
-                                <span class="dossier-key">GITHUB REPO</span>
-                                <a href="https://github.com/mohit4215" target="_blank" rel="noopener noreferrer" class="dossier-val">github.com/mohit4215</a>
+                            <div class="contact-link-item">
+                                <span class="link-label">GITHUB</span>
+                                <a href="https://github.com/mohit4215" target="_blank" rel="noopener noreferrer" class="link-val">github.com/mohit4215</a>
                             </div>
-                            <div class="dossier-row">
-                                <span class="dossier-key">INSTITUTION</span>
-                                <span class="dossier-val">AKGEC, GHAZIABAD // IT DEPT</span>
+                            <div class="contact-link-item">
+                                <span class="link-label">COLLEGE</span>
+                                <span class="link-val">AKGEC, Ghaziabad (Department of IT)</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="contact-form-wrapper">
-                        <form id="contact-form" class="brutalist-form">
-                            <div class="form-group">
-                                <label for="name" class="form-label">YOUR NAME / IDENTITY</label>
-                                <input type="text" id="name" name="name" class="form-input" placeholder="e.g. Alex Mercer" required>
+                    <div class="contact-form-column">
+                        <form id="contact-form" class="clean-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name" class="form-label">YOUR NAME</label>
+                                    <input type="text" id="name" name="name" class="form-input" placeholder="e.g. Alex Mercer" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="form-label">YOUR EMAIL</label>
+                                    <input type="email" id="email" name="email" class="form-input" placeholder="e.g. alex@company.com" required>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="email" class="form-label">YOUR EMAIL ADDRESS</label>
-                                <input type="email" id="email" name="email" class="form-input" placeholder="e.g. alex@domain.com" required>
+                                <label for="message" class="form-label">MESSAGE</label>
+                                <textarea id="message" name="message" rows="4" class="form-input" placeholder="Tell me about your project, idea, or inquiry..." required></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="message" class="form-label">MESSAGE / PROPOSAL</label>
-                                <textarea id="message" name="message" rows="4" class="form-input" placeholder="State your collaboration, project, or event parameters..." required></textarea>
-                            </div>
-                            <button type="submit" id="btn-submit" class="submit-btn">
-                                <span class="btn-text">TRANSMIT PACKET</span>
-                                <span class="btn-arrow">→</span>
+                            <button type="submit" id="btn-submit" class="btn-submit">
+                                <span>SEND MESSAGE</span>
+                                <span class="submit-arrow">→</span>
                             </button>
-                            <div id="form-log" class="form-log" aria-live="polite"></div>
+                            <div id="form-feedback" class="form-feedback"></div>
                         </form>
                     </div>
                 </div>
@@ -557,14 +562,9 @@
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-left">
-                <span class="mono-meta">MOHIT AGARWAL © 2026</span>
-                <span class="footer-separator">•</span>
-                <span class="mono-meta">IT UNDERGRADUATE & FULL-STACK DEVELOPER</span>
-            </div>
-            <div class="footer-center">
-                <span class="system-status">
-                    <span class="status-pip"></span> AKGEC // 60 FPS GSAP & THREE.JS
-                </span>
+                <span>MOHIT AGARWAL &bull; 2026</span>
+                <span class="footer-dot">&bull;</span>
+                <span>AKGEC IT UNDERGRADUATE</span>
             </div>
             <div class="footer-right">
                 <a href="#hero" class="back-to-top">BACK TO TOP ↑</a>
