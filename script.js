@@ -246,7 +246,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 3. CUSTOM CURSOR
+    // 3. 3D MAGNETIC GLASSMORPHIC TILT ENGINE
+    // ==========================================
+    const tiltCards = document.querySelectorAll('.tilt-card[data-tilt]');
+    tiltCards.forEach((card) => {
+        let isHovered = false;
+
+        card.addEventListener('mouseenter', () => {
+            isHovered = true;
+            card.style.transition = 'transform 0.12s ease-out, box-shadow 0.3s ease, border-color 0.3s ease';
+        });
+
+        card.addEventListener('mousemove', (e) => {
+            if (!isHovered) return;
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            // Maximum tilt angle of 10 degrees
+            const rotateX = ((y - centerY) / centerY) * -10;
+            const rotateY = ((x - centerX) / centerX) * 10;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.025, 1.025, 1.025)`;
+
+            // Track neon cursor spotlight inside the glass card
+            const px = ((x / rect.width) * 100).toFixed(1);
+            const py = ((y / rect.height) * 100).toFixed(1);
+            card.style.setProperty('--mouse-x', `${px}%`);
+            card.style.setProperty('--mouse-y', `${py}%`);
+        });
+
+        card.addEventListener('mouseleave', () => {
+            isHovered = false;
+            card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease';
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        });
+    });
+
+    // ==========================================
+    // 4. CUSTOM CURSOR
     // ==========================================
     const cursorDot = document.getElementById('cursor-dot');
     const cursorRing = document.getElementById('cursor-ring');
@@ -258,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cursorRing.style.top = `${e.clientY}px`;
         });
 
-        const interactives = document.querySelectorAll('a, button, input, textarea, .chip');
+        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .btn-resume');
         interactives.forEach((el) => {
             el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
