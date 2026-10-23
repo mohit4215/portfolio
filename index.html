@@ -71,48 +71,29 @@
     <main id="main-content">
         <!-- ==================== HERO SECTION ==================== -->
         <section id="hero" class="hero-section">
-            <!-- Three.js Interactive Particle Portrait Canvas -->
+            <!-- Three.js Interactive Particle Portrait Canvas (Behind Text) -->
             <canvas id="portrait-canvas" class="portrait-canvas"></canvas>
 
-            <!-- GSAP & Canvas Intro Sequence (Phase 1 Dot -> "PORTFOLIO" -> Morph -> "MOHIT AGARWAL") -->
-            <canvas id="intro-canvas" class="intro-canvas"></canvas>
+            <!-- High-Performance Text Morphing Canvas (Phase 1 Dot -> PORTFOLIO -> Morph -> MOHIT AGARWAL permanently) -->
+            <canvas id="text-canvas" class="text-canvas"></canvas>
 
-            <!-- Hero Real Layout Container (Positioned with mathematical precision) -->
-            <div class="hero-container" id="hero-container">
-                <div class="hero-header-badge">
-                    <span class="badge-dot"></span>
-                    <span>AKGEC IT UNDERGRADUATE &bull; GHAZIABAD</span>
-                </div>
+            <h1 class="sr-only">Mohit Agarwal — IT Undergraduate & Full-Stack Developer</h1>
 
-                <h1 id="hero-title" class="hero-title">
-                    MOHIT AGARWAL
-                </h1>
-
+            <!-- Hero Subtitle & Action Buttons (Directly below MOHIT AGARWAL) -->
+            <div class="hero-content" id="hero-content">
                 <p id="hero-subtitle" class="hero-subtitle">
                     IT Undergraduate & Full-Stack Developer
                 </p>
 
-                <div class="hero-meta-row" id="hero-meta">
-                    <span class="meta-tag">NEXT.JS & PAYLOAD CMS</span>
-                    <span class="meta-divider">&bull;</span>
-                    <span class="meta-tag">8.73 GPA (SEM 2)</span>
-                    <span class="meta-divider">&bull;</span>
-                    <span class="meta-tag">CLASSICAL BANSURI ARTIST</span>
-                </div>
-
                 <div class="hero-actions" id="hero-actions">
                     <a href="#projects" class="btn-primary">EXPLORE PROJECTS</a>
                     <a href="#contact" class="btn-secondary">GET IN TOUCH</a>
-                    <a href="https://instagram.com/madhavhumohitkrluga" target="_blank" rel="noopener noreferrer" class="btn-tertiary">
-                        <span>INSTAGRAM</span>
-                        <span class="btn-arrow">↗</span>
-                    </a>
                 </div>
             </div>
 
             <!-- Scroll Indicator -->
             <div class="scroll-indicator" id="scroll-indicator">
-                <span class="scroll-text">SCROLL TO EXPLORE</span>
+                <span class="scroll-text">SCROLL</span>
                 <span class="scroll-line"></span>
             </div>
         </section>
