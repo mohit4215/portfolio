@@ -459,12 +459,233 @@ document.addEventListener('DOMContentLoaded', () => {
             cursorRing.style.top = `${e.clientY}px`;
         });
 
-        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .btn-resume, .bento-card, .bento-pill, .bento-btn-action');
+        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .btn-resume, .bento-card, .bento-pill, .bento-btn-action, .magnetic-social-btn, .achieve-3d-card, .carousel-btn, .back-to-top-btn');
         interactives.forEach((el) => {
             el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
         });
     }
+
+    // ==========================================
+    // 5. EXPERIENCE GLOWING SCROLL TIMELINE
+    // ==========================================
+    const expSection = document.getElementById('experience');
+    const timelineFill = document.getElementById('timeline-scroll-fill');
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    if (expSection && timelineFill && timelineItems.length > 0) {
+        function updateTimelineScroll() {
+            const rect = expSection.getBoundingClientRect();
+            const sectionHeight = expSection.offsetHeight;
+            const triggerPoint = window.innerHeight * 0.72;
+            const scrolledInto = triggerPoint - rect.top;
+            const progress = Math.min(Math.max(scrolledInto / (sectionHeight * 0.88), 0), 1);
+
+            timelineFill.style.height = `${(progress * 100).toFixed(1)}%`;
+
+            // Check each item node position relative to triggerPoint
+            timelineItems.forEach((item) => {
+                const node = item.querySelector('.timeline-node');
+                const card = item.querySelector('.timeline-card');
+                if (node && card) {
+                    const nodeRect = node.getBoundingClientRect();
+                    if (nodeRect.top <= triggerPoint) {
+                        node.classList.add('node-active');
+                        card.classList.add('card-revealed');
+                    }
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateTimelineScroll, { passive: true });
+        updateTimelineScroll(); // Initial check
+
+        // Card hover pulses connecting node
+        timelineItems.forEach((item) => {
+            const card = item.querySelector('.timeline-card');
+            const node = item.querySelector('.timeline-node');
+            if (card && node) {
+                card.addEventListener('mouseenter', () => {
+                    node.classList.add('node-pulse');
+                });
+                card.addEventListener('mouseleave', () => {
+                    node.classList.remove('node-pulse');
+                });
+            }
+        });
+    }
+
+    // ==========================================
+    // 6. ACHIEVEMENTS 3D HORIZONTAL CAROUSEL
+    // ==========================================
+    const achieveViewport = document.getElementById('achieve-viewport');
+    const achieveTrack = document.getElementById('achieve-track');
+    const achieveCards = document.querySelectorAll('.achieve-3d-card');
+    const achievePrevBtn = document.getElementById('achieve-prev-btn');
+    const achieveNextBtn = document.getElementById('achieve-next-btn');
+    const achieveProgressBar = document.getElementById('achieve-progress-bar');
+
+    if (achieveViewport && achieveCards.length > 0) {
+        // 1. 3D Depth of Field & Center Focus Interpolation
+        function update3DCarousel() {
+            const vpRect = achieveViewport.getBoundingClientRect();
+            const vpCenter = vpRect.left + vpRect.width / 2;
+            const maxDistance = vpRect.width * 0.45;
+
+            achieveCards.forEach((card) => {
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + cardRect.width / 2;
+                const dist = Math.abs(cardCenter - vpCenter);
+                const ratio = Math.min(dist / maxDistance, 1);
+
+                // Scale: 100% in center down to 90% at edges
+                const scale = (1 - ratio * 0.1).toFixed(3);
+                // Opacity: 100% in center down to 50% at edges
+                const opacity = (1 - ratio * 0.5).toFixed(3);
+
+                card.style.transform = `scale(${scale})`;
+                card.style.opacity = opacity;
+            });
+
+            // Update progress bar
+            if (achieveProgressBar) {
+                const maxScroll = achieveViewport.scrollWidth - achieveViewport.clientWidth;
+                if (maxScroll > 0) {
+                    const scrollPct = (achieveViewport.scrollLeft / maxScroll) * 100;
+                    achieveProgressBar.style.width = `${Math.max(scrollPct, 14).toFixed(1)}%`;
+                }
+            }
+        }
+
+        achieveViewport.addEventListener('scroll', update3DCarousel, { passive: true });
+        window.addEventListener('resize', update3DCarousel);
+        update3DCarousel(); // Initial render
+
+        // 2. Spotlight hover inside card borders
+        achieveCards.forEach((card) => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // 3. Carousel Button Navigation
+        if (achievePrevBtn && achieveNextBtn) {
+            achievePrevBtn.addEventListener('click', () => {
+                achieveViewport.scrollBy({ left: -360, behavior: 'smooth' });
+            });
+            achieveNextBtn.addEventListener('click', () => {
+                achieveViewport.scrollBy({ left: 360, behavior: 'smooth' });
+            });
+        }
+
+        // 4. Mouse Drag to Scroll
+        let isDown = false;
+        let startX = 0;
+        let scrollLeft = 0;
+
+        achieveViewport.addEventListener('mousedown', (e) => {
+            isDown = true;
+            achieveViewport.classList.add('is-dragging');
+            startX = e.pageX - achieveViewport.offsetLeft;
+            scrollLeft = achieveViewport.scrollLeft;
+        });
+
+        achieveViewport.addEventListener('mouseleave', () => {
+            isDown = false;
+            achieveViewport.classList.remove('is-dragging');
+        });
+
+        achieveViewport.addEventListener('mouseup', () => {
+            isDown = false;
+            achieveViewport.classList.remove('is-dragging');
+        });
+
+        achieveViewport.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - achieveViewport.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            achieveViewport.scrollLeft = scrollLeft - walk;
+        });
+    }
+
+    // ==========================================
+    // 7. CONTACT STARLIGHT CANVAS & MAGNETIC SOCIALS
+    // ==========================================
+    const contactSection = document.getElementById('contact');
+    const contactCanvas = document.getElementById('contact-stars-canvas');
+    const magneticSocials = document.querySelectorAll('.magnetic-social-btn');
+
+    // 1. Ambient Starlight Dust
+    if (contactCanvas && contactSection) {
+        const ctx = contactCanvas.getContext('2d');
+        let cw = (contactCanvas.width = contactSection.offsetWidth);
+        let ch = (contactCanvas.height = contactSection.offsetHeight);
+
+        const contactStars = [];
+        const numStars = 45;
+        for (let i = 0; i < numStars; i++) {
+            contactStars.push({
+                x: Math.random() * cw,
+                y: Math.random() * ch,
+                size: Math.random() * 1.6 + 0.4,
+                alpha: Math.random() * 0.6 + 0.2,
+                vx: (Math.random() - 0.5) * 0.15,
+                vy: (Math.random() - 0.5) * 0.15,
+                pulse: Math.random() * Math.PI * 2
+            });
+        }
+
+        window.addEventListener('resize', () => {
+            cw = contactCanvas.width = contactSection.offsetWidth;
+            ch = contactCanvas.height = contactSection.offsetHeight;
+        });
+
+        function renderContactStars() {
+            ctx.clearRect(0, 0, cw, ch);
+            contactStars.forEach((star) => {
+                star.x += star.vx;
+                star.y += star.vy;
+                star.pulse += 0.02;
+
+                if (star.x < 0) star.x = cw;
+                if (star.x > cw) star.x = 0;
+                if (star.y < 0) star.y = ch;
+                if (star.y > ch) star.y = 0;
+
+                const currentAlpha = star.alpha * (0.6 + 0.4 * Math.sin(star.pulse));
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${currentAlpha.toFixed(2)})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(renderContactStars);
+        }
+        requestAnimationFrame(renderContactStars);
+    }
+
+    // 2. Strong Magnetic Hover on Social Buttons
+    magneticSocials.forEach((btn) => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const deltaX = (e.clientX - centerX) * 0.45;
+            const deltaY = (e.clientY - centerY) * 0.45;
+
+            btn.style.transform = `translate(${deltaX.toFixed(1)}px, ${deltaY.toFixed(1)}px)`;
+            btn.style.transition = 'transform 0.1s ease-out';
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0px, 0px)';
+            btn.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+        });
+    });
 
     // ==========================================
     // 3. HEADER SCROLL EFFECT & SCROLLSPY
