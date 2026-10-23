@@ -367,113 +367,331 @@
             </div>
         </section>
 
-        <!-- ==================== PROJECTS SECTION ==================== -->
+        <!-- ==================== PROJECTS SECTION (ASYMMETRIC BENTO GRID) ==================== -->
         <section id="projects" class="content-section">
             <div class="section-container">
                 <div class="section-header-row">
                     <span class="section-num">03</span>
                     <h2 class="section-title">FEATURED PROJECTS</h2>
-                    <span class="section-tag">ENGINEERING ARTIFACTS & SYSTEMS</span>
+                    <span class="section-tag">ASYMMETRIC BENTO ARCHITECTURE</span>
                 </div>
 
-                <div class="projects-grid">
-                    <!-- Project 1: Quest -->
-                    <article class="project-card">
-                        <div class="project-header">
-                            <span class="project-num">PROJECT 01</span>
-                            <span class="project-status-pill">CAMPUS APP</span>
+                <div class="bento-grid">
+                    <!-- BENTO ITEM 1: Quest (Major Feature - 2 Columns) -->
+                    <article class="bento-card bento-col-2" style="--brand-glow: rgba(6, 182, 212, 0.18); --brand-border: rgba(6, 182, 212, 0.45);" data-brand="cyan">
+                        <div class="bento-glow"></div>
+                        
+                        <div>
+                            <div class="bento-card-header">
+                                <span class="bento-category-tag" style="color: #06b6d4;">01 // CAMPUS LOGISTICS</span>
+                                <span class="bento-status-pill"><span class="bento-pulse-dot" style="background: #06b6d4;"></span>AKGEC EXCLUSIVE</span>
+                            </div>
+
+                            <div class="bento-info-block">
+                                <h3 class="bento-title">Quest</h3>
+                                <div class="bento-role-text">Campus Micro-Delivery App // AKGEC</div>
+                                <p class="bento-desc">Developed a peer-to-peer hostel task exchange and delivery platform exclusively for AKGEC students, featuring real-time bounty claims and a gamified Quest Points system.</p>
+                            </div>
                         </div>
-                        <h3 class="project-title">Quest</h3>
-                        <p class="project-org">Campus Micro-Delivery App // AKGEC</p>
-                        <p class="project-desc">
-                            Developed a peer-to-peer hostel task exchange and delivery platform exclusively for AKGEC students.<br><br>
-                            Implemented engaging features including real-time bounty claims and a &lsquo;Quest Points&rsquo; gamification system to drive user interaction.
-                        </p>
-                        <div class="project-tags">
-                            <span>Campus Logistics</span>
-                            <span>Peer-to-Peer</span>
-                            <span>Real-Time Bounties</span>
-                            <span>Gamification</span>
-                            <span>Quest Points</span>
+
+                        <!-- Abstract Interactive Graphic (Zoom on hover) -->
+                        <div class="bento-graphic-container">
+                            <div class="bento-graphic-inner flex flex-col gap-2.5">
+                                <div class="flex items-center justify-between text-[0.72rem] font-mono text-zinc-400">
+                                    <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>Campus Dispatch Mesh</span>
+                                    <span class="text-cyan-400 font-semibold font-mono">Real-Time WebSocket</span>
+                                </div>
+                                <div class="relative bg-zinc-950/80 rounded-lg p-3 border border-white/5 flex items-center justify-between">
+                                    <div class="flex items-center gap-2.5">
+                                        <div class="w-8 h-8 rounded-full bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-300 text-sm">⚡</div>
+                                        <div>
+                                            <div class="text-xs font-semibold text-white">Hostel 2 ➔ Academic Block 3</div>
+                                            <div class="text-[0.68rem] text-zinc-400 font-mono">Bounty Claim: +250 Quest Points</div>
+                                        </div>
+                                    </div>
+                                    <span class="px-2.5 py-1 text-[0.65rem] font-mono font-bold rounded bg-cyan-400 text-black">ACTIVE</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pill Badges -->
+                        <div class="bento-tech-pills">
+                            <span class="bento-pill">Next.js</span>
+                            <span class="bento-pill">FastAPI</span>
+                            <span class="bento-pill">PostgreSQL</span>
+                            <span class="bento-pill">WebSockets</span>
+                            <span class="bento-pill">Gamification</span>
+                        </div>
+
+                        <!-- Slide-up Actions Overlay -->
+                        <div class="bento-actions-overlay">
+                            <a href="https://github.com/mohit4215" target="_blank" rel="noopener noreferrer" class="bento-btn-action bento-btn-code">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                                </svg>
+                                <span>View Code</span>
+                            </a>
+                            <a href="#contact" class="bento-btn-action bento-btn-demo">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                                <span>Live Demo</span>
+                            </a>
                         </div>
                     </article>
 
-                    <!-- Project 2: StudyPartner -->
-                    <article class="project-card">
-                        <div class="project-header">
-                            <span class="project-num">PROJECT 02</span>
-                            <span class="project-status-pill">EDTECH & IEEE</span>
+                    <!-- BENTO ITEM 2: AKG University Web Portal (Standard 1 Column) -->
+                    <article class="bento-card" style="--brand-glow: rgba(245, 158, 11, 0.16); --brand-border: rgba(245, 158, 11, 0.45);" data-brand="amber">
+                        <div class="bento-glow"></div>
+                        
+                        <div>
+                            <div class="bento-card-header">
+                                <span class="bento-category-tag" style="color: #f59e0b;">02 // FULL-STACK CMS</span>
+                                <span class="bento-status-pill"><span class="bento-pulse-dot" style="background: #f59e0b;"></span>PRODUCTION WEB</span>
+                            </div>
+
+                            <div class="bento-info-block">
+                                <h3 class="bento-title">AKG University Web Portal</h3>
+                                <div class="bento-role-text">Institutional Web Architecture // AKGEC</div>
+                                <p class="bento-desc">Engineered a modern, full-stack university web portal utilizing Next.js and Payload CMS for scalable and efficient content management.</p>
+                            </div>
                         </div>
-                        <h3 class="project-title">StudyPartner</h3>
-                        <p class="project-org">EdTech Platform & Research // AKTU</p>
-                        <p class="project-desc">
-                            Built an LLM-assisted educational web application tailored for AKTU students, integrating WebSocket-based focus rooms and PostgreSQL-managed notes.<br><br>
-                            Authored and structured an IEEE-formatted research paper based on this B.Tech mini-project.
-                        </p>
-                        <div class="project-tags">
-                            <span>FastAPI</span>
-                            <span>PostgreSQL</span>
-                            <span>WebSockets</span>
-                            <span>LLM Assisted</span>
-                            <span>IEEE Paper</span>
+
+                        <!-- Abstract Interactive Graphic -->
+                        <div class="bento-graphic-container">
+                            <div class="bento-graphic-inner flex flex-col gap-2">
+                                <div class="flex items-center justify-between text-[0.7rem] font-mono text-zinc-400 border-b border-white/5 pb-1.5">
+                                    <span class="text-amber-400">Payload CMS Collections</span>
+                                    <span>v2.12</span>
+                                </div>
+                                <div class="flex flex-col gap-1.5 text-[0.72rem] font-mono text-zinc-300">
+                                    <div class="flex items-center justify-between bg-zinc-950/70 px-2.5 py-1 rounded border border-white/5">
+                                        <span>📁 collections/departments.ts</span>
+                                        <span class="text-emerald-400 text-[0.65rem]">SYNCED</span>
+                                    </div>
+                                    <div class="flex items-center justify-between bg-zinc-950/70 px-2.5 py-1 rounded border border-white/5">
+                                        <span>📁 collections/notices.ts</span>
+                                        <span class="text-emerald-400 text-[0.65rem]">200 OK</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pill Badges -->
+                        <div class="bento-tech-pills">
+                            <span class="bento-pill">Next.js</span>
+                            <span class="bento-pill">Payload CMS</span>
+                            <span class="bento-pill">TypeScript</span>
+                            <span class="bento-pill">Tailwind CSS</span>
+                        </div>
+
+                        <!-- Slide-up Actions Overlay -->
+                        <div class="bento-actions-overlay">
+                            <a href="https://github.com/mohit4215" target="_blank" rel="noopener noreferrer" class="bento-btn-action bento-btn-code">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                                </svg>
+                                <span>View Code</span>
+                            </a>
+                            <a href="#contact" class="bento-btn-action bento-btn-demo">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                                <span>Live Demo</span>
+                            </a>
                         </div>
                     </article>
 
-                    <!-- Project 3: AKG University Web Portal -->
-                    <article class="project-card">
-                        <div class="project-header">
-                            <span class="project-num">PROJECT 03</span>
-                            <span class="project-status-pill">FULL-STACK</span>
+                    <!-- BENTO ITEM 3: Predictive Waste-Routing (Standard 1 Column) -->
+                    <article class="bento-card" style="--brand-glow: rgba(16, 185, 129, 0.18); --brand-border: rgba(16, 185, 129, 0.45);" data-brand="emerald">
+                        <div class="bento-glow"></div>
+                        
+                        <div>
+                            <div class="bento-card-header">
+                                <span class="bento-category-tag" style="color: #10b981;">03 // AI & SUSTAINABILITY</span>
+                                <span class="bento-status-pill"><span class="bento-pulse-dot" style="background: #10b981;"></span>IIT DELHI ROUND 2</span>
+                            </div>
+
+                            <div class="bento-info-block">
+                                <h3 class="bento-title">Predictive Waste-Routing</h3>
+                                <div class="bento-role-text">Team Love Nature // WasteChakra 2026</div>
+                                <p class="bento-desc">Conceptualized a predictive waste-routing model for the WasteChakra 2026 competition at IIT Delhi, successfully qualifying for Round 2.</p>
+                            </div>
                         </div>
-                        <h3 class="project-title">AKG University Web Portal</h3>
-                        <p class="project-org">Institutional Web Architecture // AKGEC</p>
-                        <p class="project-desc">
-                            Engineered a modern, full-stack university web portal utilizing Next.js and Payload CMS for scalable and efficient content management.
-                        </p>
-                        <div class="project-tags">
-                            <span>Next.js</span>
-                            <span>Payload CMS</span>
-                            <span>TypeScript</span>
-                            <span>Tailwind CSS</span>
-                            <span>Scalable CMS</span>
+
+                        <!-- Abstract Interactive Graphic -->
+                        <div class="bento-graphic-container">
+                            <div class="bento-graphic-inner flex flex-col gap-2">
+                                <div class="flex items-center justify-between text-[0.7rem] font-mono text-zinc-400 border-b border-white/5 pb-1.5">
+                                    <span class="text-emerald-400">WasteChakra 2026</span>
+                                    <span class="text-zinc-500">IIT Delhi</span>
+                                </div>
+                                <div class="bg-zinc-950/80 rounded-lg p-2.5 border border-white/5 flex items-center justify-between">
+                                    <div>
+                                        <div class="text-xs font-semibold text-white">Route Optimization</div>
+                                        <div class="text-[0.68rem] text-emerald-400 font-mono">-34% Carbon Footprint</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="px-2 py-0.5 text-[0.65rem] font-mono font-bold rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">ROUND 2</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pill Badges -->
+                        <div class="bento-tech-pills">
+                            <span class="bento-pill">Python</span>
+                            <span class="bento-pill">MLOps</span>
+                            <span class="bento-pill">OpenCV</span>
+                            <span class="bento-pill">Optimization</span>
+                        </div>
+
+                        <!-- Slide-up Actions Overlay -->
+                        <div class="bento-actions-overlay">
+                            <a href="https://github.com/mohit4215" target="_blank" rel="noopener noreferrer" class="bento-btn-action bento-btn-code">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                                </svg>
+                                <span>View Code</span>
+                            </a>
+                            <a href="#contact" class="bento-btn-action bento-btn-demo">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                                <span>Live Demo</span>
+                            </a>
                         </div>
                     </article>
 
-                    <!-- Project 4: Predictive Waste-Routing -->
-                    <article class="project-card">
-                        <div class="project-header">
-                            <span class="project-num">PROJECT 04</span>
-                            <span class="project-status-pill">IIT DELHI ROUND 2</span>
+                    <!-- BENTO ITEM 4: StudyPartner (Major Feature - 2 Columns) -->
+                    <article class="bento-card bento-col-2" style="--brand-glow: rgba(139, 92, 246, 0.2); --brand-border: rgba(139, 92, 246, 0.45);" data-brand="purple">
+                        <div class="bento-glow"></div>
+                        
+                        <div>
+                            <div class="bento-card-header">
+                                <span class="bento-category-tag" style="color: #a78bfa;">04 // EDTECH & RESEARCH</span>
+                                <span class="bento-status-pill"><span class="bento-pulse-dot" style="background: #a78bfa;"></span>IEEE PAPER PUBLISHED</span>
+                            </div>
+
+                            <div class="bento-info-block">
+                                <h3 class="bento-title">StudyPartner</h3>
+                                <div class="bento-role-text">EdTech Platform & Research // AKTU</div>
+                                <p class="bento-desc">Built an LLM-assisted educational web application tailored for AKTU students, integrating WebSocket-based focus rooms and PostgreSQL-managed notes.</p>
+                            </div>
                         </div>
-                        <h3 class="project-title">Predictive Waste-Routing</h3>
-                        <p class="project-org">Team Love Nature // WasteChakra 2026</p>
-                        <p class="project-desc">
-                            Conceptualized a predictive waste-routing model for the WasteChakra 2026 competition at IIT Delhi, successfully qualifying for Round 2.
-                        </p>
-                        <div class="project-tags">
-                            <span>Predictive Modeling</span>
-                            <span>Route Optimization</span>
-                            <span>IIT Delhi</span>
-                            <span>WasteChakra 2026</span>
+
+                        <!-- Abstract Interactive Graphic -->
+                        <div class="bento-graphic-container">
+                            <div class="bento-graphic-inner flex flex-col sm:flex-row items-center justify-between gap-3">
+                                <div class="flex-1 w-full bg-zinc-950/80 rounded-lg p-2.5 border border-white/5">
+                                    <div class="flex items-center justify-between text-[0.68rem] font-mono text-zinc-400 mb-1.5">
+                                        <span class="text-purple-400">Gemini LLM Stream</span>
+                                        <span class="text-emerald-400">240 tok/s</span>
+                                    </div>
+                                    <div class="text-[0.72rem] text-zinc-300 font-mono truncate">
+                                        &gt; Real-time focus room synced. Notes active...
+                                    </div>
+                                </div>
+                                <div class="flex-1 w-full bg-zinc-950/80 rounded-lg p-2.5 border border-white/5">
+                                    <div class="flex items-center justify-between text-[0.68rem] font-mono text-zinc-400 mb-1.5">
+                                        <span class="text-purple-400">Research Paper</span>
+                                        <span class="text-zinc-500">IEEE Format</span>
+                                    </div>
+                                    <div class="text-[0.72rem] text-zinc-300 font-mono truncate">
+                                        📄 B.Tech Mini-Project // Published
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pill Badges -->
+                        <div class="bento-tech-pills">
+                            <span class="bento-pill">FastAPI</span>
+                            <span class="bento-pill">PostgreSQL</span>
+                            <span class="bento-pill">WebSockets</span>
+                            <span class="bento-pill">Gemini API</span>
+                            <span class="bento-pill">IEEE Paper</span>
+                        </div>
+
+                        <!-- Slide-up Actions Overlay -->
+                        <div class="bento-actions-overlay">
+                            <a href="https://github.com/mohit4215" target="_blank" rel="noopener noreferrer" class="bento-btn-action bento-btn-code">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                                </svg>
+                                <span>View Code</span>
+                            </a>
+                            <a href="#contact" class="bento-btn-action bento-btn-demo">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                                <span>Live Demo</span>
+                            </a>
                         </div>
                     </article>
 
-                    <!-- Project 5: Startup Conclave Website -->
-                    <article class="project-card">
-                        <div class="project-header">
-                            <span class="project-num">PROJECT 05</span>
-                            <span class="project-status-pill">LIVE DEPLOYMENT</span>
+                    <!-- BENTO ITEM 5: Startup Conclave Website (Panoramic 3 Columns) -->
+                    <article class="bento-card bento-col-3" style="--brand-glow: rgba(244, 63, 94, 0.18); --brand-border: rgba(244, 63, 94, 0.45);" data-brand="rose">
+                        <div class="bento-glow"></div>
+                        
+                        <div class="bento-panoramic-wrap">
+                            <div>
+                                <div class="bento-card-header">
+                                    <span class="bento-category-tag" style="color: #f43f5e;">05 // LIVE EVENT PLATFORM</span>
+                                    <span class="bento-status-pill"><span class="bento-pulse-dot" style="background: #f43f5e;"></span>ACTIVE DEPLOYMENT</span>
+                                </div>
+
+                                <div class="bento-info-block">
+                                    <h3 class="bento-title">Startup Conclave Website</h3>
+                                    <div class="bento-role-text">Official Event Platform // AKGEC</div>
+                                    <p class="bento-desc">Designed and deployed a dynamic, highly responsive event website for the upcoming AKGEC Startup Conclave, facilitating agenda discovery and ticketing.</p>
+                                </div>
+
+                                <!-- Pill Badges -->
+                                <div class="bento-tech-pills border-t-0 pt-0">
+                                    <span class="bento-pill">React</span>
+                                    <span class="bento-pill">Next.js</span>
+                                    <span class="bento-pill">Framer Motion</span>
+                                    <span class="bento-pill">Tailwind CSS</span>
+                                    <span class="bento-pill">Event Arch</span>
+                                </div>
+                            </div>
+
+                            <!-- Abstract Interactive Graphic -->
+                            <div class="bento-graphic-container">
+                                <div class="bento-graphic-inner flex flex-col sm:flex-row items-center justify-between gap-3 w-full">
+                                    <div class="flex-1 w-full bg-zinc-950/80 rounded-lg p-3 border border-white/5">
+                                        <div class="flex items-center justify-between text-[0.68rem] font-mono text-zinc-400 mb-1">
+                                            <span class="text-rose-400">Event Agendas</span>
+                                            <span class="text-emerald-400 font-semibold">1,200+ Confirmed</span>
+                                        </div>
+                                        <div class="text-xs font-semibold text-white">Startup Pitch Arena // Fortune 26</div>
+                                    </div>
+                                    <div class="flex-1 w-full bg-zinc-950/80 rounded-lg p-3 border border-white/5">
+                                        <div class="flex items-center justify-between text-[0.68rem] font-mono text-zinc-400 mb-1">
+                                            <span class="text-rose-400">Edge Deployment</span>
+                                            <span class="text-zinc-500 font-mono">14ms latency</span>
+                                        </div>
+                                        <div class="text-xs font-semibold text-white">High-Performance Vercel Edge CDN</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <h3 class="project-title">Startup Conclave Website</h3>
-                        <p class="project-org">Official Event Platform // AKGEC</p>
-                        <p class="project-desc">
-                            Designed and deployed a dynamic, highly responsive event website for the upcoming AKGEC Startup Conclave.
-                        </p>
-                        <div class="project-tags">
-                            <span>Event Architecture</span>
-                            <span>Responsive Design</span>
-                            <span>Web Engineering</span>
-                            <span>Startup Conclave</span>
+
+                        <!-- Slide-up Actions Overlay -->
+                        <div class="bento-actions-overlay">
+                            <a href="https://github.com/mohit4215" target="_blank" rel="noopener noreferrer" class="bento-btn-action bento-btn-code">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                                </svg>
+                                <span>View Code</span>
+                            </a>
+                            <a href="#contact" class="bento-btn-action bento-btn-demo">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                                <span>Live Demo</span>
+                            </a>
                         </div>
                     </article>
                 </div>
