@@ -836,6 +836,12 @@ a {
     color: #cccccc;
 }
 
+@media (min-width: 900px) {
+    .projects-grid .project-card:last-child:nth-child(odd) {
+        grid-column: span 2;
+    }
+}
+
 /* ==================== EXPERIENCE TIMELINE ==================== */
 .experience-timeline {
     position: relative;
