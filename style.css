@@ -960,6 +960,12 @@ a {
     align-self: flex-start;
 }
 
+@media (min-width: 900px) {
+    .achievements-grid .achievement-card:last-child:nth-child(odd) {
+        grid-column: span 2;
+    }
+}
+
 /* ==================== CONTACT SECTION ==================== */
 .contact-grid {
     display: grid;
