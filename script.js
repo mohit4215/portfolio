@@ -396,6 +396,57 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ==========================================
+    // 3B. BENTO BOX PROJECTS ENGINE
+    // ==========================================
+    const projectsSection = document.getElementById('projects');
+    const bentoCards = document.querySelectorAll('.bento-card');
+
+    if (projectsSection && bentoCards.length > 0) {
+        // 1. Scroll Entry Stagger-Fade Animation (Physics-based Spring Easing)
+        const observerOptions = {
+            root: null,
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        };
+
+        const bentoObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    bentoCards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('bento-revealed');
+                        }, index * 120); // 120ms progressive stagger
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        bentoObserver.observe(projectsSection);
+
+        // Fallback: If section is already visible on load
+        const initialRect = projectsSection.getBoundingClientRect();
+        if (initialRect.top < window.innerHeight * 0.9) {
+            bentoCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('bento-revealed');
+                }, index * 100);
+            });
+        }
+
+        // 2. Hover Interactions: Dynamic Radial Glow Tracking
+        bentoCards.forEach((card) => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    }
+
+    // ==========================================
     // 4. CUSTOM CURSOR
     // ==========================================
     const cursorDot = document.getElementById('cursor-dot');
@@ -408,7 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cursorRing.style.top = `${e.clientY}px`;
         });
 
-        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .btn-resume');
+        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .btn-resume, .bento-card, .bento-pill, .bento-btn-action');
         interactives.forEach((el) => {
             el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
