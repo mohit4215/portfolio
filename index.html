@@ -3,21 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mohit Agarwal — IT Undergraduate & Full-Stack Developer</title>
-    <meta name="description" content="Portfolio of Mohit Agarwal — 3rd Semester Information Technology undergraduate at AKGEC, Full-Stack Developer specializing in Next.js & Payload CMS, and Classical Bamboo Bansuri artist.">
+    <title>Mohit Agarwal | Portfolio</title>
+    <meta name="description" content="Mohit Agarwal — MLOps & Full-Stack Engineer. Information Technology undergraduate at AKGEC, Founder of HiTrade, IEEE Paper Co-author, and Classical Bansuri Artist.">
 
-    <!-- Fonts: Syne (Editorial Display), Inter (Clean Body), Space Grotesk (Labels & Badges) -->
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter, Space Grotesk, Syne -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
 
-    <!-- CDN Libraries: GSAP & Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="is-loading">
+<body class="antialiased is-loading">
+
+    <!-- ==================== ANIMATION PHASE 1 & 2 ==================== -->
+    <div id="intro-overlay" class="fixed inset-0 z-[1000] flex items-center justify-center bg-[#050505] transition-opacity duration-1000">
+        <!-- The word container -->
+        <div id="portfolio-word" class="flex gap-2 text-4xl sm:text-6xl md:text-8xl font-extrabold tracking-widest text-white z-10">
+            <!-- Letters injected via JS -->
+        </div>
+    </div>
 
     <!-- Custom Cursor -->
     <div id="cursor-dot" class="custom-cursor-dot"></div>
@@ -69,32 +76,43 @@
     </div>
 
     <main id="main-content">
-        <!-- ==================== HERO SECTION ==================== -->
-        <section id="hero" class="hero-section">
-            <!-- Three.js Interactive Particle Portrait Canvas (Behind Text) -->
-            <canvas id="portrait-canvas" class="portrait-canvas"></canvas>
+        <!-- ==================== ANIMATION PHASE 3 (HERO / LANDING UI) ==================== -->
+        <section id="hero" class="relative z-10 min-h-screen w-full flex flex-col items-center justify-center px-6 overflow-hidden">
+            <div class="absolute inset-0 z-0 bg-grid"></div>
+            <div class="glow-orb"></div>
 
-            <!-- High-Performance Text Morphing Canvas (Phase 1 Dot -> PORTFOLIO -> Morph -> MOHIT AGARWAL permanently) -->
-            <canvas id="text-canvas" class="text-canvas"></canvas>
-
-            <h1 class="sr-only">Mohit Agarwal — IT Undergraduate & Full-Stack Developer</h1>
-
-            <!-- Hero Subtitle & Action Buttons (Directly below MOHIT AGARWAL) -->
-            <div class="hero-content" id="hero-content">
-                <p id="hero-subtitle" class="hero-subtitle">
-                    IT Undergraduate & Full-Stack Developer
-                </p>
-
-                <div class="hero-actions" id="hero-actions">
-                    <a href="#projects" class="btn-primary">EXPLORE PROJECTS</a>
-                    <a href="#contact" class="btn-secondary">GET IN TOUCH</a>
+            <div class="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto py-20">
+                <!-- Tagline -->
+                <div class="reveal-item text-gray-400 font-medium tracking-[0.2em] text-sm uppercase mb-6" style="transition-delay: 100ms;">
+                    Welcome to my space
                 </div>
-            </div>
 
-            <!-- Scroll Indicator -->
-            <div class="scroll-indicator" id="scroll-indicator">
-                <span class="scroll-text">SCROLL</span>
-                <span class="scroll-line"></span>
+                <!-- Name -->
+                <h1 class="reveal-item text-6xl sm:text-8xl font-extrabold tracking-tight mb-4 text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500" style="transition-delay: 200ms;">
+                    Mohit Agarwal
+                </h1>
+
+                <!-- Subheading -->
+                <h2 class="reveal-item text-xl sm:text-3xl text-gray-400 font-light mb-12" style="transition-delay: 300ms;">
+                    <span class="text-white font-medium">MLOps</span> & <span class="text-white font-medium">Full-Stack</span> Engineer
+                </h2>
+
+                <!-- Tech Stack Tags -->
+                <div class="reveal-item flex flex-wrap justify-center gap-3 mt-4" style="transition-delay: 400ms;">
+                    <span class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm sm:text-base hover:bg-white/10 transition-colors backdrop-blur-sm">Next.js</span>
+                    <span class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm sm:text-base hover:bg-white/10 transition-colors backdrop-blur-sm">FastAPI</span>
+                    <span class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm sm:text-base hover:bg-white/10 transition-colors backdrop-blur-sm">Python</span>
+                    <span class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm sm:text-base hover:bg-white/10 transition-colors backdrop-blur-sm">PostgreSQL</span>
+                    <span class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm sm:text-base hover:bg-white/10 transition-colors backdrop-blur-sm">Gemini API</span>
+                    <span class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm sm:text-base hover:bg-white/10 transition-colors backdrop-blur-sm">Payload CMS</span>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="reveal-item mt-16" style="transition-delay: 500ms;">
+                    <a href="#about" class="px-8 py-4 bg-white text-black rounded-full font-semibold tracking-wide hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)] inline-block">
+                        Explore My Work
+                    </a>
+                </div>
             </div>
         </section>
 
