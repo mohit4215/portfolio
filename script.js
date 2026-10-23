@@ -101,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 revealItems.forEach((item) => {
                     item.classList.add('revealed');
                 });
+                startHeroTypewriter();
             }, 50);
         }, 3500); // 2500ms + 1000ms transition
     } else {
@@ -108,10 +109,119 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'auto';
         document.body.classList.remove('is-loading');
         document.querySelectorAll('.reveal-item').forEach(el => el.classList.add('revealed'));
+        startHeroTypewriter();
         if (siteHeader) {
             siteHeader.style.opacity = '1';
             siteHeader.style.transform = 'translateY(0)';
         }
+    }
+
+    // ==========================================
+    // 1B. VERCEL/LINEAR HERO ENGINE
+    // ==========================================
+    const heroSection = document.getElementById('hero');
+    const heroSpotlight = document.getElementById('hero-mouse-spotlight');
+    const typewriterEl = document.getElementById('hero-typewriter');
+    const heroFloatingIcons = document.querySelectorAll('.hero-floating-icon');
+    const magneticConnectBtn = document.getElementById('btn-magnetic-connect');
+
+    // 1. Subtitle Typewriter Animation ("MLOps & Full-Stack Engineer")
+    let typewriterStarted = false;
+    function startHeroTypewriter() {
+        if (typewriterStarted || !typewriterEl) return;
+        typewriterStarted = true;
+        const textToType = "MLOps & Full-Stack Engineer";
+        let charIndex = 0;
+        typewriterEl.textContent = "";
+
+        function typeNextChar() {
+            if (charIndex < textToType.length) {
+                typewriterEl.textContent += textToType.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeNextChar, 55);
+            }
+        }
+        setTimeout(typeNextChar, 300);
+    }
+
+    // 2. Dynamic Mouse Spotlight Effect (Cyan & Purple Radial Glow Follower)
+    if (heroSection && heroSpotlight) {
+        let targetX = heroSection.offsetWidth / 2;
+        let targetY = heroSection.offsetHeight / 2;
+        let curX = targetX;
+        let curY = targetY;
+
+        window.addEventListener('mousemove', (e) => {
+            const rect = heroSection.getBoundingClientRect();
+            targetX = e.clientX - rect.left;
+            targetY = e.clientY - rect.top;
+        });
+
+        function renderHeroSpotlight() {
+            curX += (targetX - curX) * 0.12;
+            curY += (targetY - curY) * 0.12;
+
+            heroSpotlight.style.setProperty('--hero-mouse-x', `${curX.toFixed(1)}px`);
+            heroSpotlight.style.setProperty('--hero-mouse-y', `${curY.toFixed(1)}px`);
+
+            requestAnimationFrame(renderHeroSpotlight);
+        }
+        requestAnimationFrame(renderHeroSpotlight);
+    }
+
+    // 3. Floating Tech Stack Mouse Parallax
+    if (heroFloatingIcons.length > 0 && heroSection) {
+        let winHalfW = window.innerWidth / 2;
+        let winHalfH = window.innerHeight / 2;
+        let mouseDeltaX = 0;
+        let mouseDeltaY = 0;
+        let parallaxX = 0;
+        let parallaxY = 0;
+
+        window.addEventListener('resize', () => {
+            winHalfW = window.innerWidth / 2;
+            winHalfH = window.innerHeight / 2;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            mouseDeltaX = e.clientX - winHalfW;
+            mouseDeltaY = e.clientY - winHalfH;
+        });
+
+        function renderHeroParallax() {
+            parallaxX += (mouseDeltaX - parallaxX) * 0.08;
+            parallaxY += (mouseDeltaY - parallaxY) * 0.08;
+
+            heroFloatingIcons.forEach((icon) => {
+                const depth = parseFloat(icon.getAttribute('data-depth')) || 0.04;
+                const px = parallaxX * depth;
+                const py = parallaxY * depth;
+                icon.style.transform = `translate3d(${px.toFixed(2)}px, ${py.toFixed(2)}px, 0)`;
+            });
+
+            requestAnimationFrame(renderHeroParallax);
+        }
+        requestAnimationFrame(renderHeroParallax);
+    }
+
+    // 4. Magnetic Hover Effect on "Let's Connect" CTA
+    if (magneticConnectBtn) {
+        magneticConnectBtn.addEventListener('mousemove', (e) => {
+            const rect = magneticConnectBtn.getBoundingClientRect();
+            const btnCenterX = rect.left + rect.width / 2;
+            const btnCenterY = rect.top + rect.height / 2;
+            const pullStrength = 0.35;
+            const deltaX = (e.clientX - btnCenterX) * pullStrength;
+            const deltaY = (e.clientY - btnCenterY) * pullStrength;
+
+            magneticConnectBtn.style.transform = `translate(${deltaX.toFixed(1)}px, ${deltaY.toFixed(1)}px)`;
+            magneticConnectBtn.style.transition = 'transform 0.1s ease-out';
+        });
+
+        magneticConnectBtn.addEventListener('mouseleave', () => {
+            magneticConnectBtn.style.transform = 'translate(0px, 0px)';
+            magneticConnectBtn.style.transition = 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)';
+        });
     }
 
     // ==========================================
