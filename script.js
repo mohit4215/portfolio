@@ -480,8 +480,8 @@ document.addEventListener('DOMContentLoaded', () => {
         function updateTimelineScroll() {
             const wrapRect = timelineWrapper.getBoundingClientRect();
             const wrapHeight = timelineWrapper.offsetHeight;
-            // Trigger point at 68% down the viewport for natural dynamic pacing
-            const triggerPoint = window.innerHeight * 0.68;
+            // Trigger point at 78% down the viewport for natural dynamic pacing
+            const triggerPoint = window.innerHeight * 0.78;
             const scrolled = triggerPoint - wrapRect.top;
             const progress = Math.min(Math.max(scrolled / wrapHeight, 0), 1);
 
