@@ -8,7 +8,7 @@ const ACTIVITIES = [
   { emoji: "🏋️", title: "Gym & Fitness",    role: "Physical Discipline", tag: "DAILY",   bg: "bg-sky",      desc: "Dedicated to strength training and maintaining peak physical fitness — because a disciplined body builds a disciplined mind." },
   { emoji: "🏊", title: "Swimming",          role: "Aquatic Sport",       tag: "WEEKLY",  bg: "bg-mint",     desc: "Active swimmer focusing on endurance, breathing technique, and the mental clarity that comes from long sessions in the water." },
   { emoji: "🥊", title: "Boxing",            role: "Combat Sport",        tag: "TRAINING",bg: "bg-sakura",   desc: "Practising boxing for explosive speed, sharp tactical instincts, and disciplined stress management through controlled aggression." },
-  { emoji: "🎵", title: "Flutist",           role: "Musical Artist",      tag: "CREATIVE",bg: "bg-lavender", desc: "Passionate flute player exploring classical notes — music sharpens creative thinking and emotional intelligence." },
+  { emoji: "💻", title: "Open Source",       role: "Tech Community",      tag: "COLLABORATIVE", bg: "bg-lavender", desc: "Contributing to developer communities and student-led open-source initiatives to build scalable tools and share knowledge." },
   { emoji: "❤️", title: "NGO Volunteering", role: "Community Service",   tag: "IMPACT",  bg: "bg-warm",     desc: "Volunteering at NGOs to support educational and social welfare. Giving back is non-negotiable." },
 ];
 
