@@ -1005,17 +1005,93 @@ a {
 }
 
 /* ==================== SKILLS SECTION (3D GLASSMORPHISM) ==================== */
+/* Technical Skills Section Design Tokens */
+#skills {
+    /* 1. Layout & Ambient Light Tokens */
+    --skills-grid-gap: 1.75rem;
+    --skills-ambient-size: 65vw;
+    --skills-ambient-blur: 80px;
+    --skills-ambient-cyan: rgba(6, 182, 212, 0.09);
+    --skills-ambient-blue: rgba(59, 130, 246, 0.04);
+
+    /* 2. Glassmorphic Surface & Geometry Tokens */
+    --skills-card-bg: rgba(12, 12, 18, 0.65);
+    --skills-card-blur: 24px;
+    --skills-card-border: rgba(255, 255, 255, 0.08);
+    --skills-card-radius: 1.6rem;
+    --skills-card-pad: 2.25rem 2rem;
+    --skills-card-pad-mobile: 1.75rem 1.5rem;
+    --skills-card-depth: translateZ(24px);
+
+    /* 3. Typography Tokens */
+    --skills-title-font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --skills-title-size: clamp(1.25rem, 1.8vw, 1.45rem);
+    --skills-title-weight: 700;
+    --skills-title-line-height: 1.35;
+    --skills-title-color: #ffffff;
+    --skills-title-pad-bottom: 0.25rem;
+    --skills-title-letter-spacing: -0.015em;
+
+    --skills-summary-font: var(--font-body);
+    --skills-summary-size: 0.88rem;
+    --skills-summary-color: var(--text-dim);
+    --skills-summary-line-height: 1.6;
+
+    /* 4. Category Pill Tokens */
+    --skills-pill-font: var(--font-mono);
+    --skills-pill-size: 0.66rem;
+    --skills-pill-spacing: 0.14em;
+    --skills-pill-radius: 9999px;
+    --skills-pill-pad: 0.25rem 0.65rem;
+    --skills-pill-bg: rgba(255, 255, 255, 0.04);
+    --skills-pill-border: rgba(255, 255, 255, 0.1);
+    --skills-pill-color: var(--text-dim);
+
+    /* 5. Tech Badge Tokens */
+    --skills-badge-font: var(--font-mono);
+    --skills-badge-size: 0.76rem;
+    --skills-badge-pad: 0.42rem 0.95rem;
+    --skills-badge-radius: 9999px;
+    --skills-badge-spacing: 0.04em;
+    --skills-badge-gap: 0.55rem;
+    --skills-badge-bg: rgba(255, 255, 255, 0.04);
+    --skills-badge-border: rgba(255, 255, 255, 0.1);
+    --skills-badge-color: #cbd5e1;
+    --skills-badge-highlight-bg: rgba(255, 255, 255, 0.07);
+    --skills-badge-highlight-border: rgba(255, 255, 255, 0.18);
+    --skills-badge-highlight-color: #ffffff;
+
+    /* 6. Icon Badge Tokens */
+    --skills-icon-size: 42px;
+    --skills-icon-radius: 0.85rem;
+
+    /* 7. Motion & Interaction Tokens */
+    --skills-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --skills-transition-card: transform 0.45s var(--skills-ease), box-shadow 0.4s ease, border-color 0.4s ease;
+    --skills-transition-badge: transform 0.22s var(--skills-ease), background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    --skills-spotlight-size: 450px;
+
+    /* 8. Default Domain Accent Tokens (Cyan) */
+    --skills-accent: #06b6d4;
+    --skills-accent-rgb: 6, 182, 212;
+    --skills-card-hover-border: rgba(var(--skills-accent-rgb), 0.55);
+    --skills-card-hover-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), 0 0 35px rgba(var(--skills-accent-rgb), 0.2), inset 0 0 25px rgba(var(--skills-accent-rgb), 0.05);
+    --skills-badge-hover-bg: rgba(var(--skills-accent-rgb), 0.14);
+    --skills-badge-hover-border: rgba(var(--skills-accent-rgb), 0.65);
+    --skills-badge-hover-shadow: 0 0 16px rgba(var(--skills-accent-rgb), 0.35);
+}
+
 .skills-ambient-glow {
     position: absolute;
-    width: 65vw;
-    height: 65vw;
-    background: radial-gradient(circle, rgba(6, 182, 212, 0.09) 0%, rgba(59, 130, 246, 0.04) 40%, transparent 70%);
+    width: var(--skills-ambient-size);
+    height: var(--skills-ambient-size);
+    background: radial-gradient(circle, var(--skills-ambient-cyan) 0%, var(--skills-ambient-blue) 40%, transparent 70%);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
     z-index: 0;
-    filter: blur(80px);
+    filter: blur(var(--skills-ambient-blur));
     animation: ambientFloat 14s ease-in-out infinite alternate;
 }
 
@@ -1027,7 +1103,7 @@ a {
 .skills-glass-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.75rem;
+    gap: var(--skills-grid-gap);
 }
 
 /* Featured double-width card for AI & MLOps */
@@ -1035,27 +1111,51 @@ a {
     grid-column: span 2;
 }
 
-/* Glassmorphic 3D Tilt Card */
+/* Glassmorphic 3D Tilt Card Component */
 .tilt-card {
     position: relative;
-    background: rgba(12, 12, 18, 0.65);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 1.6rem;
-    padding: 2.25rem 2rem;
+    background: var(--skills-card-bg);
+    backdrop-filter: blur(var(--skills-card-blur));
+    -webkit-backdrop-filter: blur(var(--skills-card-blur));
+    border: 1px solid var(--skills-card-border);
+    border-radius: var(--skills-card-radius);
+    padding: var(--skills-card-pad);
     transform-style: preserve-3d;
-    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    transition: var(--skills-transition-card);
     overflow: hidden;
     will-change: transform;
 }
 
-/* Soft cyan/blue neon border glow on hover */
+/* Card Domain Brand Tokens */
+.skill-card-cyan {
+    --skills-accent: #06b6d4;
+    --skills-accent-rgb: 6, 182, 212;
+}
+
+.skill-card-blue {
+    --skills-accent: #3b82f6;
+    --skills-accent-rgb: 59, 130, 246;
+}
+
+.skill-card-indigo {
+    --skills-accent: #6366f1;
+    --skills-accent-rgb: 99, 102, 241;
+}
+
+.skill-card-emerald {
+    --skills-accent: #10b981;
+    --skills-accent-rgb: 16, 185, 129;
+}
+
+.skill-card-purple {
+    --skills-accent: #a855f7;
+    --skills-accent-rgb: 168, 85, 247;
+}
+
+/* Neon border glow and elevation on hover */
 .tilt-card:hover {
-    border-color: rgba(6, 182, 212, 0.55);
-    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75),
-                0 0 35px rgba(6, 182, 212, 0.2),
-                inset 0 0 25px rgba(6, 182, 212, 0.05);
+    border-color: var(--skills-card-hover-border);
+    box-shadow: var(--skills-card-hover-shadow);
 }
 
 /* Dynamic neon light glow tracking inside card */
@@ -1065,8 +1165,8 @@ a {
     inset: 0;
     border-radius: inherit;
     background: radial-gradient(
-        450px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-        rgba(6, 182, 212, 0.12),
+        var(--skills-spotlight-size) circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(var(--skills-accent-rgb), 0.14),
         transparent 65%
     );
     opacity: 0;
@@ -1082,7 +1182,7 @@ a {
 .tilt-card-content {
     position: relative;
     z-index: 2;
-    transform: translateZ(24px);
+    transform: var(--skills-card-depth);
     overflow: visible;
 }
 
@@ -1094,19 +1194,21 @@ a {
 }
 
 .skill-icon-badge {
-    width: 42px;
-    height: 42px;
-    border-radius: 0.85rem;
+    width: var(--skills-icon-size);
+    height: var(--skills-icon-size);
+    border-radius: var(--skills-icon-radius);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(var(--skills-accent-rgb), 0.1);
+    border: 1px solid rgba(var(--skills-accent-rgb), 0.3);
+    box-shadow: 0 0 15px rgba(var(--skills-accent-rgb), 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .tilt-card:hover .skill-icon-badge {
     transform: scale(1.08) rotate(3deg);
+    box-shadow: 0 0 20px rgba(var(--skills-accent-rgb), 0.35);
 }
 
 .icon-cyan {
@@ -1140,70 +1242,71 @@ a {
 }
 
 .skill-cat-pill {
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.14em;
-    padding: 0.25rem 0.65rem;
-    border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-dim);
+    font-family: var(--skills-pill-font);
+    font-size: var(--skills-pill-size);
+    letter-spacing: var(--skills-pill-spacing);
+    padding: var(--skills-pill-pad);
+    border-radius: var(--skills-pill-radius);
+    background: var(--skills-pill-bg);
+    border: 1px solid var(--skills-pill-border);
+    color: var(--skills-pill-color);
 }
 
 .skill-card-heading {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-size: clamp(1.25rem, 1.8vw, 1.45rem);
-    font-weight: 700;
-    line-height: 1.35;
-    padding-bottom: 0.25rem;
-    color: #ffffff;
-    letter-spacing: -0.015em;
+    font-family: var(--skills-title-font);
+    font-size: var(--skills-title-size);
+    font-weight: var(--skills-title-weight);
+    line-height: var(--skills-title-line-height);
+    padding-bottom: var(--skills-title-pad-bottom);
+    color: var(--skills-title-color);
+    letter-spacing: var(--skills-title-letter-spacing);
     margin-bottom: 0.5rem;
     overflow: visible;
 }
 
 .skill-card-summary {
-    font-size: 0.88rem;
-    color: var(--text-dim);
-    line-height: 1.6;
+    font-family: var(--skills-summary-font);
+    font-size: var(--skills-summary-size);
+    color: var(--skills-summary-color);
+    line-height: var(--skills-summary-line-height);
     margin-bottom: 1.6rem;
 }
 
 .skill-badges-wrap {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.55rem;
+    gap: var(--skills-badge-gap);
 }
 
 /* Modern Pill-Shaped Badges with Scale Hover */
 .skill-badge {
     display: inline-flex;
     align-items: center;
-    padding: 0.42rem 0.95rem;
-    border-radius: 9999px;
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-    letter-spacing: 0.04em;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #cbd5e1;
-    transition: transform 0.22s var(--ease-out), background-color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    padding: var(--skills-badge-pad);
+    border-radius: var(--skills-badge-radius);
+    font-family: var(--skills-badge-font);
+    font-size: var(--skills-badge-size);
+    letter-spacing: var(--skills-badge-spacing);
+    background: var(--skills-badge-bg);
+    border: 1px solid var(--skills-badge-border);
+    color: var(--skills-badge-color);
+    transition: var(--skills-transition-badge);
     user-select: none;
     cursor: default;
 }
 
 .skill-badge:hover {
     transform: scale(1.07);
-    background: rgba(6, 182, 212, 0.14);
-    border-color: rgba(6, 182, 212, 0.65);
-    color: #ffffff;
-    box-shadow: 0 0 16px rgba(6, 182, 212, 0.35);
+    background: var(--skills-badge-hover-bg);
+    border-color: var(--skills-badge-hover-border);
+    color: var(--skills-badge-hover-color, #ffffff);
+    box-shadow: var(--skills-badge-hover-shadow);
 }
 
 .skill-badge.badge-highlight {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.18);
-    color: #ffffff;
+    background: var(--skills-badge-highlight-bg);
+    border-color: var(--skills-badge-highlight-border);
+    color: var(--skills-badge-highlight-color);
 }
 
 @media (max-width: 1024px) {
@@ -1223,10 +1326,9 @@ a {
         grid-column: span 1;
     }
     .tilt-card {
-        padding: 1.75rem 1.5rem;
+        padding: var(--skills-card-pad-mobile);
     }
 }
-
 /* ==================== BENTO BOX PROJECTS SECTION ==================== */
 .bento-grid {
     display: grid;
