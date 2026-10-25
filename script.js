@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cursorRing.style.top = `${e.clientY}px`;
         });
 
-        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .bento-card, .bento-pill, .bento-btn-action, .magnetic-social-btn, .achieve-3d-card, .carousel-btn, .back-to-top-btn, .gallery-card, .gallery-tab, .lightbox-btn, .lightbox-nav-btn');
+        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .bento-card, .bento-pill, .bento-btn-action, .magnetic-social-btn, .achieve-3d-card, .carousel-btn, .back-to-top-btn, .gallery-card, .gallery-tab, .lightbox-btn, .lightbox-nav-btn, .timeline-card');
         interactives.forEach((el) => {
             el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
@@ -467,50 +467,104 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 5. EXPERIENCE GLOWING SCROLL TIMELINE
+    // 5. EXPERIENCE GLOWING SCROLL TIMELINE ENGINE
     // ==========================================
     const expSection = document.getElementById('experience');
+    const timelineWrapper = document.getElementById('experience-timeline');
     const timelineFill = document.getElementById('timeline-scroll-fill');
     const timelineItems = document.querySelectorAll('.timeline-item');
 
-    if (expSection && timelineFill && timelineItems.length > 0) {
+    if (expSection && timelineWrapper && timelineFill && timelineItems.length > 0) {
+        let isTicking = false;
+
         function updateTimelineScroll() {
-            const rect = expSection.getBoundingClientRect();
-            const sectionHeight = expSection.offsetHeight;
-            const triggerPoint = window.innerHeight * 0.72;
-            const scrolledInto = triggerPoint - rect.top;
-            const progress = Math.min(Math.max(scrolledInto / (sectionHeight * 0.88), 0), 1);
+            const wrapRect = timelineWrapper.getBoundingClientRect();
+            const wrapHeight = timelineWrapper.offsetHeight;
+            // Trigger point at 68% down the viewport for natural dynamic pacing
+            const triggerPoint = window.innerHeight * 0.68;
+            const scrolled = triggerPoint - wrapRect.top;
+            const progress = Math.min(Math.max(scrolled / wrapHeight, 0), 1);
 
             timelineFill.style.height = `${(progress * 100).toFixed(1)}%`;
 
-            // Check each item node position relative to triggerPoint
+            // Active focus identification (card closest to viewport center)
+            const viewportCenter = window.innerHeight * 0.5;
+            let closestCard = null;
+            let minDistance = Infinity;
+
             timelineItems.forEach((item) => {
                 const node = item.querySelector('.timeline-node');
                 const card = item.querySelector('.timeline-card');
                 if (node && card) {
                     const nodeRect = node.getBoundingClientRect();
+
+                    // If glowing line reaches the node, activate node, reveal branch & card
                     if (nodeRect.top <= triggerPoint) {
                         node.classList.add('node-active');
                         card.classList.add('card-revealed');
+                        item.classList.add('item-revealed');
+                    }
+
+                    // Calculate proximity to center for in-focus active gaze
+                    if (card.classList.contains('card-revealed')) {
+                        const cardRect = card.getBoundingClientRect();
+                        const cardCenter = cardRect.top + cardRect.height / 2;
+                        const distToCenter = Math.abs(viewportCenter - cardCenter);
+                        if (distToCenter < minDistance && distToCenter < window.innerHeight * 0.42) {
+                            minDistance = distToCenter;
+                            closestCard = card;
+                        }
                     }
                 }
             });
+
+            // Update focused state
+            timelineItems.forEach((item) => {
+                const card = item.querySelector('.timeline-card');
+                if (card) {
+                    if (card === closestCard) {
+                        card.classList.add('card-focused');
+                    } else {
+                        card.classList.remove('card-focused');
+                    }
+                }
+            });
+
+            isTicking = false;
         }
 
-        window.addEventListener('scroll', updateTimelineScroll, { passive: true });
-        updateTimelineScroll(); // Initial check
+        function requestTimelineUpdate() {
+            if (!isTicking) {
+                requestAnimationFrame(updateTimelineScroll);
+                isTicking = true;
+            }
+        }
 
-        // Card hover pulses connecting node
+        window.addEventListener('scroll', requestTimelineUpdate, { passive: true });
+        window.addEventListener('resize', requestTimelineUpdate);
+        requestTimelineUpdate(); // Initial check
+
+        // Experience Card Spotlight Hover & Node Pulse
         timelineItems.forEach((item) => {
             const card = item.querySelector('.timeline-card');
             const node = item.querySelector('.timeline-node');
-            if (card && node) {
-                card.addEventListener('mouseenter', () => {
-                    node.classList.add('node-pulse');
+            if (card) {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
                 });
-                card.addEventListener('mouseleave', () => {
-                    node.classList.remove('node-pulse');
-                });
+
+                if (node) {
+                    card.addEventListener('mouseenter', () => {
+                        node.classList.add('node-pulse');
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        node.classList.remove('node-pulse');
+                    });
+                }
             }
         });
     }
