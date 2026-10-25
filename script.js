@@ -1,4 +1,4 @@
-﻿/**
+/**
  * MOHIT AGARWAL â€” PERSONAL DEVELOPER PORTFOLIO
  * High-Performance Snappy Particle Assembly & Modern Dark Landing Page
  */
@@ -445,7 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cursorRing.style.top = `${e.clientY}px`;
         }, { passive: true });
 
-        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .bento-card, .bento-pill, .bento-btn-action, .magnetic-social-btn, .achieve-3d-card, .carousel-btn, .back-to-top-btn, .gallery-card, .gallery-tab, .lightbox-btn, .lightbox-nav-btn, .timeline-card');
+        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .bento-card, .bento-pill, .bento-btn-action, .magnetic-social-btn, .achieve-3d-card, .carousel-btn, .back-to-top-btn, .gallery-card, .gallery-tab, .lightbox-btn, .lightbox-nav-btn, .timeline-card, .project-case-btn, .gallery-toggle-btn');
         interactives.forEach((el) => {
             el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
@@ -802,10 +802,148 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
+    // 8B. PROJECT CASE STUDY MODAL (ACCESSIBLE & FOCUS-SAFE)
+    // ==========================================
+    const projectModal = document.getElementById('project-modal');
+    const projectModalBackdrop = document.getElementById('project-modal-backdrop');
+    const projectModalCloseBtn = document.getElementById('project-modal-close-btn');
+    const projectModalTitle = document.getElementById('project-modal-title');
+    const projectModalContext = document.getElementById('project-modal-context');
+    const projectModalDesc = document.getElementById('project-modal-desc');
+    const projectModalPills = document.getElementById('project-modal-pills');
+    const projectModalContactLink = document.getElementById('project-modal-contact-link');
+    const projectModalLinks = document.getElementById('project-modal-links');
+    const projectCaseBtns = document.querySelectorAll('.project-case-btn');
+
+    let lastActiveProjectTrigger = null;
+
+    function openProjectModal(btn) {
+        if (!projectModal) return;
+        const card = btn.closest('.bento-card');
+        if (!card) return;
+
+        lastActiveProjectTrigger = btn;
+
+        const titleEl = card.querySelector('.bento-title');
+        const contextEl = card.querySelector('.bento-role-text');
+        const descEl = card.querySelector('.bento-desc');
+        const pillEls = card.querySelectorAll('.bento-tech-pills .bento-pill');
+        const repo = card.getAttribute('data-repo') || '';
+        const live = card.getAttribute('data-live') || '';
+
+        const titleText = titleEl ? titleEl.textContent.trim() : 'Project Case Study';
+        const contextText = contextEl ? contextEl.textContent.trim() : '';
+        const descText = descEl ? descEl.textContent.trim() : '';
+
+        if (projectModalTitle) projectModalTitle.textContent = titleText;
+        if (projectModalContext) projectModalContext.textContent = contextText;
+        if (projectModalDesc) projectModalDesc.textContent = descText;
+
+        if (projectModalPills) {
+            projectModalPills.innerHTML = '';
+            pillEls.forEach((p) => {
+                const span = document.createElement('span');
+                span.className = 'bento-pill';
+                span.textContent = p.textContent.trim();
+                projectModalPills.appendChild(span);
+            });
+        }
+
+        if (projectModalContactLink) {
+            projectModalContactLink.href = `mailto:mohitagarwal4215@gmail.com?subject=Project Inquiry: ${encodeURIComponent(titleText)}`;
+        }
+
+        if (projectModalLinks) {
+            projectModalLinks.innerHTML = '';
+            if (repo.trim() !== '') {
+                const repoLink = document.createElement('a');
+                repoLink.href = repo.trim();
+                repoLink.target = '_blank';
+                repoLink.rel = 'noopener noreferrer';
+                repoLink.className = 'project-link project-link-dynamic';
+                repoLink.textContent = 'GitHub \u2197';
+                projectModalLinks.appendChild(repoLink);
+            }
+            if (live.trim() !== '') {
+                const liveLink = document.createElement('a');
+                liveLink.href = live.trim();
+                liveLink.target = '_blank';
+                liveLink.rel = 'noopener noreferrer';
+                liveLink.className = 'project-link project-link-dynamic';
+                liveLink.textContent = 'Live Demo \u2197';
+                projectModalLinks.appendChild(liveLink);
+            }
+        }
+
+        projectModal.classList.add('is-open');
+        projectModal.setAttribute('aria-hidden', 'false');
+        projectModal.removeAttribute('inert');
+        document.body.style.overflow = 'hidden';
+
+        if (projectModalCloseBtn) {
+            projectModalCloseBtn.focus();
+        }
+    }
+
+    function closeProjectModal() {
+        if (!projectModal) return;
+        projectModal.classList.remove('is-open');
+        projectModal.setAttribute('aria-hidden', 'true');
+        projectModal.setAttribute('inert', '');
+        document.body.style.overflow = '';
+
+        if (lastActiveProjectTrigger && typeof lastActiveProjectTrigger.focus === 'function') {
+            lastActiveProjectTrigger.focus();
+        }
+    }
+
+    if (projectModal) {
+        projectCaseBtns.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openProjectModal(btn);
+            });
+        });
+
+        if (projectModalCloseBtn) projectModalCloseBtn.addEventListener('click', closeProjectModal);
+        if (projectModalBackdrop) projectModalBackdrop.addEventListener('click', closeProjectModal);
+
+        window.addEventListener('keydown', (e) => {
+            if (!projectModal.classList.contains('is-open')) return;
+            if (e.key === 'Escape') closeProjectModal();
+        });
+
+        // Focus trap inside project modal
+        projectModal.addEventListener('keydown', (e) => {
+            if (e.key !== 'Tab') return;
+            const focusables = Array.from(projectModal.querySelectorAll('button:not([disabled]), a:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+                .filter(el => el.offsetParent !== null);
+            if (focusables.length === 0) return;
+
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+
+            if (e.shiftKey) {
+                if (document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                }
+            } else {
+                if (document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        });
+    }
+
+    // ==========================================
     // 9. GALLERY & ACCESSIBLE LIGHTBOX MODAL
     // ==========================================
     const galleryTabs = document.querySelectorAll('.gallery-tab');
     const galleryCards = Array.from(document.querySelectorAll('.gallery-card'));
+    const galleryToggleBtn = document.getElementById('gallery-toggle-btn');
+    const galleryToggleWrap = document.querySelector('.gallery-toggle-wrap');
     const lightbox = document.getElementById('gallery-lightbox');
     const lightboxBackdrop = document.getElementById('lightbox-backdrop');
     const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
@@ -819,41 +957,84 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxCounter = document.getElementById('lightbox-counter');
 
     let currentFilter = 'all';
-    let currentFilteredCards = [...galleryCards];
+    let isGalleryExpanded = false;
+    const INITIAL_VISIBLE_COUNT = 8;
+
+    function applyGalleryState() {
+        if (currentFilter === 'all') {
+            if (galleryToggleWrap) galleryToggleWrap.style.display = '';
+            galleryCards.forEach((card, index) => {
+                card.classList.remove('is-hidden');
+                if (!isGalleryExpanded && index >= INITIAL_VISIBLE_COUNT) {
+                    card.classList.add('is-collapsed-item');
+                } else {
+                    card.classList.remove('is-collapsed-item');
+                }
+            });
+            if (galleryToggleBtn) {
+                galleryToggleBtn.textContent = isGalleryExpanded ? 'Show fewer' : `View all ${galleryCards.length}`;
+            }
+        } else {
+            if (galleryToggleWrap) galleryToggleWrap.style.display = 'none';
+            galleryCards.forEach((card) => {
+                card.classList.remove('is-collapsed-item');
+                const category = card.getAttribute('data-category');
+                if (category === currentFilter) {
+                    card.classList.remove('is-hidden');
+                } else {
+                    card.classList.add('is-hidden');
+                }
+            });
+        }
+    }
+
+    function getVisibleGalleryCards() {
+        return galleryCards.filter(c => !c.classList.contains('is-hidden') && !c.classList.contains('is-collapsed-item'));
+    }
+
+    let currentFilteredCards = [];
     let currentIndex = 0;
     let lastActiveThumbnail = null;
 
-    if (galleryTabs.length > 0 && galleryCards.length > 0) {
-        const allCount = galleryCards.length;
-        const certCount = galleryCards.filter(c => c.getAttribute('data-category') === 'certificate').length;
-        const compCount = galleryCards.filter(c => c.getAttribute('data-category') === 'competition').length;
-        const countMap = { all: allCount, certificate: certCount, competition: compCount };
+    if (galleryCards.length > 0) {
+        applyGalleryState();
+        currentFilteredCards = getVisibleGalleryCards();
 
-        galleryTabs.forEach((tab) => {
-            const filterKey = tab.getAttribute('data-filter');
-            const countEl = tab.querySelector('.gallery-tab-count');
-            if (countEl && countMap[filterKey] !== undefined) {
-                countEl.textContent = countMap[filterKey];
-            }
-
-            tab.addEventListener('click', () => {
-                galleryTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-
-                currentFilter = tab.getAttribute('data-filter');
-
-                galleryCards.forEach((card) => {
-                    const category = card.getAttribute('data-category');
-                    if (currentFilter === 'all' || category === currentFilter) {
-                        card.classList.remove('is-hidden');
-                    } else {
-                        card.classList.add('is-hidden');
-                    }
-                });
-
-                currentFilteredCards = galleryCards.filter(c => !c.classList.contains('is-hidden'));
+        if (galleryToggleBtn) {
+            galleryToggleBtn.addEventListener('click', () => {
+                isGalleryExpanded = !isGalleryExpanded;
+                applyGalleryState();
+                currentFilteredCards = getVisibleGalleryCards();
             });
-        });
+        }
+
+        if (galleryTabs.length > 0) {
+            const allCount = galleryCards.length;
+            const certCount = galleryCards.filter(c => c.getAttribute('data-category') === 'certificate').length;
+            const compCount = galleryCards.filter(c => c.getAttribute('data-category') === 'competition').length;
+            const countMap = { all: allCount, certificate: certCount, competition: compCount };
+
+            galleryTabs.forEach((tab) => {
+                const filterKey = tab.getAttribute('data-filter');
+                const countEl = tab.querySelector('.gallery-tab-count');
+                if (countEl && countMap[filterKey] !== undefined) {
+                    countEl.textContent = countMap[filterKey];
+                }
+
+                tab.addEventListener('click', () => {
+                    galleryTabs.forEach((t) => {
+                        t.classList.remove('active');
+                        t.setAttribute('aria-pressed', 'false');
+                    });
+                    tab.classList.add('active');
+                    tab.setAttribute('aria-pressed', 'true');
+
+                    currentFilter = tab.getAttribute('data-filter');
+                    applyGalleryState();
+                    currentFilteredCards = getVisibleGalleryCards();
+                });
+            });
+        }
     }
 
     function updateLightbox(index) {
@@ -880,12 +1061,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (lightboxTag) lightboxTag.textContent = badge;
         if (lightboxTitle) lightboxTitle.textContent = title;
         if (lightboxMeta) lightboxMeta.textContent = `${org} Â· ${date}${certId}`;
-        if (lightboxDownloadBtn) lightboxDownloadBtn.href = src;
         if (lightboxCounter) lightboxCounter.textContent = `${currentIndex + 1} / ${currentFilteredCards.length}`;
     }
 
     function openLightbox(card) {
-        currentFilteredCards = galleryCards.filter(c => !c.classList.contains('is-hidden'));
+        currentFilteredCards = getVisibleGalleryCards();
         const index = currentFilteredCards.indexOf(card);
         if (index === -1) return;
 
@@ -916,12 +1096,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function nextLightbox() {
+        currentFilteredCards = getVisibleGalleryCards();
         if (currentFilteredCards.length === 0) return;
         const nextIdx = (currentIndex + 1) % currentFilteredCards.length;
         updateLightbox(nextIdx);
     }
 
     function prevLightbox() {
+        currentFilteredCards = getVisibleGalleryCards();
         if (currentFilteredCards.length === 0) return;
         const prevIdx = (currentIndex - 1 + currentFilteredCards.length) % currentFilteredCards.length;
         updateLightbox(prevIdx);
@@ -929,10 +1111,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (lightbox) {
         galleryCards.forEach((card) => {
-            card.setAttribute('tabindex', '0');
-            card.setAttribute('role', 'button');
-            card.setAttribute('aria-label', `View document: ${card.getAttribute('data-title') || 'Archive item'}`);
-
+            // Note: tabindex="0", role="button" and aria-labelledby are defined in semantic HTML
             card.addEventListener('click', () => openLightbox(card));
             card.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -946,6 +1125,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeLightbox);
         if (lightboxNextBtn) lightboxNextBtn.addEventListener('click', nextLightbox);
         if (lightboxPrevBtn) lightboxPrevBtn.addEventListener('click', prevLightbox);
+
+        if (lightboxDownloadBtn) {
+            lightboxDownloadBtn.addEventListener('click', () => {
+                if (lightboxImg && lightboxImg.src) {
+                    window.open(lightboxImg.src, '_blank', 'noopener,noreferrer');
+                }
+            });
+        }
 
         window.addEventListener('keydown', (e) => {
             if (!lightbox.classList.contains('is-open')) return;
