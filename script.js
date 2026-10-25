@@ -931,20 +931,105 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 6. CONTACT FORM HANDLING
+    // 6. CONTACT FORM HANDLING (DIRECT TO EMAIL)
     // ==========================================
     const contactForm = document.getElementById('contact-form');
     const formFeedback = document.getElementById('form-feedback');
 
     if (contactForm && formFeedback) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            formFeedback.innerHTML = `<span style="color:#ffffff;">Thank you, ${name}! Your message has been received.</span>`;
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
 
-            setTimeout(() => {
-                contactForm.reset();
-            }, 1500);
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+            const btnSubmit = document.getElementById('btn-submit');
+            const btnText = document.getElementById('btn-submit-text') || (btnSubmit ? btnSubmit.querySelector('span') : null);
+
+            const nameVal = nameInput ? nameInput.value.trim() : '';
+            const emailVal = emailInput ? emailInput.value.trim() : '';
+            const messageVal = messageInput ? messageInput.value.trim() : '';
+
+            if (!nameVal || !emailVal || !messageVal) {
+                formFeedback.innerHTML = `<span style="color:#f87171;">Please fill in all fields before sending.</span>`;
+                return;
+            }
+
+            // Save original button label and set sending state
+            const originalText = btnText ? btnText.textContent : 'SEND MESSAGE';
+            if (btnText) btnText.textContent = 'TRANSMITTING...';
+            if (btnSubmit) {
+                btnSubmit.disabled = true;
+                btnSubmit.classList.add('btn-loading');
+            }
+            formFeedback.innerHTML = `<span class="feedback-sending">Transmitting inquiry directly to Mohit's inbox...</span>`;
+
+            try {
+                const response = await fetch("https://formsubmit.co/ajax/mohitagarwal4215@gmail.com", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: nameVal,
+                        email: emailVal,
+                        message: messageVal,
+                        _subject: `New Portfolio Inquiry from ${nameVal}`,
+                        _template: 'table'
+                    })
+                });
+
+                const data = await response.json().catch(() => ({}));
+
+                if (response.ok && (data.success === 'true' || data.success === true)) {
+                    formFeedback.innerHTML = `
+                        <div class="feedback-success">
+                            <span>Message delivered! Mohit has received your details and will get back to <strong>${escapeHtml(emailVal)}</strong> shortly.</span>
+                        </div>
+                    `;
+                    contactForm.reset();
+                } else if (data.message && data.message.includes("Activation")) {
+                    formFeedback.innerHTML = `
+                        <div class="feedback-info">
+                            <span>Form setup notice: FormSubmit has sent a one-time activation link to <strong>mohitagarwal4215@gmail.com</strong>. Click "Activate Form" in your inbox once to enable instant delivery!</span>
+                        </div>
+                    `;
+                    contactForm.reset();
+                } else if (window.location.protocol === 'file:' || (data.message && data.message.includes("web server"))) {
+                    // Local file browser fallback
+                    const mailtoUrl = `mailto:mohitagarwal4215@gmail.com?subject=Portfolio%20Inquiry%20from%20${encodeURIComponent(nameVal)}&body=${encodeURIComponent(messageVal)}%0A%0A---%0AFrom:%20${encodeURIComponent(nameVal)}%20(${encodeURIComponent(emailVal)})`;
+                    formFeedback.innerHTML = `
+                        <div class="feedback-warning">
+                            <span>On local file preview, click below to transmit directly via your mail client:</span><br>
+                            <a href="${mailtoUrl}" class="feedback-action-btn">Send via Email Client →</a>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(data.message || 'Transmission failed');
+                }
+            } catch (err) {
+                console.error('Contact Form Transmission Error:', err);
+                const mailtoUrl = `mailto:mohitagarwal4215@gmail.com?subject=Portfolio%20Inquiry%20from%20${encodeURIComponent(nameVal)}&body=${encodeURIComponent(messageVal)}%0A%0A---%0AFrom:%20${encodeURIComponent(nameVal)}%20(${encodeURIComponent(emailVal)})`;
+                formFeedback.innerHTML = `
+                    <div class="feedback-fallback">
+                        <span>Could not reach form server directly. You can email Mohit directly:</span><br>
+                        <a href="${mailtoUrl}" class="feedback-action-btn">Launch Email Client →</a>
+                    </div>
+                `;
+            } finally {
+                if (btnText) btnText.textContent = originalText;
+                if (btnSubmit) {
+                    btnSubmit.disabled = false;
+                    btnSubmit.classList.remove('btn-loading');
+                }
+            }
         });
     }
 });
