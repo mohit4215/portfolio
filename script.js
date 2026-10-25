@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cursorRing.style.top = `${e.clientY}px`;
         });
 
-        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .btn-resume, .bento-card, .bento-pill, .bento-btn-action, .magnetic-social-btn, .achieve-3d-card, .carousel-btn, .back-to-top-btn');
+        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .btn-resume, .bento-card, .bento-pill, .bento-btn-action, .magnetic-social-btn, .achieve-3d-card, .carousel-btn, .back-to-top-btn, .gallery-card, .gallery-tab, .lightbox-btn, .lightbox-nav-btn');
         interactives.forEach((el) => {
             el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
@@ -740,7 +740,131 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 5. CONTACT FORM HANDLING
+    // 5. CERTIFICATES & GALLERY (FILTERS + LIGHTBOX)
+    // ==========================================
+    const galleryTabs = document.querySelectorAll('.gallery-tab');
+    const galleryCards = Array.from(document.querySelectorAll('.gallery-card'));
+    const lightbox = document.getElementById('gallery-lightbox');
+    const lightboxBackdrop = document.getElementById('lightbox-backdrop');
+    const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+    const lightboxPrevBtn = document.getElementById('lightbox-prev-btn');
+    const lightboxNextBtn = document.getElementById('lightbox-next-btn');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxTag = document.getElementById('lightbox-tag');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxMeta = document.getElementById('lightbox-meta');
+    const lightboxDownloadBtn = document.getElementById('lightbox-download-btn');
+    const lightboxCounter = document.getElementById('lightbox-counter');
+
+    let currentFilter = 'all';
+    let currentFilteredCards = [...galleryCards];
+    let currentIndex = 0;
+
+    // Filter functionality
+    if (galleryTabs.length > 0 && galleryCards.length > 0) {
+        galleryTabs.forEach((tab) => {
+            tab.addEventListener('click', () => {
+                galleryTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                currentFilter = tab.getAttribute('data-filter');
+
+                galleryCards.forEach((card) => {
+                    const category = card.getAttribute('data-category');
+                    if (currentFilter === 'all' || category === currentFilter) {
+                        card.classList.remove('is-hidden');
+                    } else {
+                        card.classList.add('is-hidden');
+                    }
+                });
+
+                currentFilteredCards = galleryCards.filter(c => !c.classList.contains('is-hidden'));
+            });
+        });
+    }
+
+    // Lightbox functionality
+    function updateLightbox(index) {
+        if (!currentFilteredCards[index]) return;
+        currentIndex = index;
+        const card = currentFilteredCards[index];
+
+        const src = card.getAttribute('data-src');
+        const title = card.getAttribute('data-title');
+        const org = card.getAttribute('data-org');
+        const date = card.getAttribute('data-date');
+        const badge = card.getAttribute('data-badge') || 'VERIFIED';
+        const certId = card.getAttribute('data-id') ? ` · ${card.getAttribute('data-id')}` : '';
+
+        if (lightboxImg) {
+            lightboxImg.style.opacity = '0';
+            setTimeout(() => {
+                lightboxImg.src = src;
+                lightboxImg.alt = title;
+                lightboxImg.style.opacity = '1';
+            }, 120);
+        }
+
+        if (lightboxTag) lightboxTag.textContent = badge;
+        if (lightboxTitle) lightboxTitle.textContent = title;
+        if (lightboxMeta) lightboxMeta.textContent = `${org} · ${date}${certId}`;
+        if (lightboxDownloadBtn) lightboxDownloadBtn.href = src;
+        if (lightboxCounter) lightboxCounter.textContent = `${currentIndex + 1} / ${currentFilteredCards.length}`;
+    }
+
+    function openLightbox(card) {
+        currentFilteredCards = galleryCards.filter(c => !c.classList.contains('is-hidden'));
+        const index = currentFilteredCards.indexOf(card);
+        if (index === -1) return;
+
+        updateLightbox(index);
+        if (lightbox) {
+            lightbox.classList.add('is-open');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeLightbox() {
+        if (lightbox) {
+            lightbox.classList.remove('is-open');
+            lightbox.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+    }
+
+    function nextLightbox() {
+        if (currentFilteredCards.length === 0) return;
+        const nextIdx = (currentIndex + 1) % currentFilteredCards.length;
+        updateLightbox(nextIdx);
+    }
+
+    function prevLightbox() {
+        if (currentFilteredCards.length === 0) return;
+        const prevIdx = (currentIndex - 1 + currentFilteredCards.length) % currentFilteredCards.length;
+        updateLightbox(prevIdx);
+    }
+
+    if (lightbox) {
+        galleryCards.forEach((card) => {
+            card.addEventListener('click', () => openLightbox(card));
+        });
+
+        if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeLightbox);
+        if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closeLightbox);
+        if (lightboxNextBtn) lightboxNextBtn.addEventListener('click', nextLightbox);
+        if (lightboxPrevBtn) lightboxPrevBtn.addEventListener('click', prevLightbox);
+
+        window.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('is-open')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextLightbox();
+            if (e.key === 'ArrowLeft') prevLightbox();
+        });
+    }
+
+    // ==========================================
+    // 6. CONTACT FORM HANDLING
     // ==========================================
     const contactForm = document.getElementById('contact-form');
     const formFeedback = document.getElementById('form-feedback');
