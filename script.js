@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cursorRing.style.top = `${e.clientY}px`;
         });
 
-        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .btn-resume, .bento-card, .bento-pill, .bento-btn-action, .magnetic-social-btn, .achieve-3d-card, .carousel-btn, .back-to-top-btn, .gallery-card, .gallery-tab, .lightbox-btn, .lightbox-nav-btn');
+        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .bento-card, .bento-pill, .bento-btn-action, .magnetic-social-btn, .achieve-3d-card, .carousel-btn, .back-to-top-btn, .gallery-card, .gallery-tab, .lightbox-btn, .lightbox-nav-btn');
         interactives.forEach((el) => {
             el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
