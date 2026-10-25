@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://portfolio-two-drab.vercel.app/sitemap.xml
+Sitemap: https://mohitagarwal.vercel.app/sitemap.xml
