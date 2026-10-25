@@ -1555,7 +1555,7 @@
                     </a>
 
                     <!-- LinkedIn -->
-                    <a href="https://linkedin.com/in/mohit4215" target="_blank" rel="noopener noreferrer" class="magnetic-social-btn" data-social="linkedin" aria-label="LinkedIn Profile">
+                    <a href="https://www.linkedin.com/in/mohit-agarwal-48b59a259/" target="_blank" rel="noopener noreferrer" class="magnetic-social-btn" data-social="linkedin" aria-label="LinkedIn Profile">
                         <div class="social-icon-inner">
                             <svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                             <span class="social-btn-label">LinkedIn</span>
@@ -1581,24 +1581,30 @@
 
                 <!-- Sleek Glassmorphic Contact Box -->
                 <div class="max-w-xl mx-auto bg-zinc-950/80 border border-white/10 rounded-2xl p-6 sm:p-8 backdrop-blur-xl mb-16 shadow-2xl">
-                    <form id="contact-form" class="clean-form">
+                    <form id="contact-form" class="clean-form" action="https://formsubmit.co/mohitagarwal4215@gmail.com" method="POST">
+                        <!-- FormSubmit Configuration -->
+                        <input type="hidden" name="_subject" value="New Portfolio Message for Mohit Agarwal">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="text" name="_honey" style="display:none">
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="name" class="form-label">YOUR NAME</label>
-                                <input type="text" id="name" name="name" class="form-input" placeholder="e.g. Alex Mercer" required>
+                                <input type="text" id="name" name="name" class="form-input" placeholder="e.g. Alex Mercer" required autocomplete="name">
                             </div>
                             <div class="form-group">
                                 <label for="email" class="form-label">YOUR EMAIL</label>
-                                <input type="email" id="email" name="email" class="form-input" placeholder="e.g. alex@company.com" required>
+                                <input type="email" id="email" name="email" class="form-input" placeholder="e.g. alex@company.com" required autocomplete="email">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="message" class="form-label">MESSAGE</label>
-                            <textarea id="message" name="message" rows="3" class="form-input" placeholder="Tell me about your project, idea, or inquiry..." required></textarea>
+                            <textarea id="message" name="message" rows="4" class="form-input" placeholder="Tell me about your project, idea, or inquiry..." required></textarea>
                         </div>
                         <button type="submit" id="btn-submit" class="btn-submit w-full justify-center gap-3">
-                            <span>SEND MESSAGE</span>
-                            <span class="submit-arrow">→</span>
+                            <span id="btn-submit-text">SEND MESSAGE</span>
+                            <span class="submit-arrow" id="btn-submit-arrow">→</span>
                         </button>
                         <div id="form-feedback" class="form-feedback text-center"></div>
                     </form>
