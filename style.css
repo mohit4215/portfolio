@@ -1254,7 +1254,7 @@ a {
 
 .skill-card-heading {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.65rem;
     font-family: var(--skills-title-font);
     font-size: var(--skills-title-size);
@@ -1276,6 +1276,8 @@ a {
     box-shadow: 0 0 10px var(--skills-accent, #06b6d4);
     transform: rotate(45deg);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    align-self: flex-start;
+    margin-top: 0.42rem;
 }
 
 .tilt-card:hover .skill-heading-point {
@@ -1286,6 +1288,8 @@ a {
 /* Technical Skills Section Header Enhancements */
 #skills .section-header-row {
     align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
 }
 
 .section-header-meta {
