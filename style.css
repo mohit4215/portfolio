@@ -1473,9 +1473,9 @@ a {
 /* ==================== EXPERIENCE GLOWING SCROLL TIMELINE ==================== */
 .timeline-wrapper {
     position: relative;
-    max-width: 920px;
+    max-width: 960px;
     margin: 3.5rem auto 0;
-    padding: 2rem 0;
+    padding: 2.5rem 0 4rem;
 }
 
 /* Timeline Track */
@@ -1485,7 +1485,8 @@ a {
     bottom: 0;
     left: 24px;
     width: 2px;
-    background-color: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.02) 100%);
+    border-radius: 9999px;
 }
 
 .timeline-track-fill {
@@ -1494,9 +1495,30 @@ a {
     left: 24px;
     width: 2px;
     height: 0%;
-    background: linear-gradient(180deg, #38bdf8 0%, #a855f7 50%, #ec4899 100%);
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.7), 0 0 25px rgba(168, 85, 247, 0.5);
-    transition: height 0.1s ease-out;
+    background: linear-gradient(180deg, #38bdf8 0%, #818cf8 35%, #a855f7 70%, #ec4899 100%);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.8), 0 0 22px rgba(129, 140, 248, 0.6), 0 0 35px rgba(168, 85, 247, 0.4);
+    border-radius: 9999px;
+    will-change: height;
+    transition: height 0.08s linear;
+}
+
+/* Glowing Neon Spark Head at the Leading Edge */
+.timeline-scroll-head {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 10px #ffffff, 0 0 20px #38bdf8, 0 0 35px #818cf8, 0 0 50px #a855f7;
+    animation: headPulse 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes headPulse {
+    0% { transform: translateX(-50%) scale(0.9); opacity: 0.9; }
+    100% { transform: translateX(-50%) scale(1.3); opacity: 1; }
 }
 
 @media (min-width: 768px) {
@@ -1508,7 +1530,7 @@ a {
 
 .timeline-item {
     position: relative;
-    margin-bottom: 3.5rem;
+    margin-bottom: 3.25rem;
     display: flex;
 }
 
@@ -1536,16 +1558,16 @@ a {
     top: 1.5rem;
     left: 24px;
     transform: translate(-50%, -50%);
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     background-color: #050505;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 5;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (min-width: 768px) {
@@ -1558,24 +1580,88 @@ a {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.25);
+    transition: all 0.35s ease;
+}
+
+/* Node Radar Ping Ripple */
+.timeline-node .node-ripple {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1.5px solid #38bdf8;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .timeline-node.node-active {
     border-color: #38bdf8;
-    box-shadow: 0 0 15px rgba(56, 189, 248, 0.8), 0 0 30px rgba(168, 85, 247, 0.5);
+    background-color: #0b1120;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.9), 0 0 32px rgba(129, 140, 248, 0.5);
+    transform: translate(-50%, -50%) scale(1.15);
 }
 
 .timeline-node.node-active .node-core {
     background-color: #ffffff;
-    box-shadow: 0 0 8px #ffffff;
+    box-shadow: 0 0 8px #ffffff, 0 0 14px #38bdf8;
+}
+
+.timeline-node.node-active .node-ripple {
+    animation: ripplePing 1.2s cubic-bezier(0, 0.2, 0.8, 1) forwards;
+}
+
+@keyframes ripplePing {
+    0% { transform: scale(0.6); opacity: 0.9; }
+    50% { opacity: 0.5; }
+    100% { transform: scale(2.6); opacity: 0; }
 }
 
 .timeline-node.node-pulse {
     border-color: #a855f7;
-    box-shadow: 0 0 25px #38bdf8, 0 0 50px #a855f7;
+    box-shadow: 0 0 25px #38bdf8, 0 0 45px #a855f7;
     transform: translate(-50%, -50%) scale(1.4) !important;
+}
+
+/* Timeline Horizontal Branch Connector */
+.timeline-connector {
+    position: absolute;
+    top: 1.5rem;
+    height: 1px;
+    pointer-events: none;
+    z-index: 2;
+    transform-origin: center;
+    transform: scaleX(0);
+    opacity: 0;
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+@media (min-width: 768px) {
+    .timeline-item.timeline-left .timeline-connector {
+        right: calc(50% - 9px);
+        width: calc(2.5rem + 9px);
+        transform-origin: right center;
+        background: linear-gradient(90deg, rgba(56, 189, 248, 0.6) 0%, rgba(129, 140, 248, 0.2) 100%);
+    }
+    .timeline-item.timeline-right .timeline-connector {
+        left: calc(50% - 9px);
+        width: calc(2.5rem + 9px);
+        transform-origin: left center;
+        background: linear-gradient(90deg, rgba(129, 140, 248, 0.2) 0%, rgba(56, 189, 248, 0.6) 100%);
+    }
+}
+
+@media (max-width: 767px) {
+    .timeline-connector {
+        left: 24px;
+        width: calc(4.5rem - 24px);
+        transform-origin: left center;
+        background: linear-gradient(90deg, rgba(56, 189, 248, 0.6) 0%, rgba(129, 140, 248, 0.2) 100%);
+    }
+}
+
+.timeline-item.item-revealed .timeline-connector {
+    transform: scaleX(1);
+    opacity: 1;
 }
 
 /* Glassmorphic Experience Card */
@@ -1583,38 +1669,74 @@ a {
     position: relative;
     background: #0a0a0a;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
+    border-radius: 18px;
     padding: 1.85rem;
     width: 100%;
+    overflow: hidden;
     opacity: 0;
-    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    will-change: transform, opacity, filter;
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.75s cubic-bezier(0.16, 1, 0.3, 1),
                 border-color 0.3s ease,
                 box-shadow 0.3s ease;
 }
 
+.timeline-card-spotlight {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: 18px;
+    background: radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56, 189, 248, 0.08), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.timeline-card:hover .timeline-card-spotlight {
+    opacity: 1;
+}
+
+/* Initial state before reveal (unblurred and smoothly transformed) */
 .timeline-item.timeline-left .timeline-card {
-    transform: translateX(-35px);
+    transform: translate3d(-38px, 15px, 0) scale(0.96) rotate(-1deg);
+    filter: blur(5px);
 }
 .timeline-item.timeline-right .timeline-card {
-    transform: translateX(35px);
+    transform: translate3d(38px, 15px, 0) scale(0.96) rotate(1deg);
+    filter: blur(5px);
 }
 
 @media (max-width: 767px) {
     .timeline-item .timeline-card {
-        transform: translateX(25px);
+        transform: translate3d(30px, 15px, 0) scale(0.96);
+        filter: blur(5px);
     }
 }
 
+/* Revealed state */
 .timeline-card.card-revealed {
     opacity: 1;
-    transform: translate(0, 0);
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    filter: blur(0px);
 }
 
+/* Focused state (currently nearest to center viewport while scrolling) */
+.timeline-card.card-focused {
+    border-color: rgba(56, 189, 248, 0.35);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75), 0 0 25px rgba(56, 189, 248, 0.12);
+}
+
+.timeline-card.card-focused .timeline-date-pill {
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+}
+
+/* Hover state */
 .timeline-card:hover {
-    border-color: rgba(56, 189, 248, 0.4);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(56, 189, 248, 0.15);
-    transform: translateY(-4px) !important;
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.18);
+    transform: translate3d(0, -5px, 0) scale(1.01) !important;
 }
 
 .timeline-date-pill {
@@ -1629,6 +1751,7 @@ a {
     padding: 0.25rem 0.65rem;
     border-radius: 9999px;
     margin-bottom: 0.85rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .timeline-role-title {
