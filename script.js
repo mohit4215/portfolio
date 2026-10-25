@@ -816,6 +816,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Filter functionality
     if (galleryTabs.length > 0 && galleryCards.length > 0) {
+        // Sync filter tab counter badges dynamically with DOM card counts
+        const allCount = galleryCards.length;
+        const certCount = galleryCards.filter(c => c.getAttribute('data-category') === 'certificate').length;
+        const compCount = galleryCards.filter(c => c.getAttribute('data-category') === 'competition').length;
+        const countMap = { all: allCount, certificate: certCount, competition: compCount };
+        galleryTabs.forEach((tab) => {
+            const filterKey = tab.getAttribute('data-filter');
+            const countEl = tab.querySelector('.gallery-tab-count');
+            if (countEl && countMap[filterKey] !== undefined) {
+                countEl.textContent = countMap[filterKey];
+            }
+        });
+
         galleryTabs.forEach((tab) => {
             tab.addEventListener('click', () => {
                 galleryTabs.forEach(t => t.classList.remove('active'));
