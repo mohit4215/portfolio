@@ -1,0 +1,6 @@
+tailwindcss.exe
+*.tmp
+.DS_Store
+Thumbs.db
+libwebp.zip
+libwebp/

@@ -4,17 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mohit Agarwal | Portfolio</title>
-    <meta name="description" content="Mohit Agarwal — MLOps & Full-Stack Engineer. Information Technology undergraduate at AKGEC, and Founder of HiTrade.">
+    <meta name="description" content="Mohit Agarwal — MLOps &amp; Full-Stack Engineer. Information Technology undergraduate at AKGEC, and Founder of Quest.">
+    <link rel="canonical" href="https://portfolio-two-drab.vercel.app/">
+    <meta name="theme-color" content="#050505">
 
-    <!-- Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 
-    <!-- Google Fonts: Inter, Space Grotesk, Syne -->
+    <!-- Open Graph Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Mohit Agarwal | Portfolio">
+    <meta property="og:description" content="Mohit Agarwal — MLOps &amp; Full-Stack Engineer. Information Technology undergraduate at AKGEC, and Founder of Quest.">
+    <meta property="og:url" content="https://portfolio-two-drab.vercel.app/">
+    <meta property="og:site_name" content="Mohit Agarwal">
+    <meta property="og:image" content="https://portfolio-two-drab.vercel.app/assets/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Mohit Agarwal — MLOps &amp; Full-Stack Engineer Portfolio">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mohit Agarwal | Portfolio">
+    <meta name="twitter:description" content="Mohit Agarwal — MLOps &amp; Full-Stack Engineer. Information Technology undergraduate at AKGEC, and Founder of Quest.">
+    <meta name="twitter:image" content="https://portfolio-two-drab.vercel.app/assets/og-image.png">
+
+    <!-- Person & ProfilePage JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "mainEntity": {
+        "@type": "Person",
+        "name": "Mohit Agarwal",
+        "jobTitle": "MLOps & Full-Stack Engineer",
+        "url": "https://portfolio-two-drab.vercel.app/",
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Ajay Kumar Garg Engineering College (AKGEC)"
+        },
+        "sameAs": [
+          "https://github.com/mohit4215",
+          "https://www.linkedin.com/in/mohit-agarwal-48b59a259/",
+          "https://instagram.com/madhavhumohitkrluga"
+        ],
+        "knowsAbout": [
+          "MLOps",
+          "Full-Stack Engineering",
+          "Python",
+          "Next.js",
+          "FastAPI",
+          "Docker",
+          "Kubernetes",
+          "PostgreSQL",
+          "React",
+          "Machine Learning"
+        ]
+      }
+    }
+    </script>
+
+    <!-- Google Fonts: Inter & Space Grotesk (Optimized: 5 weights, display=swap, latin) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 
+    <!-- Compiled Production Tailwind CSS (No CDN script) -->
+    <link rel="stylesheet" href="tailwind.css">
+
+    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- No-JS Fallback: Ensure content is immediately visible and scrollable if JS is disabled -->
+    <noscript>
+        <style>
+            #intro-overlay { display: none !important; }
+            body.is-loading { overflow: auto !important; }
+            .reveal-item { opacity: 1 !important; transform: none !important; }
+            .timeline-card { opacity: 1 !important; transform: none !important; }
+            #cursor-dot, #cursor-ring { display: none !important; }
+            #site-header { opacity: 1 !important; transform: none !important; }
+            #mobile-drawer { display: none !important; }
+        </style>
+    </noscript>
 </head>
 <body class="antialiased is-loading">
 
@@ -51,7 +123,7 @@
                 </ul>
             </nav>
 
-            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu">
+            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
                 <span class="toggle-bar"></span>
                 <span class="toggle-bar"></span>
             </button>
@@ -59,7 +131,7 @@
     </header>
 
     <!-- Mobile Drawer -->
-    <div id="mobile-drawer" class="mobile-drawer">
+    <div id="mobile-drawer" class="mobile-drawer" inert>
         <div class="drawer-content">
             <ul class="mobile-nav-list">
                 <li><a href="#hero" class="mobile-link">Home</a></li>
@@ -161,6 +233,17 @@
                             </svg>
                         </span>
                     </a>
+
+                    <!-- Resume / Download CV CTA -->
+                    <!-- TODO: User to provide real resume.pdf at repository root -->
+                    <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-border-beam group" download="Mohit_Agarwal_Resume.pdf">
+                        <span class="btn-border-beam-inner">
+                            <span>Download CV</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -224,6 +307,7 @@
                 <div class="about-center-card">
                     <div class="about-eyebrow">
                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="section-num">01</span>
                         <span>ABOUT ME</span>
                     </div>
 
@@ -427,21 +511,7 @@
                             <span class="bento-pill">Gamification</span>
                         </div>
 
-                        <!-- Slide-up Actions Overlay -->
-                        <div class="bento-actions-overlay">
-                            <a href="https://github.com/mohit4215" target="_blank" rel="noopener noreferrer" class="bento-btn-action bento-btn-code">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                                </svg>
-                                <span>View Code</span>
-                            </a>
-                            <a href="#contact" class="bento-btn-action bento-btn-demo">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                                </svg>
-                                <span>Live Demo</span>
-                            </a>
-                        </div>
+                        <!-- TODO: Add real repository and deployed-demo URLs when provided. Placeholder buttons removed. -->
                     </article>
 
                     <!-- BENTO ITEM 2: AKG University Web Portal (Standard 1 Column) -->
@@ -469,21 +539,7 @@
                             <span class="bento-pill">Tailwind CSS</span>
                         </div>
 
-                        <!-- Slide-up Actions Overlay -->
-                        <div class="bento-actions-overlay">
-                            <a href="https://github.com/mohit4215" target="_blank" rel="noopener noreferrer" class="bento-btn-action bento-btn-code">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                                </svg>
-                                <span>View Code</span>
-                            </a>
-                            <a href="#contact" class="bento-btn-action bento-btn-demo">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                                </svg>
-                                <span>Live Demo</span>
-                            </a>
-                        </div>
+                        <!-- TODO: Add real repository and deployed-demo URLs when provided. Placeholder buttons removed. -->
                     </article>
 
                     <!-- BENTO ITEM 3: Predictive Waste-Routing (Standard 1 Column) -->
@@ -511,21 +567,7 @@
                             <span class="bento-pill">Optimization</span>
                         </div>
 
-                        <!-- Slide-up Actions Overlay -->
-                        <div class="bento-actions-overlay">
-                            <a href="https://github.com/mohit4215" target="_blank" rel="noopener noreferrer" class="bento-btn-action bento-btn-code">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                                </svg>
-                                <span>View Code</span>
-                            </a>
-                            <a href="#contact" class="bento-btn-action bento-btn-demo">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                                </svg>
-                                <span>Live Demo</span>
-                            </a>
-                        </div>
+                        <!-- TODO: Add real repository and deployed-demo URLs when provided. Placeholder buttons removed. -->
                     </article>
 
                     <!-- BENTO ITEM 4: StudyPartner (Major Feature - 2 Columns) -->
@@ -554,21 +596,7 @@
                             <span class="bento-pill">Mini Project</span>
                         </div>
 
-                        <!-- Slide-up Actions Overlay -->
-                        <div class="bento-actions-overlay">
-                            <a href="https://github.com/mohit4215" target="_blank" rel="noopener noreferrer" class="bento-btn-action bento-btn-code">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                                </svg>
-                                <span>View Code</span>
-                            </a>
-                            <a href="#contact" class="bento-btn-action bento-btn-demo">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                                </svg>
-                                <span>Live Demo</span>
-                            </a>
-                        </div>
+                        <!-- TODO: Add real repository and deployed-demo URLs when provided. Placeholder buttons removed. -->
                     </article>
 
                     <!-- BENTO ITEM 5: Sutram | Smart India Hackathon (Major Feature - 2 Columns) -->
@@ -597,21 +625,7 @@
                             <span class="bento-pill">Rapid Prototyping</span>
                         </div>
 
-                        <!-- Slide-up Actions Overlay -->
-                        <div class="bento-actions-overlay">
-                            <a href="https://github.com/mohit4215" target="_blank" rel="noopener noreferrer" class="bento-btn-action bento-btn-code">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                                </svg>
-                                <span>View Code</span>
-                            </a>
-                            <a href="#contact" class="bento-btn-action bento-btn-demo">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                                </svg>
-                                <span>Live Demo</span>
-                            </a>
-                        </div>
+                        <!-- TODO: Add real repository and deployed-demo URLs when provided. Placeholder buttons removed. -->
                     </article>
 
                     <!-- BENTO ITEM 6: Startup Conclave Website (Standard 1 Column) -->
@@ -639,21 +653,7 @@
                             <span class="bento-pill">Event Arch</span>
                         </div>
 
-                        <!-- Slide-up Actions Overlay -->
-                        <div class="bento-actions-overlay">
-                            <a href="https://github.com/mohit4215" target="_blank" rel="noopener noreferrer" class="bento-btn-action bento-btn-code">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                                </svg>
-                                <span>View Code</span>
-                            </a>
-                            <a href="#contact" class="bento-btn-action bento-btn-demo">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                                </svg>
-                                <span>Live Demo</span>
-                            </a>
-                        </div>
+                        <!-- TODO: Add real repository and deployed-demo URLs when provided. Placeholder buttons removed. -->
                     </article>
                 </div>
             </div>
@@ -886,6 +886,7 @@
                     <div class="carousel-progress-track">
                         <div class="carousel-progress-bar" id="achieve-progress-bar"></div>
                     </div>
+                    <span id="achieve-counter" class="achieve-counter-badge" aria-live="polite">1 / 8</span>
                     <button class="carousel-btn carousel-next" id="achieve-next-btn" aria-label="Next Achievement">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </button>
@@ -1035,10 +1036,13 @@
                 <!-- Gallery Grid -->
                 <div class="gallery-grid" id="gallery-grid">
                     <!-- GALLERY ITEM 1: DTU Fortune '26 Live Pitch Presentation (Featured Photo First) -->
-                    <article class="gallery-card" data-category="competition" data-src="assets/gallery/dtu-presentation-1.jpeg" data-title="Live Pitch Presentation — DTU Fortune '26" data-org="Delhi Technological University (DTU)" data-date="April 2026" data-id="LIVE COMPETITION" data-badge="ON-STAGE PITCH">
+                                        <article class="gallery-card" data-category="competition" data-src="assets/gallery/dtu-presentation-1-full.webp" data-title="Live Pitch Presentation — DTU Fortune '26" data-org="Delhi Technological University (DTU)" data-date="April 2026" data-id="LIVE COMPETITION" data-badge="ON-STAGE PITCH">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/gallery/dtu-presentation-1.jpeg" alt="Mohit Agarwal Pitching at DTU Fortune '26" class="gallery-img gallery-photo" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/gallery/dtu-presentation-1-thumb.webp" type="image/webp">
+                                    <img src="assets/gallery/dtu-presentation-1-thumb.jpg" alt="Mohit Agarwal Pitching at DTU Fortune '26" class="gallery-img gallery-photo" loading="eager" width="400" height="711">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1062,10 +1066,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 2: IIT Delhi Campus (WasteChakra & Rendezvous) -->
-                    <article class="gallery-card" data-category="competition" data-src="assets/gallery/iit-delhi-campus.jpg" data-title="Indian Institute of Technology Delhi" data-org="IIT Delhi · WasteChakra 2026 & Rendezvous Flute Performance" data-date="2026" data-id="IIT DELHI" data-badge="NATIONAL STAGE">
+                                        <article class="gallery-card" data-category="competition" data-src="assets/gallery/iit-delhi-campus-full.webp" data-title="Indian Institute of Technology Delhi" data-org="IIT Delhi · WasteChakra 2026 & Rendezvous Flute Performance" data-date="2026" data-id="IIT DELHI" data-badge="NATIONAL STAGE">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/gallery/iit-delhi-campus.jpg" alt="Mohit Agarwal at IIT Delhi" class="gallery-img gallery-photo" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/gallery/iit-delhi-campus-thumb.webp" type="image/webp">
+                                    <img src="assets/gallery/iit-delhi-campus-thumb.jpg" alt="Mohit Agarwal at IIT Delhi" class="gallery-img gallery-photo" loading="lazy" width="400" height="225">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1089,10 +1096,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 3: IGDTUW Delhi Campus -->
-                    <article class="gallery-card" data-category="competition" data-src="assets/gallery/igdtuw-visit.jpg" data-title="IGDTUW Delhi Campus" data-org="Indira Gandhi Delhi Technical University for Women" data-date="2026" data-id="DELHI TECH EVENT" data-badge="CAMPUS VISIT">
+                                        <article class="gallery-card" data-category="competition" data-src="assets/gallery/igdtuw-visit-full.webp" data-title="IGDTUW Delhi Campus" data-org="Indira Gandhi Delhi Technical University for Women" data-date="2026" data-id="DELHI TECH EVENT" data-badge="CAMPUS VISIT">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/gallery/igdtuw-visit.jpg" alt="Mohit Agarwal at IGDTUW Delhi" class="gallery-img gallery-photo" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/gallery/igdtuw-visit-thumb.webp" type="image/webp">
+                                    <img src="assets/gallery/igdtuw-visit-thumb.jpg" alt="Mohit Agarwal at IGDTUW Delhi" class="gallery-img gallery-photo" loading="lazy" width="400" height="534">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1116,10 +1126,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 4: MAIT TechXtract Social Media Winner Award -->
-                    <article class="gallery-card" data-category="competition" data-src="assets/gallery/mait-social-media-winner.jpg" data-title="Social Media Challenge Winner — TechXtract Hackathon" data-org="Maharaja Agrasen Institute of Technology (MAIT)" data-date="2026" data-id="1ST POSITION · TEAM ROCKET" data-badge="1ST PRIZE WINNER">
+                                        <article class="gallery-card" data-category="competition" data-src="assets/gallery/mait-social-media-winner-full.webp" data-title="Social Media Challenge Winner — TechXtract Hackathon" data-org="Maharaja Agrasen Institute of Technology (MAIT)" data-date="2026" data-id="1ST POSITION · TEAM ROCKET" data-badge="1ST PRIZE WINNER">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/gallery/mait-social-media-winner.jpg" alt="Social Media Winner Envelope MAIT" class="gallery-img gallery-photo" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/gallery/mait-social-media-winner-thumb.webp" type="image/webp">
+                                    <img src="assets/gallery/mait-social-media-winner-thumb.jpg" alt="Social Media Winner Envelope MAIT" class="gallery-img gallery-photo" loading="lazy" width="400" height="711">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1143,10 +1156,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 5: Robin Hood Army Teaching & Welfare Drive -->
-                    <article class="gallery-card" data-category="competition" data-src="assets/gallery/rha-volunteering-children.jpg" data-title="Robin Hood Army — Teaching & Welfare Drive" data-org="Robin Hood Army (RHA) · Community Welfare" data-date="2024–PRESENT" data-id="COMMUNITY DRIVE" data-badge="COMMUNITY IMPACT">
+                                        <article class="gallery-card" data-category="competition" data-src="assets/gallery/rha-volunteering-children-full.webp" data-title="Robin Hood Army — Teaching & Welfare Drive" data-org="Robin Hood Army (RHA) · Community Welfare" data-date="2024–PRESENT" data-id="COMMUNITY DRIVE" data-badge="COMMUNITY IMPACT">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/gallery/rha-volunteering-children.jpg" alt="Mohit Agarwal volunteering with Robin Hood Army children" class="gallery-img gallery-photo" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/gallery/rha-volunteering-children-thumb.webp" type="image/webp">
+                                    <img src="assets/gallery/rha-volunteering-children-thumb.jpg" alt="Mohit Agarwal volunteering with Robin Hood Army children" class="gallery-img gallery-photo" loading="lazy" width="400" height="225">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1170,10 +1186,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 6: Robin Hood Army Community Classroom -->
-                    <article class="gallery-card" data-category="competition" data-src="assets/gallery/rha-community-classroom.jpg" data-title="Community Classroom & Supply Distribution" data-org="Robin Hood Army (RHA) · Ghaziabad Chapter" data-date="2024–PRESENT" data-id="YOUTH EMPOWERMENT" data-badge="YOUTH EMPOWERMENT">
+                                        <article class="gallery-card" data-category="competition" data-src="assets/gallery/rha-community-classroom-full.webp" data-title="Community Classroom & Supply Distribution" data-org="Robin Hood Army (RHA) · Ghaziabad Chapter" data-date="2024–PRESENT" data-id="YOUTH EMPOWERMENT" data-badge="YOUTH EMPOWERMENT">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/gallery/rha-community-classroom.jpg" alt="Robin Hood Army community classroom session with study supplies" class="gallery-img gallery-photo" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/gallery/rha-community-classroom-thumb.webp" type="image/webp">
+                                    <img src="assets/gallery/rha-community-classroom-thumb.jpg" alt="Robin Hood Army community classroom session with study supplies" class="gallery-img gallery-photo" loading="lazy" width="400" height="529">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1197,10 +1216,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 7: IIT Bhubaneswar Ideathon 2026 -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-iit-bhubaneswar-ideathon-2026.png" data-title="Ideathon 2026 — IIT Bhubaneswar" data-org="Indian Institute of Technology Bhubaneswar" data-date="2026" data-id="IIT BHUBANESWAR" data-badge="NATIONAL IDEATHON">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-iit-bhubaneswar-ideathon-2026-full.webp" data-title="Ideathon 2026 — IIT Bhubaneswar" data-org="Indian Institute of Technology Bhubaneswar" data-date="2026" data-id="IIT BHUBANESWAR" data-badge="NATIONAL IDEATHON">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-iit-bhubaneswar-ideathon-2026.png" alt="IIT Bhubaneswar Ideathon Certificate" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-iit-bhubaneswar-ideathon-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-iit-bhubaneswar-ideathon-2026-thumb.jpg" alt="IIT Bhubaneswar Ideathon Certificate" class="gallery-img" loading="lazy" width="400" height="283">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1224,10 +1246,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 6: ABV-IIITM Hacksagon 2026 -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-abv-iiitm-hacksagon-2026.png" data-title="Hacksagon 2026 — Ideation Phase" data-org="ABV-IIITM IEEE Student Branch · IEEE MP Section" data-date="2026" data-id="IEEE MP SECTION" data-badge="IEEE HACKATHON">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-abv-iiitm-hacksagon-2026-full.webp" data-title="Hacksagon 2026 — Ideation Phase" data-org="ABV-IIITM IEEE Student Branch · IEEE MP Section" data-date="2026" data-id="IEEE MP SECTION" data-badge="IEEE HACKATHON">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-abv-iiitm-hacksagon-2026.png" alt="ABV-IIITM Hacksagon 2026 IEEE Certificate" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-abv-iiitm-hacksagon-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-abv-iiitm-hacksagon-2026-thumb.jpg" alt="ABV-IIITM Hacksagon 2026 IEEE Certificate" class="gallery-img" loading="lazy" width="400" height="283">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1251,10 +1276,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 7: Thapar TIET Eclipse 6.0 Round 2 Offline Hackathon -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-thapar-eclipse-offline-2026.png" data-title="Eclipse 6.0 — Round 2: Offline Hackathon" data-org="Thapar Institute of Engineering and Technology (TIET), Patiala" data-date="2026" data-id="TEAM DELTA FORCE" data-badge="OFFLINE HACKATHON">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-thapar-eclipse-offline-2026-full.webp" data-title="Eclipse 6.0 — Round 2: Offline Hackathon" data-org="Thapar Institute of Engineering and Technology (TIET), Patiala" data-date="2026" data-id="TEAM DELTA FORCE" data-badge="OFFLINE HACKATHON">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-thapar-eclipse-offline-2026.png" alt="Eclipse 6.0 Round 2 Offline Hackathon Certificate TIET" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-thapar-eclipse-offline-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-thapar-eclipse-offline-2026-thumb.jpg" alt="Eclipse 6.0 Round 2 Offline Hackathon Certificate TIET" class="gallery-img" loading="lazy" width="400" height="283">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1278,10 +1306,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 9: Jamia Millia Islamia SKLATE Challenge -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-jamia-millia-sklate-2026.png" data-title="SKLATE — UI/UX & B-Plan Innovation Challenge" data-org="Faculty of Engineering, Jamia Millia Islamia (FET JMI), Delhi" data-date="2026" data-id="ROUND 1 SUBMISSION" data-badge="UI/UX & B-PLAN">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-jamia-millia-sklate-2026-full.webp" data-title="SKLATE — UI/UX & B-Plan Innovation Challenge" data-org="Faculty of Engineering, Jamia Millia Islamia (FET JMI), Delhi" data-date="2026" data-id="ROUND 1 SUBMISSION" data-badge="UI/UX & B-PLAN">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-jamia-millia-sklate-2026.png" alt="SKLATE UI/UX & B-Plan Challenge Certificate FET JMI" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-jamia-millia-sklate-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-jamia-millia-sklate-2026-thumb.jpg" alt="SKLATE UI/UX & B-Plan Challenge Certificate FET JMI" class="gallery-img" loading="lazy" width="400" height="283">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1305,10 +1336,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 10: NIT Tiruchirappalli Pragyan'26 -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-nit-trichy-pragyan-ocean-mining-2026.png" data-title="Ocean Mining — Pragyan'26" data-org="National Institute of Technology (NIT), Tiruchirappalli" data-date="2026" data-id="NIT TRICHY" data-badge="TECHNICAL FEST">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-nit-trichy-pragyan-ocean-mining-2026-full.webp" data-title="Ocean Mining — Pragyan'26" data-org="National Institute of Technology (NIT), Tiruchirappalli" data-date="2026" data-id="NIT TRICHY" data-badge="TECHNICAL FEST">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-nit-trichy-pragyan-ocean-mining-2026.png" alt="NIT Trichy Pragyan 26 Ocean Mining Certificate" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-nit-trichy-pragyan-ocean-mining-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-nit-trichy-pragyan-ocean-mining-2026-thumb.jpg" alt="NIT Trichy Pragyan 26 Ocean Mining Certificate" class="gallery-img" loading="lazy" width="400" height="283">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1332,10 +1366,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 11: IIM Visakhapatnam Brand Aficionado -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-iim-visakhapatnam-brand-aficionado-2026.png" data-title="Brand Aficionado — Marketing Challenge" data-org="Indian Institute of Management (IIM), Visakhapatnam" data-date="2026" data-id="IIM VIZAG" data-badge="IIM CHALLENGE">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-iim-visakhapatnam-brand-aficionado-2026-full.webp" data-title="Brand Aficionado — Marketing Challenge" data-org="Indian Institute of Management (IIM), Visakhapatnam" data-date="2026" data-id="IIM VIZAG" data-badge="IIM CHALLENGE">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-iim-visakhapatnam-brand-aficionado-2026.png" alt="IIM Visakhapatnam Brand Aficionado Certificate" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-iim-visakhapatnam-brand-aficionado-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-iim-visakhapatnam-brand-aficionado-2026-thumb.jpg" alt="IIM Visakhapatnam Brand Aficionado Certificate" class="gallery-img" loading="lazy" width="400" height="283">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1359,10 +1396,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 12: FMS Delhi Conquest 2026 -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-fms-delhi-conquest-2026.png" data-title="Conquest 2026 — Fiesta Management Fest" data-org="Faculty of Management Studies (FMS), University of Delhi" data-date="2026" data-id="FMS DU" data-badge="FMS DELHI">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-fms-delhi-conquest-2026-full.webp" data-title="Conquest 2026 — Fiesta Management Fest" data-org="Faculty of Management Studies (FMS), University of Delhi" data-date="2026" data-id="FMS DU" data-badge="FMS DELHI">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-fms-delhi-conquest-2026.png" alt="FMS Delhi Conquest Fiesta Certificate" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-fms-delhi-conquest-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-fms-delhi-conquest-2026-thumb.jpg" alt="FMS Delhi Conquest Fiesta Certificate" class="gallery-img" loading="lazy" width="400" height="283">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1386,10 +1426,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 13: IIIT Naya Raipur XCELERATE 2026 -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-iiit-naya-raipur-xcelerate-2026.png" data-title="Case Study Competition — XCELERATE 2026" data-org="Money Matters & CSIDC · IIIT Naya Raipur" data-date="2026" data-id="IIIT NAYA RAIPUR" data-badge="CASE STUDY">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-iiit-naya-raipur-xcelerate-2026-full.webp" data-title="Case Study Competition — XCELERATE 2026" data-org="Money Matters & CSIDC · IIIT Naya Raipur" data-date="2026" data-id="IIIT NAYA RAIPUR" data-badge="CASE STUDY">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-iiit-naya-raipur-xcelerate-2026.png" alt="IIIT Naya Raipur Case Study Competition Certificate" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-iiit-naya-raipur-xcelerate-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-iiit-naya-raipur-xcelerate-2026-thumb.jpg" alt="IIIT Naya Raipur Case Study Competition Certificate" class="gallery-img" loading="lazy" width="400" height="283">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1413,10 +1456,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 14: DU SBSEC Chanakya Niti 3.0 -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-du-sbsec-chanakya-niti-2026.png" data-title="Chanakya Niti 3.0 — Strategy Competition" data-org="Shaheed Bhagat Singh Evening College (SBSEC), University of Delhi" data-date="2026" data-id="DU SBSEC" data-badge="STRATEGY CONTEST">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-du-sbsec-chanakya-niti-2026-full.webp" data-title="Chanakya Niti 3.0 — Strategy Competition" data-org="Shaheed Bhagat Singh Evening College (SBSEC), University of Delhi" data-date="2026" data-id="DU SBSEC" data-badge="STRATEGY CONTEST">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-du-sbsec-chanakya-niti-2026.png" alt="Chanakya Niti 3.0 Certificate SBSEC DU" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-du-sbsec-chanakya-niti-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-du-sbsec-chanakya-niti-2026-thumb.jpg" alt="Chanakya Niti 3.0 Certificate SBSEC DU" class="gallery-img" loading="lazy" width="400" height="283">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1440,10 +1486,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 15: NIT Kurukshetra Startup Pitch Arena -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-nit-kurukshetra-startup-pitch-2026.png" data-title="Startup Pitch Arena — National Competition" data-org="Synergy Club · Dept of Business Administration, NIT Kurukshetra" data-date="April 20–21, 2026" data-id="SC/2026/P/0002" data-badge="NATIONAL PITCH">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-nit-kurukshetra-startup-pitch-2026-full.webp" data-title="Startup Pitch Arena — National Competition" data-org="Synergy Club · Dept of Business Administration, NIT Kurukshetra" data-date="April 20–21, 2026" data-id="SC/2026/P/0002" data-badge="NATIONAL PITCH">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-nit-kurukshetra-startup-pitch-2026.png" alt="Startup Pitch Arena Certificate - NIT Kurukshetra" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-nit-kurukshetra-startup-pitch-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-nit-kurukshetra-startup-pitch-2026-thumb.jpg" alt="Startup Pitch Arena Certificate - NIT Kurukshetra" class="gallery-img" loading="lazy" width="400" height="283">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1467,10 +1516,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 6: DTU FIN-O-HACK (Fortune '26) -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-dtu-finohack-2026.png" data-title="FIN-O-HACK Hackathon — Fortune '26" data-org="ASSETS · Delhi Technological University (DTU)" data-date="April 6–7, 2026" data-id="FORTUNE '26" data-badge="FINTECH HACKATHON">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-dtu-finohack-2026-full.webp" data-title="FIN-O-HACK Hackathon — Fortune '26" data-org="ASSETS · Delhi Technological University (DTU)" data-date="April 6–7, 2026" data-id="FORTUNE '26" data-badge="FINTECH HACKATHON">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-dtu-finohack-2026.png" alt="FIN-O-HACK Hackathon Certificate - DTU" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-dtu-finohack-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-dtu-finohack-2026-thumb.jpg" alt="FIN-O-HACK Hackathon Certificate - DTU" class="gallery-img" loading="lazy" width="400" height="283">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1494,10 +1546,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 7: DTU MarkSense (Fortune '26) -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-dtu-marksense-2026.png" data-title="MarkSense Competition — Fortune '26" data-org="ASSETS · Delhi Technological University (DTU)" data-date="April 6–7, 2026" data-id="TEAM: THE STRANGE ANALYST" data-badge="MARKET SENSE">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-dtu-marksense-2026-full.webp" data-title="MarkSense Competition — Fortune '26" data-org="ASSETS · Delhi Technological University (DTU)" data-date="April 6–7, 2026" data-id="TEAM: THE STRANGE ANALYST" data-badge="MARKET SENSE">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-dtu-marksense-2026.png" alt="MarkSense Competition Certificate - DTU" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-dtu-marksense-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-dtu-marksense-2026-thumb.jpg" alt="MarkSense Competition Certificate - DTU" class="gallery-img" loading="lazy" width="400" height="283">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1521,10 +1576,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 8: Omnikon National Hackathon 2026 -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-omnikon-hackathon-2026.png" data-title="Omnikon National Hackathon 2026 Ambassadorship" data-org="Omnikon ORG · Student Tech Society" data-date="August 18, 2026" data-id="OMNI26-AMB-0027" data-badge="CYBERMASTER TIER">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-omnikon-hackathon-2026-full.webp" data-title="Omnikon National Hackathon 2026 Ambassadorship" data-org="Omnikon ORG · Student Tech Society" data-date="August 18, 2026" data-id="OMNI26-AMB-0027" data-badge="CYBERMASTER TIER">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-omnikon-hackathon-2026.png" alt="Omnikon National Hackathon Certificate" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-omnikon-hackathon-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-omnikon-hackathon-2026-thumb.jpg" alt="Omnikon National Hackathon Certificate" class="gallery-img" loading="lazy" width="400" height="283">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1548,10 +1606,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 9: Mentored Research Forum, LSR -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-mrf-lsr-2026.png" data-title="Marginally Interesting: Article Writing 2026" data-org="Mentored Research Forum · Dept of Economics, LSR" data-date="2026" data-id="LSR DELHI" data-badge="ARTICLE WRITING">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-mrf-lsr-2026-full.webp" data-title="Marginally Interesting: Article Writing 2026" data-org="Mentored Research Forum · Dept of Economics, LSR" data-date="2026" data-id="LSR DELHI" data-badge="ARTICLE WRITING">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-mrf-lsr-2026.png" alt="Article Writing Certificate - LSR Mentored Research Forum" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-mrf-lsr-2026-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-mrf-lsr-2026-thumb.jpg" alt="Article Writing Certificate - LSR Mentored Research Forum" class="gallery-img" loading="lazy" width="400" height="300">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1575,10 +1636,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 10: Plum XIV National Challenge -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/plum-xiv.jpg" data-title="Plum XIV National Challenge" data-org="Plum Product & Analytics League" data-date="2025–2026" data-id="PLUM-XIV" data-badge="NATIONAL CONTEST">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/plum-xiv-full.webp" data-title="Plum XIV National Challenge" data-org="Plum Product & Analytics League" data-date="2025–2026" data-id="PLUM-XIV" data-badge="NATIONAL CONTEST">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/plum-xiv.jpg" alt="Plum XIV National Challenge Certificate" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/plum-xiv-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/plum-xiv-thumb.jpg" alt="Plum XIV National Challenge Certificate" class="gallery-img" loading="lazy" width="400" height="273">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1602,10 +1666,13 @@
                     </article>
 
                     <!-- GALLERY ITEM 11: Rotary Club Blood Donation Certificate -->
-                    <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-blood-donation-rotary.jpg" data-title="Certificate of Appreciation — Voluntary Blood Donation" data-org="Rotary Club of Ghaziabad North · AKGEC Camp" data-date="April 16, 2026" data-id="DONOR CARD NO. 134" data-badge="SOCIAL SERVICE">
+                                        <article class="gallery-card" data-category="certificate" data-src="assets/certificates/cert-blood-donation-rotary-full.webp" data-title="Certificate of Appreciation — Voluntary Blood Donation" data-org="Rotary Club of Ghaziabad North · AKGEC Camp" data-date="April 16, 2026" data-id="DONOR CARD NO. 134" data-badge="SOCIAL SERVICE">
                         <div class="gallery-card-inner">
                             <div class="gallery-media-wrap">
-                                <img src="assets/certificates/cert-blood-donation-rotary.jpg" alt="Blood Donation Certificate of Appreciation Rotary Club" class="gallery-img" loading="lazy">
+                                <picture>
+                                    <source srcset="assets/certificates/cert-blood-donation-rotary-thumb.webp" type="image/webp">
+                                    <img src="assets/certificates/cert-blood-donation-rotary-thumb.jpg" alt="Blood Donation Certificate of Appreciation Rotary Club" class="gallery-img" loading="lazy" width="400" height="533">
+                                </picture>
                                 <div class="gallery-media-overlay">
                                     <span class="gallery-inspect-btn">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/></svg>
@@ -1686,6 +1753,19 @@
                     </a>
                 </div>
 
+                <!-- Resume / CV Download in Contact Section -->
+                <!-- TODO: User to provide real resume.pdf at repository root -->
+                <div class="flex justify-center mb-10">
+                    <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-border-beam group" download="Mohit_Agarwal_Resume.pdf">
+                        <span class="btn-border-beam-inner">
+                            <span>Download CV / Resume</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
+
                 <!-- Sleek Glassmorphic Contact Box -->
                 <div class="max-w-xl mx-auto bg-zinc-950/80 border border-white/10 rounded-2xl p-6 sm:p-8 backdrop-blur-xl mb-16 shadow-2xl">
                     <form id="contact-form" class="clean-form" action="https://formsubmit.co/mohitagarwal4215@gmail.com" method="POST">
@@ -1693,7 +1773,7 @@
                         <input type="hidden" name="_subject" value="New Portfolio Message for Mohit Agarwal">
                         <input type="hidden" name="_captcha" value="false">
                         <input type="hidden" name="_template" value="table">
-                        <input type="text" name="_honey" style="display:none">
+                        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
 
                         <div class="form-row">
                             <div class="form-group">
@@ -1713,8 +1793,14 @@
                             <span id="btn-submit-text">SEND MESSAGE</span>
                             <span class="submit-arrow" id="btn-submit-arrow">→</span>
                         </button>
-                        <div id="form-feedback" class="form-feedback text-center"></div>
+                        <div id="form-feedback" class="form-feedback text-center" aria-live="polite"></div>
                     </form>
+                    <noscript>
+                        <div class="mt-4 p-4 rounded-xl bg-zinc-900/90 border border-white/10 text-center text-sm text-zinc-300">
+                            <span>JavaScript is disabled in your browser. You can reach Mohit directly via email: </span>
+                            <a href="mailto:mohitagarwal4215@gmail.com" class="text-cyan-400 underline font-semibold">mohitagarwal4215@gmail.com</a>
+                        </div>
+                    </noscript>
                 </div>
             </div>
 
@@ -1737,7 +1823,7 @@
         </section>
 
         <!-- ==================== GALLERY LIGHTBOX MODAL ==================== -->
-        <div id="gallery-lightbox" class="gallery-lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+        <div id="gallery-lightbox" class="gallery-lightbox" aria-hidden="true" role="dialog" aria-modal="true" inert>
             <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
             <div class="lightbox-container">
                 <div class="lightbox-header">
@@ -1777,6 +1863,7 @@
         </div>
     </main>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
+
