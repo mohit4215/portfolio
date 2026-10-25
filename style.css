@@ -18,7 +18,8 @@
     --text-dim: #a0a0a0;
     --text-muted: #606060;
 
-    --font-display: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'Space Grotesk', -apple-system, monospace;
 
@@ -796,6 +797,8 @@ a {
     font-family: var(--font-heading);
     font-size: clamp(1.4rem, 2.4vw, 2.1rem);
     font-weight: 700;
+    line-height: 1.25;
+    padding-bottom: 0.15rem;
     letter-spacing: 0.02em;
     color: #ffffff;
     text-transform: uppercase;
@@ -1053,6 +1056,7 @@ a {
     position: relative;
     z-index: 2;
     transform: translateZ(24px);
+    overflow: visible;
 }
 
 .skill-card-top {
@@ -1120,12 +1124,15 @@ a {
 }
 
 .skill-card-heading {
-    font-family: var(--font-display);
-    font-size: 1.45rem;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: clamp(1.25rem, 1.8vw, 1.45rem);
     font-weight: 700;
+    line-height: 1.35;
+    padding-bottom: 0.25rem;
     color: #ffffff;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
     margin-bottom: 0.5rem;
+    overflow: visible;
 }
 
 .skill-card-summary {
