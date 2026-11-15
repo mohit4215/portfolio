@@ -1,5 +1,5 @@
 /**
- * MOHIT AGARWAL â€” PERSONAL DEVELOPER PORTFOLIO
+ * MOHIT AGARWAL — PERSONAL DEVELOPER PORTFOLIO
  * High-Performance Snappy Particle Assembly & Modern Dark Landing Page
  */
 
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             introOverlay.style.opacity = '0';
         }, 600);
 
-        // 4. Reveal main site at 1000ms (â‰¤ 1.2s total duration)
+        // 4. Reveal main site at 1000ms (<= 1.2s total duration)
         setTimeout(() => {
             finishIntroAndReveal();
             try {
@@ -1047,7 +1047,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const org = card.getAttribute('data-org');
         const date = card.getAttribute('data-date');
         const badge = card.getAttribute('data-badge') || 'VERIFIED';
-        const certId = card.getAttribute('data-id') ? ` Â· ${card.getAttribute('data-id')}` : '';
+        const certId = card.getAttribute('data-id') ? ` \u00B7 ${card.getAttribute('data-id')}` : '';
 
         if (lightboxImg) {
             lightboxImg.style.opacity = '0';
@@ -1060,7 +1060,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (lightboxTag) lightboxTag.textContent = badge;
         if (lightboxTitle) lightboxTitle.textContent = title;
-        if (lightboxMeta) lightboxMeta.textContent = `${org} Â· ${date}${certId}`;
+        if (lightboxMeta) lightboxMeta.textContent = `${org} \u00B7 ${date}${certId}`;
         if (lightboxCounter) lightboxCounter.textContent = `${currentIndex + 1} / ${currentFilteredCards.length}`;
     }
 
@@ -1251,7 +1251,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const mailtoUrl = `mailto:mohitagarwal4215@gmail.com?subject=Portfolio%20Inquiry%20from%20${encodeURIComponent(nameVal)}&body=${encodeURIComponent(messageVal)}`;
                     formFeedback.innerHTML = `
                         <div class="feedback-warning" style="color:#fbbf24; padding:0.5rem 0;">
-                            <span>Direct transmission fallback: <a href="${mailtoUrl}" class="underline text-cyan-400">Click here to send via your mail client â†’</a></span>
+                            <span>Direct transmission fallback: <a href="${mailtoUrl}" class="underline text-cyan-400">Click here to send via your mail client \u2192</a></span>
                         </div>
                     `;
                 } else {
