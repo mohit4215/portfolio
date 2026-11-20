@@ -603,7 +603,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!prefersReducedMotion) {
                     const ratio = Math.min(dist / maxDistance, 1);
                     const scale = (1 - ratio * 0.1).toFixed(3);
-                    const opacity = (1 - ratio * 0.5).toFixed(3);
+                    const opacity = (1 - ratio * 0.2).toFixed(3);
                     card.style.transform = `scale(${scale})`;
                     card.style.opacity = opacity;
                 } else {
