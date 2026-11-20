@@ -9,6 +9,317 @@ document.addEventListener('DOMContentLoaded', () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // ==========================================
+    // 0. SOUND DESIGN & MICRO-HAPTICS ENGINE
+    // Pure Synthesized Web Audio API (0 KB External Audio Files)
+    // Ultra-subtle, crisp tactile feedback styled after Apple & Linear
+    // ==========================================
+    const SoundEngine = (() => {
+        let audioCtx = null;
+        let isSoundEnabled = false;
+        let lastHoverTime = 0;
+
+        try {
+            const saved = localStorage.getItem('portfolio_sound_enabled');
+            if (saved === 'true') {
+                isSoundEnabled = true;
+            }
+        } catch (_) {}
+
+        function getContext() {
+            if (!audioCtx && (window.AudioContext || window.webkitAudioContext)) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContextClass();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function vibrate(pattern) {
+            if (!isSoundEnabled) return;
+            if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+                try {
+                    navigator.vibrate(pattern);
+                } catch (_) {}
+            }
+        }
+
+        // 1. Hover micro-tick: ultra-subtle 8ms filtered sine sweep (1200Hz -> 800Hz)
+        function playHover() {
+            if (!isSoundEnabled) return;
+            const nowMs = performance.now();
+            if (nowMs - lastHoverTime < 50) return; // Debounce rapid sweeps
+            lastHoverTime = nowMs;
+
+            const ctx = getContext();
+            if (!ctx || ctx.state !== 'running') return;
+
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(1200, now);
+            osc.frequency.exponentialRampToValueAtTime(700, now + 0.01);
+
+            gain.gain.setValueAtTime(0.02, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.01);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(now);
+            osc.stop(now + 0.012);
+        }
+
+        // 2. Click micro-pop: crisp mechanical switch pop (420Hz -> 140Hz in 20ms)
+        function playClick() {
+            if (!isSoundEnabled) return;
+            vibrate(8);
+
+            const ctx = getContext();
+            if (!ctx || ctx.state !== 'running') return;
+
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(420, now);
+            osc.frequency.exponentialRampToValueAtTime(140, now + 0.02);
+
+            gain.gain.setValueAtTime(0.12, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.02);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(now);
+            osc.stop(now + 0.025);
+        }
+
+        // 3. Tab / Filter / Switch slide: tactile sliding pop (320Hz -> 580Hz)
+        function playSwitch() {
+            if (!isSoundEnabled) return;
+            vibrate(12);
+
+            const ctx = getContext();
+            if (!ctx || ctx.state !== 'running') return;
+
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(320, now);
+            osc.frequency.exponentialRampToValueAtTime(580, now + 0.035);
+
+            gain.gain.setValueAtTime(0.09, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.035);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(now);
+            osc.stop(now + 0.04);
+        }
+
+        // 4. Carousel / Card slide flick: tactile low-pass swipe
+        function playSlide() {
+            if (!isSoundEnabled) return;
+            vibrate(10);
+
+            const ctx = getContext();
+            if (!ctx || ctx.state !== 'running') return;
+
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const filter = ctx.createBiquadFilter();
+            const gain = ctx.createGain();
+
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(480, now);
+            osc.frequency.exponentialRampToValueAtTime(240, now + 0.04);
+
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(1800, now);
+
+            gain.gain.setValueAtTime(0.08, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.04);
+
+            osc.connect(filter);
+            filter.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(now);
+            osc.stop(now + 0.045);
+        }
+
+        // 5. Apple / macOS style harmonic glass modal chime (C5 -> E5 -> G5)
+        function playModalOpen() {
+            if (!isSoundEnabled) return;
+            vibrate([10, 30, 10]);
+
+            const ctx = getContext();
+            if (!ctx || ctx.state !== 'running') return;
+
+            const now = ctx.currentTime;
+            const chord = [523.25, 659.25, 783.99]; // C5, E5, G5
+
+            chord.forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                const filter = ctx.createBiquadFilter();
+
+                const startOffset = idx * 0.03;
+                const startTime = now + startOffset;
+                const duration = 0.22;
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, startTime);
+
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(2800, startTime);
+
+                gain.gain.setValueAtTime(0.001, startTime);
+                gain.gain.linearRampToValueAtTime(0.07 / (idx + 1), startTime + 0.015);
+                gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(startTime);
+                osc.stop(startTime + duration);
+            });
+        }
+
+        // 6. Modal close: soft descending glass blip (E5 -> G4)
+        function playModalClose() {
+            if (!isSoundEnabled) return;
+            vibrate(10);
+
+            const ctx = getContext();
+            if (!ctx || ctx.state !== 'running') return;
+
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(659.25, now);
+            osc.frequency.exponentialRampToValueAtTime(392.00, now + 0.12);
+
+            gain.gain.setValueAtTime(0.06, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(now);
+            osc.stop(now + 0.13);
+        }
+
+        // 7. Sound enabled activation chime (Ascending major triad: E5 -> G#5 -> B5)
+        function playActivationChime() {
+            const ctx = getContext();
+            if (!ctx) return;
+            if (ctx.state === 'suspended') {
+                ctx.resume();
+            }
+
+            const notes = [659.25, 830.61, 987.77];
+            const now = ctx.currentTime;
+
+            notes.forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                const noteStart = now + idx * 0.07;
+                const duration = 0.28;
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, noteStart);
+
+                gain.gain.setValueAtTime(0.001, noteStart);
+                gain.gain.linearRampToValueAtTime(0.09, noteStart + 0.012);
+                gain.gain.exponentialRampToValueAtTime(0.0001, noteStart + duration);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(noteStart);
+                osc.stop(noteStart + duration);
+            });
+
+            vibrate([15, 40, 15]);
+        }
+
+        function toggle() {
+            isSoundEnabled = !isSoundEnabled;
+            try {
+                localStorage.setItem('portfolio_sound_enabled', String(isSoundEnabled));
+            } catch (_) {}
+
+            if (isSoundEnabled) {
+                playActivationChime();
+            } else {
+                vibrate(8);
+            }
+
+            return isSoundEnabled;
+        }
+
+        function isEnabled() {
+            return isSoundEnabled;
+        }
+
+        return {
+            getContext,
+            toggle,
+            isEnabled,
+            playHover,
+            playClick,
+            playSwitch,
+            playSlide,
+            playModalOpen,
+            playModalClose,
+            vibrate
+        };
+    })();
+
+    // ==========================================
+    // 0B. SOUND TOGGLE UI CONTROLLER
+    // ==========================================
+    const soundToggle = document.getElementById('sound-toggle');
+    const soundLabel = document.getElementById('sound-label');
+
+    function updateSoundUI(active) {
+        if (!soundToggle) return;
+        if (active) {
+            soundToggle.classList.add('is-active');
+            soundToggle.setAttribute('aria-pressed', 'true');
+            soundToggle.setAttribute('title', 'Sound feedback enabled. Click to mute.');
+            if (soundLabel) soundLabel.textContent = 'SOUND ON';
+        } else {
+            soundToggle.classList.remove('is-active');
+            soundToggle.setAttribute('aria-pressed', 'false');
+            soundToggle.setAttribute('title', 'Sound feedback muted. Click to enable.');
+            if (soundLabel) soundLabel.textContent = 'SOUND OFF';
+        }
+    }
+
+    if (soundToggle) {
+        updateSoundUI(SoundEngine.isEnabled());
+
+        soundToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const newState = SoundEngine.toggle();
+            updateSoundUI(newState);
+        });
+    }
+
+    // ==========================================
     // 1. INTRO OVERLAY & SNAPPY ASSEMBLE ANIMATION
     // ==========================================
     const word = "PORTFOLIO";
@@ -444,14 +755,18 @@ document.addEventListener('DOMContentLoaded', () => {
             cursorRing.style.left = `${e.clientX}px`;
             cursorRing.style.top = `${e.clientY}px`;
         }, { passive: true });
-
-        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .bento-card, .bento-pill, .bento-btn-action, .magnetic-social-btn, .achieve-3d-card, .carousel-btn, .back-to-top-btn, .gallery-card, .gallery-tab, .lightbox-btn, .lightbox-nav-btn, .timeline-card, .project-case-btn, .gallery-toggle-btn');
-        interactives.forEach((el) => {
-            el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
-        });
     }
 
+    const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .bento-card, .bento-pill, .bento-btn-action, .magnetic-social-btn, .achieve-3d-card, .carousel-btn, .back-to-top-btn, .gallery-card, .gallery-tab, .lightbox-btn, .lightbox-nav-btn, .timeline-card, .project-case-btn, .gallery-toggle-btn, .sound-toggle-btn');
+    interactives.forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+            if (cursorRing && !prefersReducedMotion) cursorRing.classList.add('cursor-hover');
+            SoundEngine.playHover();
+        });
+        el.addEventListener('mouseleave', () => {
+            if (cursorRing && !prefersReducedMotion) cursorRing.classList.remove('cursor-hover');
+        });
+    });
     // ==========================================
     // 5. EXPERIENCE TIMELINE (FAILURE-SAFE REVEAL)
     // ==========================================
@@ -641,9 +956,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (achievePrevBtn && achieveNextBtn) {
             achievePrevBtn.addEventListener('click', () => {
+                SoundEngine.playSlide();
                 achieveViewport.scrollBy({ left: -360, behavior: 'smooth' });
             });
             achieveNextBtn.addEventListener('click', () => {
+                SoundEngine.playSlide();
                 achieveViewport.scrollBy({ left: 360, behavior: 'smooth' });
             });
         }
@@ -875,6 +1192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        SoundEngine.playModalOpen();
         projectModal.classList.add('is-open');
         projectModal.setAttribute('aria-hidden', 'false');
         projectModal.removeAttribute('inert');
@@ -887,6 +1205,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function closeProjectModal() {
         if (!projectModal) return;
+        SoundEngine.playModalClose();
         projectModal.classList.remove('is-open');
         projectModal.setAttribute('aria-hidden', 'true');
         projectModal.setAttribute('inert', '');
@@ -1002,6 +1321,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (galleryToggleBtn) {
             galleryToggleBtn.addEventListener('click', () => {
+                SoundEngine.playSwitch();
                 isGalleryExpanded = !isGalleryExpanded;
                 applyGalleryState();
                 currentFilteredCards = getVisibleGalleryCards();
@@ -1022,6 +1342,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 tab.addEventListener('click', () => {
+                    SoundEngine.playSwitch();
                     galleryTabs.forEach((t) => {
                         t.classList.remove('active');
                         t.setAttribute('aria-pressed', 'false');
@@ -1073,6 +1394,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLightbox(index);
 
         if (lightbox) {
+            SoundEngine.playModalOpen();
             lightbox.classList.add('is-open');
             lightbox.setAttribute('aria-hidden', 'false');
             lightbox.removeAttribute('inert');
@@ -1085,6 +1407,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function closeLightbox() {
         if (lightbox) {
+            SoundEngine.playModalClose();
             lightbox.classList.remove('is-open');
             lightbox.setAttribute('aria-hidden', 'true');
             lightbox.setAttribute('inert', '');
@@ -1096,6 +1419,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function nextLightbox() {
+        SoundEngine.playSlide();
         currentFilteredCards = getVisibleGalleryCards();
         if (currentFilteredCards.length === 0) return;
         const nextIdx = (currentIndex + 1) % currentFilteredCards.length;
@@ -1103,6 +1427,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function prevLightbox() {
+        SoundEngine.playSlide();
         currentFilteredCards = getVisibleGalleryCards();
         if (currentFilteredCards.length === 0) return;
         const prevIdx = (currentIndex - 1 + currentFilteredCards.length) % currentFilteredCards.length;
@@ -1170,6 +1495,24 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const contactForm = document.getElementById('contact-form');
     const formFeedback = document.getElementById('form-feedback');
+
+    // Global tactile click feedback for interactive elements
+    document.addEventListener('click', (e) => {
+        const target = e.target.closest('a, button, .bento-card, .achieve-3d-card, .timeline-card');
+        if (!target) return;
+        if (target.id === 'sound-toggle' ||
+            target.classList.contains('gallery-tab') ||
+            target.id === 'gallery-toggle-btn' ||
+            target.classList.contains('carousel-btn') ||
+            target.classList.contains('lightbox-nav-btn') ||
+            target.classList.contains('project-case-btn') ||
+            target.classList.contains('gallery-card') ||
+            target.classList.contains('lightbox-close') ||
+            target.id === 'project-modal-close-btn') {
+            return;
+        }
+        SoundEngine.playClick();
+    });
 
     if (contactForm && formFeedback) {
         contactForm.addEventListener('submit', async (e) => {

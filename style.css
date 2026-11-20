@@ -3070,7 +3070,8 @@ a {
 .btn-submit:focus-visible,
 .magnetic-social-btn:focus-visible,
 .carousel-btn:focus-visible,
-.back-to-top-btn:focus-visible {
+.back-to-top-btn:focus-visible,
+.sound-toggle-btn:focus-visible {
     outline: 2px solid #06b6d4 !important;
     outline-offset: 3px !important;
 }
@@ -3355,4 +3356,141 @@ a {
 .timeline-compact-org a {
     text-decoration: underline !important;
     text-underline-offset: 2px !important;
+}
+
+/* ==========================================
+   14. SOUND DESIGN & MICRO-HAPTICS CONTROLLER
+   Pure Web Audio API Floating Glass Pill
+   ========================================== */
+.sound-controller-wrap {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    z-index: 95;
+    pointer-events: auto;
+}
+
+.sound-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.52rem 0.95rem;
+    background: rgba(13, 14, 18, 0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 9999px;
+    color: #94a3b8;
+    font-family: var(--font-mono, 'Courier New', monospace);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+.sound-toggle-btn:hover {
+    color: #f1f5f9;
+    background: rgba(22, 24, 30, 0.92);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+/* Active (Sound ON) state */
+.sound-toggle-btn.is-active {
+    color: #06b6d4;
+    background: rgba(8, 28, 36, 0.88);
+    border-color: rgba(6, 182, 212, 0.45);
+    box-shadow: 0 4px 24px rgba(6, 182, 212, 0.22), 0 0 0 1px rgba(6, 182, 212, 0.2) inset;
+}
+
+.sound-toggle-btn.is-active:hover {
+    border-color: rgba(6, 182, 212, 0.7);
+    box-shadow: 0 6px 28px rgba(6, 182, 212, 0.32), 0 0 0 1px rgba(6, 182, 212, 0.3) inset;
+}
+
+.sound-icon-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    color: currentColor;
+    flex-shrink: 0;
+}
+
+.sound-icon-active {
+    display: none;
+}
+
+.sound-toggle-btn.is-active .sound-icon-mute {
+    display: none;
+}
+
+.sound-toggle-btn.is-active .sound-icon-active {
+    display: inline-block;
+}
+
+/* Animated mini equalizer wave bars */
+.sound-eq-bars {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 11px;
+    margin-left: 2px;
+}
+
+.eq-bar {
+    width: 2px;
+    height: 3px;
+    background-color: currentColor;
+    border-radius: 1px;
+    opacity: 0.4;
+    transition: height 0.2s ease, opacity 0.2s ease;
+}
+
+.sound-toggle-btn.is-active .eq-bar {
+    opacity: 0.95;
+    animation: eqPulse 1.2s ease-in-out infinite alternate;
+}
+
+.sound-toggle-btn.is-active .bar-1 {
+    animation-delay: 0.1s;
+}
+
+.sound-toggle-btn.is-active .bar-2 {
+    animation-delay: 0.35s;
+}
+
+.sound-toggle-btn.is-active .bar-3 {
+    animation-delay: 0.2s;
+}
+
+@keyframes eqPulse {
+    0% { height: 3px; }
+    50% { height: 11px; }
+    100% { height: 6px; }
+}
+
+@media (max-width: 640px) {
+    .sound-controller-wrap {
+        bottom: 1rem;
+        left: 1rem;
+    }
+    .sound-toggle-btn {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.68rem;
+        gap: 0.4rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sound-toggle-btn.is-active .eq-bar {
+        animation: none;
+        height: 7px;
+    }
 }
