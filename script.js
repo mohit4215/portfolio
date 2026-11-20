@@ -445,7 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cursorRing.style.top = `${e.clientY}px`;
         }, { passive: true });
 
-        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .bento-card, .bento-pill, .bento-btn-action, .magnetic-social-btn, .achieve-3d-card, .carousel-btn, .back-to-top-btn, .gallery-card, .gallery-tab, .lightbox-btn, .lightbox-nav-btn, .timeline-card, .project-case-btn, .gallery-toggle-btn, .hr-copy-btn');
+        const interactives = document.querySelectorAll('a, button, input, textarea, .skill-badge, .tool-tag, .tilt-card, .floating-orbit-item, .bento-card, .bento-pill, .bento-btn-action, .magnetic-social-btn, .achieve-3d-card, .carousel-btn, .back-to-top-btn, .gallery-card, .gallery-tab, .lightbox-btn, .lightbox-nav-btn, .timeline-card, .project-case-btn, .gallery-toggle-btn');
         interactives.forEach((el) => {
             el.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
@@ -1176,59 +1176,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 10. HR QUICK ACTION: COPY EMAIL
-    // ==========================================
-    const copyEmailBtns = document.querySelectorAll('[data-copy-email]');
-    const copyEmailStatus = document.getElementById('copy-email-status');
-    let copyEmailResetTimer = null;
-
-    async function copyEmailText(email) {
-        if (navigator.clipboard && window.isSecureContext) {
-            try {
-                await Promise.race([
-                    navigator.clipboard.writeText(email),
-                    new Promise((_, reject) => setTimeout(() => reject(new Error('clipboard timeout')), 700))
-                ]);
-                return true;
-            } catch (err) {
-                // Fall through to the legacy copy path below.
-            }
-        }
-
-        const helper = document.createElement('textarea');
-        helper.value = email;
-        helper.setAttribute('readonly', '');
-        helper.style.position = 'fixed';
-        helper.style.opacity = '0';
-        document.body.appendChild(helper);
-        helper.select();
-        let copied = false;
-        try {
-            copied = document.execCommand('copy');
-        } catch (err) {
-            copied = false;
-        }
-        helper.remove();
-        return copied;
-    }
-
-    copyEmailBtns.forEach((btn) => {
-        btn.addEventListener('click', async () => {
-            const email = btn.getAttribute('data-copy-email') || '';
-            if (!email) return;
-
-            const copied = await copyEmailText(email);
-            if (copyEmailStatus) copyEmailStatus.textContent = copied ? 'Copied' : 'Copy failed';
-
-            if (copyEmailResetTimer) window.clearTimeout(copyEmailResetTimer);
-            copyEmailResetTimer = window.setTimeout(() => {
-                if (copyEmailStatus) copyEmailStatus.textContent = '';
-            }, 2200);
-        });
-    });
-
-    // ==========================================
-    // 11. CONTACT FORM (VALIDATION & SAFE SUBMIT)
+    // 10. CONTACT FORM (VALIDATION & SAFE SUBMIT)
     // ==========================================
     const contactForm = document.getElementById('contact-form');
     const formFeedback = document.getElementById('form-feedback');
