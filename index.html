@@ -1926,6 +1926,32 @@
         </div>
     </main>
 
+    <!-- Floating Sound & Micro-Haptics Controller (Pure Web Audio API) -->
+    <div class="sound-controller-wrap" id="sound-controller-wrap">
+        <button type="button" id="sound-toggle" class="sound-toggle-btn" aria-label="Toggle interaction sound effects" aria-pressed="false" title="Toggle audio feedback (Pure Web Audio)">
+            <span class="sound-icon-indicator" aria-hidden="true">
+                <!-- Muted Icon -->
+                <svg class="sound-icon-mute" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+                <!-- Active / Unmuted Icon -->
+                <svg class="sound-icon-active" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                </svg>
+            </span>
+            <span class="sound-label" id="sound-label">SOUND OFF</span>
+            <span class="sound-eq-bars" aria-hidden="true">
+                <span class="eq-bar bar-1"></span>
+                <span class="eq-bar bar-2"></span>
+                <span class="eq-bar bar-3"></span>
+            </span>
+        </button>
+    </div>
+
     <script src="script.js" defer></script>
 </body>
 </html>
