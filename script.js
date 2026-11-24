@@ -248,6 +248,31 @@ document.addEventListener('DOMContentLoaded', () => {
             vibrate([15, 40, 15]);
         }
 
+        function playPop() {
+            if (!isSoundEnabled) return;
+            vibrate([8, 18]);
+
+            const ctx = getContext();
+            if (!ctx || ctx.state !== 'running') return;
+
+            const now = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(880, now);
+            osc.frequency.exponentialRampToValueAtTime(1320, now + 0.038);
+
+            gain.gain.setValueAtTime(0.09, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.045);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(now);
+            osc.stop(now + 0.05);
+        }
+
         function toggle() {
             isSoundEnabled = !isSoundEnabled;
             try {
@@ -277,6 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
             playSlide,
             playModalOpen,
             playModalClose,
+            playPop,
             vibrate
         };
     })();
@@ -1638,4 +1664,449 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // ==========================================
+    // 13. TOP VIEWPORT NEON SCROLL PROGRESS
+    // ==========================================
+    const scrollProgressBar = document.getElementById('scroll-progress-bar');
+    if (scrollProgressBar) {
+        let progressTicking = false;
+        const updateScrollProgress = () => {
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            const maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const pct = maxScroll > 0 ? Math.min(100, Math.max(0, (scrollY / maxScroll) * 100)) : 0;
+            scrollProgressBar.style.width = `${pct}%`;
+            progressTicking = false;
+        };
+        window.addEventListener('scroll', () => {
+            if (!progressTicking) {
+                window.requestAnimationFrame(updateScrollProgress);
+                progressTicking = true;
+            }
+        }, { passive: true });
+        updateScrollProgress();
+    }
+
+    // ==========================================
+    // 14. GLASSMORPHIC TOAST NOTIFICATION ENGINE
+    // ==========================================
+    const toastContainer = document.getElementById('toast-container');
+
+    function showToast(title, description, duration = 3500) {
+        if (!toastContainer) return;
+
+        SoundEngine.playPop();
+
+        const toast = document.createElement('div');
+        toast.className = 'glass-toast';
+        toast.setAttribute('role', 'alert');
+        toast.innerHTML = `
+            <div class="toast-icon-wrap" aria-hidden="true">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div class="toast-content">
+                <div class="toast-title">${title}</div>
+                ${description ? `<div class="toast-desc">${description}</div>` : ''}
+            </div>
+            <button type="button" class="toast-close-btn" aria-label="Dismiss toast">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="toast-progress" style="animation-duration: ${duration}ms;"></div>
+        `;
+
+        toastContainer.appendChild(toast);
+
+        // Trigger entrance
+        window.requestAnimationFrame(() => {
+            toast.classList.add('is-visible');
+        });
+
+        let dismissTimeout = null;
+
+        const dismissToast = () => {
+            if (dismissTimeout) clearTimeout(dismissTimeout);
+            toast.classList.remove('is-visible');
+            toast.classList.add('is-hiding');
+            setTimeout(() => {
+                if (toast.parentNode) toast.parentNode.removeChild(toast);
+            }, 260);
+        };
+
+        const closeBtn = toast.querySelector('.toast-close-btn');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                SoundEngine.playClick();
+                dismissToast();
+            });
+        }
+
+        dismissTimeout = setTimeout(dismissToast, duration);
+    }
+
+    // ==========================================
+    // 15. ONE-CLICK EMAIL CLIPBOARD COPY HANDLER
+    // ==========================================
+    async function copyEmailAddress(triggerBtn) {
+        const email = 'mohitagarwal4215@gmail.com';
+        let copied = false;
+
+        if (navigator.clipboard) {
+            try {
+                await navigator.clipboard.writeText(email);
+                copied = true;
+            } catch (_) {
+                // Clipboard writeText failed (e.g. document not focused or headless context)
+            }
+        }
+
+        if (!copied) {
+            try {
+                const textArea = document.createElement('textarea');
+                textArea.value = email;
+                textArea.setAttribute('readonly', '');
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-9999px';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.select();
+                copied = document.execCommand('copy');
+                document.body.removeChild(textArea);
+            } catch (_) {
+                copied = false;
+            }
+        }
+
+        // Always provide clear glass toast feedback
+        showToast('Email Copied to Clipboard!', `${email} is ready to paste.`);
+
+        if (triggerBtn) {
+            const labelSpan = triggerBtn.querySelector('#hero-copy-email-text, .social-btn-label, span');
+            if (labelSpan) {
+                const originalText = labelSpan.textContent;
+                labelSpan.textContent = 'Copied!';
+                setTimeout(() => {
+                    labelSpan.textContent = originalText;
+                }, 2200);
+            }
+        }
+    }
+
+    const heroCopyBtn = document.getElementById('hero-copy-email-btn');
+    if (heroCopyBtn) {
+        heroCopyBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            copyEmailAddress(heroCopyBtn);
+        });
+    }
+
+    const contactCopyBtn = document.getElementById('contact-copy-email-btn');
+    if (contactCopyBtn) {
+        contactCopyBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            copyEmailAddress(contactCopyBtn);
+        });
+    }
+
+    // ==========================================
+    // 16. RECRUITER FAST-TRACK SNAPSHOT MODAL
+    // ==========================================
+    const recruiterModal = document.getElementById('recruiter-modal');
+    const recruiterBackdrop = document.getElementById('recruiter-backdrop');
+    const recruiterCloseBtn = document.getElementById('recruiter-modal-close');
+    const recruiterCopyBtn = document.getElementById('recruiter-copy-email-btn');
+
+    function openRecruiterModal() {
+        if (!recruiterModal) return;
+        SoundEngine.playModalOpen();
+        recruiterModal.removeAttribute('inert');
+        recruiterModal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        if (recruiterCloseBtn) recruiterCloseBtn.focus();
+    }
+
+    function closeRecruiterModal() {
+        if (!recruiterModal || !recruiterModal.classList.contains('is-open')) return;
+        SoundEngine.playModalClose();
+        recruiterModal.classList.remove('is-open');
+        recruiterModal.setAttribute('inert', '');
+        document.body.style.overflow = '';
+    }
+
+    if (recruiterBackdrop) {
+        recruiterBackdrop.addEventListener('click', closeRecruiterModal);
+    }
+    if (recruiterCloseBtn) {
+        recruiterCloseBtn.addEventListener('click', closeRecruiterModal);
+    }
+    if (recruiterCopyBtn) {
+        recruiterCopyBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            copyEmailAddress(recruiterCopyBtn);
+        });
+    }
+
+    // ==========================================
+    // 17. COMMAND PALETTE (⌘K / Ctrl+K) CONTROLLER
+    // ==========================================
+    const cmdModal = document.getElementById('cmd-palette-modal');
+    const cmdBackdrop = document.getElementById('cmd-palette-backdrop');
+    const cmdInput = document.getElementById('cmd-palette-search-input');
+    const cmdResults = document.getElementById('cmd-palette-results');
+    const cmdCloseBtn = document.getElementById('cmd-palette-close');
+    const cmdOpenBtn = document.getElementById('cmd-palette-btn');
+
+    const COMMANDS = [
+        // Navigation
+        { id: 'nav-hero', group: 'Navigation', title: 'Home / Hero', desc: 'Jump to top intro section', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6', action: 'jump', target: '#hero', badge: 'Jump ↵' },
+        { id: 'nav-about', group: 'Navigation', title: 'About Mohit', desc: 'Background, education & core philosophy', icon: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z', action: 'jump', target: '#about', badge: 'Jump ↵' },
+        { id: 'nav-skills', group: 'Navigation', title: 'Technical Skills Matrix', desc: 'MLOps, Python, Docker, AI, React, Cloud', icon: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4', action: 'jump', target: '#skills', badge: 'Jump ↵' },
+        { id: 'nav-projects', group: 'Navigation', title: 'Featured Projects', desc: '8 repos: CampusConnect, RAG, Vision AI', icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10', action: 'jump', target: '#projects', badge: 'Jump ↵' },
+        { id: 'nav-experience', group: 'Navigation', title: 'Experience & Leadership', desc: 'Timeline cards & key responsibilities', icon: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', action: 'jump', target: '#experience', badge: 'Jump ↵' },
+        { id: 'nav-achievements', group: 'Navigation', title: 'Achievements & Badges', desc: 'Hackathons, certifications & awards', icon: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z', action: 'jump', target: '#achievements', badge: 'Jump ↵' },
+        { id: 'nav-gallery', group: 'Navigation', title: 'Campus & Hackathon Gallery', desc: 'Interactive photo grid & lightbox', icon: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z', action: 'jump', target: '#gallery', badge: 'Jump ↵' },
+        { id: 'nav-contact', group: 'Navigation', title: 'Contact & Inquiry Terminal', desc: 'Send message, social links & email', icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', action: 'jump', target: '#contact', badge: 'Jump ↵' },
+
+        // Quick Actions
+        { id: 'act-email', group: 'Quick Actions', title: 'Copy Email Address', desc: 'mohitagarwal4215@gmail.com', icon: 'M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z', action: 'copy-email', badge: 'Copy ↵' },
+        { id: 'act-resume', group: 'Quick Actions', title: 'Download Resume / CV (PDF)', desc: 'Official Mohit_Agarwal_Resume.pdf', icon: 'M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', action: 'download-resume', badge: 'Download ↵' },
+        { id: 'act-sound', group: 'Quick Actions', title: 'Toggle Interaction Sound FX', desc: 'Pure Web Audio tactile feedback & haptics', icon: 'M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14M11 5L6 9H2v6h4l5 4V5z', action: 'toggle-sound', badge: 'Toggle ↵' },
+        { id: 'act-github', group: 'Quick Actions', title: 'Open GitHub Profile', desc: 'https://github.com/mohit4215', icon: 'M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14', action: 'link', target: 'https://github.com/mohit4215', badge: 'Open ↗' },
+        { id: 'act-linkedin', group: 'Quick Actions', title: 'Open LinkedIn Profile', desc: 'https://www.linkedin.com/in/mohit-agarwal-48b59a259/', icon: 'M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14', action: 'link', target: 'https://www.linkedin.com/in/mohit-agarwal-48b59a259/', badge: 'Open ↗' },
+
+        // Recruiter Fast-Track
+        { id: 'act-recruiter', group: 'Recruiter Fast-Track', title: 'Recruiter Snapshot (Quick Bio)', desc: 'CGPA 8.48 · MLOps & Full-Stack · 2026 Batch', icon: 'M13 10V3L4 14h7v7l9-11h-7z', action: 'recruiter', badge: 'View ↵' }
+    ];
+
+    let filteredCommands = [...COMMANDS];
+    let selectedCommandIndex = 0;
+
+    function renderCommandResults() {
+        if (!cmdResults) return;
+
+        if (filteredCommands.length === 0) {
+            cmdResults.innerHTML = `
+                <div class="cmd-empty-state">
+                    <span>No commands found matching "${cmdInput ? cmdInput.value : ''}"</span>
+                </div>
+            `;
+            return;
+        }
+
+        let html = '';
+        let lastGroup = null;
+
+        filteredCommands.forEach((cmd, idx) => {
+            if (cmd.group !== lastGroup) {
+                lastGroup = cmd.group;
+                html += `<div class="cmd-group-title">${cmd.group}</div>`;
+            }
+            const isSelected = idx === selectedCommandIndex;
+            html += `
+                <div class="cmd-item ${isSelected ? 'is-selected' : ''}" data-idx="${idx}" role="option" aria-selected="${isSelected}">
+                    <div class="cmd-item-left">
+                        <div class="cmd-item-icon-box" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="${cmd.icon}"/>
+                            </svg>
+                        </div>
+                        <div class="cmd-item-text">
+                            <span class="cmd-item-title">${cmd.title}</span>
+                            <span class="cmd-item-desc">${cmd.desc}</span>
+                        </div>
+                    </div>
+                    <span class="cmd-item-action-badge">${cmd.badge}</span>
+                </div>
+            `;
+        });
+
+        cmdResults.innerHTML = html;
+
+        // Scroll selected item into view smoothly
+        const selectedEl = cmdResults.querySelector('.cmd-item.is-selected');
+        if (selectedEl) {
+            selectedEl.scrollIntoView({ block: 'nearest' });
+        }
+
+        // Add click & hover listeners to items
+        const itemEls = cmdResults.querySelectorAll('.cmd-item');
+        itemEls.forEach((el) => {
+            const idx = parseInt(el.getAttribute('data-idx'), 10);
+            el.addEventListener('mouseenter', () => {
+                if (selectedCommandIndex !== idx) {
+                    selectedCommandIndex = idx;
+                    itemEls.forEach((item, i) => item.classList.toggle('is-selected', i === idx));
+                    SoundEngine.playHover();
+                }
+            });
+            el.addEventListener('click', () => {
+                executeCommand(filteredCommands[idx]);
+            });
+        });
+    }
+
+    function executeCommand(cmd) {
+        if (!cmd) return;
+        SoundEngine.playClick();
+        closeCmdPalette();
+
+        setTimeout(() => {
+            switch (cmd.action) {
+                case 'jump': {
+                    const target = document.querySelector(cmd.target);
+                    if (target) {
+                        SoundEngine.playSlide();
+                        target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+                    }
+                    break;
+                }
+                case 'copy-email': {
+                    copyEmailAddress();
+                    break;
+                }
+                case 'download-resume': {
+                    const a = document.createElement('a');
+                    a.href = 'resume.pdf';
+                    a.download = 'Mohit_Agarwal_Resume.pdf';
+                    a.target = '_blank';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    showToast('Downloading Resume', 'Mohit_Agarwal_Resume.pdf is downloading.');
+                    break;
+                }
+                case 'toggle-sound': {
+                    const state = SoundEngine.toggle();
+                    updateSoundUI(state);
+                    showToast(state ? 'Sound Effects Enabled' : 'Sound Effects Muted', state ? 'Pure Web Audio tactile feedback is active.' : 'Audio micro-haptics disabled.');
+                    break;
+                }
+                case 'link': {
+                    window.open(cmd.target, '_blank', 'noopener,noreferrer');
+                    break;
+                }
+                case 'recruiter': {
+                    openRecruiterModal();
+                    break;
+                }
+            }
+        }, 120);
+    }
+
+    function filterCommands(query) {
+        const q = (query || '').toLowerCase().trim();
+        if (!q) {
+            filteredCommands = [...COMMANDS];
+        } else {
+            filteredCommands = COMMANDS.filter(cmd =>
+                cmd.title.toLowerCase().includes(q) ||
+                cmd.desc.toLowerCase().includes(q) ||
+                cmd.group.toLowerCase().includes(q) ||
+                (cmd.target && cmd.target.toLowerCase().includes(q))
+            );
+        }
+        selectedCommandIndex = 0;
+        renderCommandResults();
+    }
+
+    function openCmdPalette() {
+        if (!cmdModal) return;
+        SoundEngine.playModalOpen();
+        cmdModal.removeAttribute('inert');
+        cmdModal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+
+        if (cmdInput) {
+            cmdInput.value = '';
+            filterCommands('');
+            setTimeout(() => cmdInput.focus(), 50);
+        }
+    }
+
+    function closeCmdPalette() {
+        if (!cmdModal || !cmdModal.classList.contains('is-open')) return;
+        SoundEngine.playModalClose();
+        cmdModal.classList.remove('is-open');
+        cmdModal.setAttribute('inert', '');
+        document.body.style.overflow = '';
+    }
+
+    if (cmdOpenBtn) {
+        cmdOpenBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openCmdPalette();
+        });
+    }
+
+    if (cmdCloseBtn) {
+        cmdCloseBtn.addEventListener('click', closeCmdPalette);
+    }
+
+    if (cmdBackdrop) {
+        cmdBackdrop.addEventListener('click', closeCmdPalette);
+    }
+
+    if (cmdInput) {
+        cmdInput.addEventListener('input', (e) => {
+            filterCommands(e.target.value);
+        });
+    }
+
+    // Global keyboard shortcuts
+    window.addEventListener('keydown', (e) => {
+        const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+        const isCmdK = (isMac && e.metaKey && e.key.toLowerCase() === 'k') || (!isMac && e.ctrlKey && e.key.toLowerCase() === 'k');
+        const isSlash = e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName) && !document.activeElement?.isContentEditable;
+
+        if (isCmdK || isSlash) {
+            e.preventDefault();
+            if (cmdModal && cmdModal.classList.contains('is-open')) {
+                closeCmdPalette();
+            } else {
+                openCmdPalette();
+            }
+            return;
+        }
+
+        if (e.key === 'Escape') {
+            if (cmdModal && cmdModal.classList.contains('is-open')) {
+                e.preventDefault();
+                closeCmdPalette();
+                return;
+            }
+            if (recruiterModal && recruiterModal.classList.contains('is-open')) {
+                e.preventDefault();
+                closeRecruiterModal();
+                return;
+            }
+        }
+
+        if (cmdModal && cmdModal.classList.contains('is-open')) {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (filteredCommands.length > 0) {
+                    selectedCommandIndex = (selectedCommandIndex + 1) % filteredCommands.length;
+                    renderCommandResults();
+                    SoundEngine.playHover();
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (filteredCommands.length > 0) {
+                    selectedCommandIndex = (selectedCommandIndex - 1 + filteredCommands.length) % filteredCommands.length;
+                    renderCommandResults();
+                    SoundEngine.playHover();
+                }
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (filteredCommands.length > 0 && filteredCommands[selectedCommandIndex]) {
+                    executeCommand(filteredCommands[selectedCommandIndex]);
+                }
+            }
+        }
+    });
 });

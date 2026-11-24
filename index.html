@@ -78,7 +78,7 @@
     <link rel="stylesheet" href="tailwind.css">
 
     <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20261125a">
 
     <!-- No-JS Fallback: Ensure content is immediately visible and scrollable if JS is disabled -->
     <noscript>
@@ -107,6 +107,9 @@
     <div id="cursor-dot" class="custom-cursor-dot"></div>
     <div id="cursor-ring" class="custom-cursor-ring"></div>
 
+    <!-- Top Viewport Neon Scroll Progress Indicator -->
+    <div id="scroll-progress-bar" class="scroll-progress-bar" aria-hidden="true"></div>
+
     <!-- Minimalist Top Navigation Bar -->
     <header id="site-header" class="site-header">
         <div class="header-container">
@@ -128,10 +131,22 @@
                 </ul>
             </nav>
 
-            <button type="button" class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
-                <span class="toggle-bar"></span>
-                <span class="toggle-bar"></span>
-            </button>
+            <div class="header-actions">
+                <!-- Command Palette Desktop / Mobile Trigger -->
+                <button type="button" class="cmd-palette-btn" id="cmd-palette-btn" aria-label="Open command palette (Ctrl+K)" title="Quick Command Palette (Ctrl+K)">
+                    <svg class="cmd-btn-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <span class="cmd-btn-label">Quick Search</span>
+                    <kbd class="cmd-btn-kbd"><span class="cmd-btn-mod">⌘</span>K</kbd>
+                </button>
+
+                <button type="button" class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
+                    <span class="toggle-bar"></span>
+                    <span class="toggle-bar"></span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -238,6 +253,16 @@
                             </svg>
                         </span>
                     </a>
+
+                    <!-- Dedicated Copy Email CTA with Instant Glass Toast -->
+                    <button type="button" id="hero-copy-email-btn" class="btn-border-beam group cursor-pointer" aria-label="Copy Mohit's Email Address to Clipboard" title="Copy mohitagarwal4215@gmail.com">
+                        <span class="btn-border-beam-inner">
+                            <svg class="w-4 h-4 text-cyan-400 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                            <span id="hero-copy-email-text">Copy Email</span>
+                        </span>
+                    </button>
 
                     <!-- Resume / Download CV CTA -->
                     <!-- Official Resume: resume.pdf -->
@@ -1699,6 +1724,14 @@
                         </div>
                     </a>
 
+                    <!-- Quick Copy Email Button -->
+                    <button type="button" id="contact-copy-email-btn" class="magnetic-social-btn cursor-pointer" data-social="copy-email" aria-label="Copy Email Address to Clipboard" title="Copy mohitagarwal4215@gmail.com">
+                        <div class="social-icon-inner">
+                            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                            <span class="social-btn-label">Copy Email</span>
+                        </div>
+                    </button>
+
                     <!-- LinkedIn -->
                     <a href="https://www.linkedin.com/in/mohit-agarwal-48b59a259/" target="_blank" rel="noopener noreferrer" class="magnetic-social-btn" data-social="linkedin" aria-label="LinkedIn Profile">
                         <div class="social-icon-inner">
@@ -1899,7 +1932,118 @@
     </div>
 
 
-    <script src="script.js?v=20261121e" defer></script>
+    <!-- ==================== COMMAND PALETTE (⌘K / Ctrl+K) MODAL ==================== -->
+    <div id="cmd-palette-modal" class="cmd-palette-modal" role="dialog" aria-modal="true" aria-labelledby="cmd-palette-search-input" inert>
+        <div class="cmd-palette-backdrop" id="cmd-palette-backdrop"></div>
+        <div class="cmd-palette-container">
+            <div class="cmd-palette-dialog">
+                <div class="cmd-palette-header">
+                    <svg class="cmd-palette-search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="cmd-palette-search-input" class="cmd-palette-search-input" placeholder="Search sections, actions, recruiter info... (or type '/')" autocomplete="off" spellcheck="false" aria-autocomplete="list" aria-controls="cmd-palette-results">
+                    <button type="button" id="cmd-palette-close" class="cmd-palette-close-btn" aria-label="Close command palette">
+                        <kbd class="cmd-key-badge">ESC</kbd>
+                    </button>
+                </div>
+
+                <div id="cmd-palette-results" class="cmd-palette-results" role="listbox">
+                    <!-- Dynamic / filtered items rendered by script.js -->
+                </div>
+
+                <div class="cmd-palette-footer">
+                    <div class="cmd-footer-hints">
+                        <span class="cmd-hint-item"><kbd class="cmd-key-badge">↑</kbd><kbd class="cmd-key-badge">↓</kbd> navigate</span>
+                        <span class="cmd-hint-item"><kbd class="cmd-key-badge">↵</kbd> select</span>
+                        <span class="cmd-hint-item"><kbd class="cmd-key-badge">ESC</kbd> close</span>
+                    </div>
+                    <div class="cmd-footer-brand">
+                        <span>Mohit Agarwal · Portfolio</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== RECRUITER FAST-TRACK SNAPSHOT MODAL ==================== -->
+    <div id="recruiter-modal" class="recruiter-modal" role="dialog" aria-modal="true" aria-labelledby="recruiter-modal-title" inert>
+        <div class="recruiter-backdrop" id="recruiter-backdrop"></div>
+        <div class="recruiter-container">
+            <div class="recruiter-dialog">
+                <div class="recruiter-header">
+                    <div class="recruiter-profile-wrap">
+                        <div class="recruiter-avatar">MA</div>
+                        <div class="recruiter-intro">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h3 id="recruiter-modal-title" class="recruiter-name">Mohit Agarwal</h3>
+                                <span class="recruiter-status-pill">
+                                    <span class="recruiter-status-dot"></span>
+                                    <span>Available for 2026 Roles</span>
+                                </span>
+                            </div>
+                            <p class="recruiter-degree">B.Tech in Information Technology · AKGEC, Ghaziabad (2022–2026)</p>
+                        </div>
+                    </div>
+                    <button type="button" id="recruiter-modal-close" class="recruiter-close-btn" aria-label="Close fast-track snapshot">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="recruiter-metrics-grid">
+                    <div class="recruiter-metric-card">
+                        <span class="metric-label">CURRENT CGPA</span>
+                        <div class="metric-val text-cyan-400">8.48 <span class="text-xs text-zinc-400">/ 10</span></div>
+                        <span class="metric-sub">Top Tier Engineering Batch</span>
+                    </div>
+                    <div class="recruiter-metric-card">
+                        <span class="metric-label">PRIMARY ROLES</span>
+                        <div class="metric-val text-white text-sm">MLOps & Full-Stack</div>
+                        <span class="metric-sub">Production AI Architectures</span>
+                    </div>
+                    <div class="recruiter-metric-card">
+                        <span class="metric-label">CORE TOOLKIT</span>
+                        <div class="metric-val text-indigo-400 text-sm">Python · PyTorch · Docker</div>
+                        <span class="metric-sub">Kubernetes · Next.js · Node.js</span>
+                    </div>
+                    <div class="recruiter-metric-card">
+                        <span class="metric-label">MEASURABLE IMPACT</span>
+                        <div class="metric-val text-emerald-400 text-sm">15k+ Image Pipeline</div>
+                        <span class="metric-sub">60% Faster Multimodal RAG</span>
+                    </div>
+                </div>
+
+                <div class="recruiter-summary-box">
+                    <p class="recruiter-summary-text">
+                        High-velocity engineer specializing in end-to-end Machine Learning pipelines, distributed web systems, and real-time computer vision. Strong foundation in containerized deployments, retrieval-augmented generation (RAG), and full-lifecycle software engineering.
+                    </p>
+                </div>
+
+                <div class="recruiter-quick-actions">
+                    <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="recruiter-action-btn recruiter-btn-primary" download="Mohit_Agarwal_Resume.pdf">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        <span>Download CV (PDF)</span>
+                    </a>
+                    <button type="button" id="recruiter-copy-email-btn" class="recruiter-action-btn recruiter-btn-secondary cursor-pointer">
+                        <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        <span>Copy Email</span>
+                    </button>
+                    <a href="mailto:mohitagarwal4215@gmail.com?subject=Opportunity%20Discussion%20with%20Mohit%20Agarwal" class="recruiter-action-btn recruiter-btn-secondary">
+                        <svg class="w-4 h-4 text-zinc-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <span>Email Mohit</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== GLASS TOAST NOTIFICATION CONTAINER ==================== -->
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="script.js?v=20261125a" defer></script>
 </body>
 </html>
 
